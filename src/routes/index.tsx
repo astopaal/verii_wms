@@ -1,12 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/shared/ProtectedRoute';
+import { MainLayout } from '@/components/shared/MainLayout';
 
 // Layouts
-import MainLayout from '@/layouts/MainLayout';
 import AuthLayout from '@/layouts/AuthLayout';
 
-// Pages (will be created)
-// import { LoginPage } from '@/features/auth';
+// Pages
+import { LoginPage } from '@/features/auth';
+import { DashboardPage } from '@/features/dashboard';
+import {
+  GoodsReceiptCreatePage,
+  GoodsReceiptListPage,
+} from '@/features/goods-receipt';
 // import { InventoryPage } from '@/features/inventory';
 
 export const router = createBrowserRouter([
@@ -20,7 +25,20 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Dashboard</div>,
+        element: <DashboardPage />,
+      },
+      {
+        path: 'goods-receipt',
+        children: [
+          {
+            path: 'create',
+            element: <GoodsReceiptCreatePage />,
+          },
+          {
+            path: 'list',
+            element: <GoodsReceiptListPage />,
+          },
+        ],
       },
       // {
       //   path: 'inventory',
@@ -34,7 +52,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'login',
-        element: <div>Login Page</div>,
+        element: <LoginPage />,
       },
     ],
   },
