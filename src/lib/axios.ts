@@ -8,7 +8,6 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  // Mock login endpoint - Her zaman başarılı döndür
   if (config.url?.includes('/auth/login')) {
     const requestData = config.data ? (typeof config.data === 'string' ? JSON.parse(config.data) : config.data) : {};
     return Promise.reject({
@@ -40,13 +39,11 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    // Mock login endpoint response - Request interceptor'dan gelen mock response'u handle et
     if (error.config?.url?.includes('/auth/login') && error.response?.data) {
       return Promise.resolve(error.response.data);
     }
 
     if (error.response?.status === 401) {
-      // Auth store'dan logout yapılacak (circular dependency olmaması için dinamik import)
       const token = localStorage.getItem('access_token');
       if (token) {
         localStorage.removeItem('access_token');
