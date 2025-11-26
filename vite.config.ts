@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
-const allowedHosts = ["6db18ef804ed.ngrok-free.app"];
+const allowedHosts = ["booker-uncompromising-tari.ngrok-free.dev"];
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],

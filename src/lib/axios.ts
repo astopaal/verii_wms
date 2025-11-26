@@ -1,48 +1,34 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
+import i18n from './i18n';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://booker-uncompromising-tari.ngrok-free.dev';
+
+if (!import.meta.env.VITE_API_URL) {
+  console.warn('VITE_API_URL environment variable not found, using default:', API_URL);
+}
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  if (config.url?.includes('/auth/login')) {
-    const requestData = config.data ? (typeof config.data === 'string' ? JSON.parse(config.data) : config.data) : {};
-    return Promise.reject({
-      config,
-      response: {
-        data: {
-          user: {
-            id: 1,
-            email: requestData.username || 'test@example.com',
-            name: 'Test Kullanıcı',
-          },
-          token: 'mock-jwt-token-' + Date.now(),
-        },
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-      },
-      isAxiosError: true,
-    });
-  }
-
   const token = localStorage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  
+  const currentLanguage = i18n.language || 'tr';
+  config.headers['X-Language'] = currentLanguage;
+  
   return config;
 });
 
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    if (error.config?.url?.includes('/auth/login') && error.response?.data) {
-      return Promise.resolve(error.response.data);
-    }
-
     if (error.response?.status === 401) {
       const token = localStorage.getItem('access_token');
       if (token) {
