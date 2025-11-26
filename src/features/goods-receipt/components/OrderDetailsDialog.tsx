@@ -1,4 +1,5 @@
 import { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import {
   Dialog,
@@ -28,6 +29,7 @@ export function OrderDetailsDialog({
   onToggleItem,
   onUpdateQuantity,
 }: OrderDetailsDialogProps): ReactElement {
+  const { t } = useTranslation();
   const { data: orderItems, isLoading } = useQuery({
     queryKey: ['orderItems', orderId],
     queryFn: () => goodsReceiptApi.getOrderItems(orderId!),
@@ -47,14 +49,14 @@ export function OrderDetailsDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Sipariş Detayları</DialogTitle>
+          <DialogTitle>{t('goodsReceipt.orderDetails.title')}</DialogTitle>
           <DialogDescription>
-            Sipariş kalemlerini seçerek mal kabul listesine ekleyebilirsiniz
+            {t('goodsReceipt.orderDetails.description')}
           </DialogDescription>
         </DialogHeader>
 
         {isLoading ? (
-          <div className="text-center py-8">Yükleniyor...</div>
+          <div className="text-center py-8">{t('common.loading')}</div>
         ) : (
           <div className="space-y-4 mt-4">
             {orderItems?.map((item) => {
@@ -86,19 +88,19 @@ export function OrderDetailsDialog({
                       </div>
                       <div className="mt-2 grid grid-cols-3 gap-4 text-sm">
                         <div>
-                          <p className="text-muted-foreground">Sipariş Miktarı</p>
+                          <p className="text-muted-foreground">{t('goodsReceipt.orderDetails.orderQuantity')}</p>
                           <p className="font-medium">
                             {item.quantity} {item.unit}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Birim Fiyat</p>
+                          <p className="text-muted-foreground">{t('goodsReceipt.orderDetails.unitPrice')}</p>
                           <p className="font-medium">
                             {item.unitPrice.toLocaleString('tr-TR')} ₺
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Toplam</p>
+                          <p className="text-muted-foreground">{t('goodsReceipt.orderDetails.total')}</p>
                           <p className="font-medium">
                             {item.totalPrice.toLocaleString('tr-TR')} ₺
                           </p>
@@ -107,7 +109,7 @@ export function OrderDetailsDialog({
                     </div>
                     {isSelected && (
                       <div className="flex items-center gap-2">
-                        <label className="text-sm">Miktar:</label>
+                        <label className="text-sm">{t('goodsReceipt.orderDetails.quantity')}</label>
                         <input
                           type="number"
                           min="0"
@@ -132,7 +134,7 @@ export function OrderDetailsDialog({
 
         <div className="flex justify-end gap-2 mt-6">
           <Button variant="outline" onClick={onClose}>
-            Kapat
+            {t('common.close')}
           </Button>
         </div>
       </DialogContent>

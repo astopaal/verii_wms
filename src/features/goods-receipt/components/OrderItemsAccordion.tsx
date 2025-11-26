@@ -1,4 +1,5 @@
 import { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { goodsReceiptApi } from '../api/goods-receipt-api';
 import { Input } from '@/components/ui/input';
@@ -18,6 +19,7 @@ export function OrderItemsAccordion({
   onToggleItem,
   onUpdateQuantity,
 }: OrderItemsAccordionProps): ReactElement {
+  const { t } = useTranslation();
   const { data: orderItems, isLoading } = useQuery({
     queryKey: ['orderItems', orderId],
     queryFn: () => goodsReceiptApi.getOrderItems(orderId),
@@ -30,11 +32,11 @@ export function OrderItemsAccordion({
   };
 
   if (isLoading) {
-    return <div className="text-center py-4 text-sm text-muted-foreground">Yükleniyor...</div>;
+    return <div className="text-center py-4 text-sm text-muted-foreground">{t('common.loading')}</div>;
   }
 
   if (!orderItems || orderItems.length === 0) {
-    return <div className="text-center py-4 text-sm text-muted-foreground">Kalem bulunamadı</div>;
+    return <div className="text-center py-4 text-sm text-muted-foreground">{t('goodsReceipt.orderItems.itemNotFound')}</div>;
   }
 
   return (
@@ -69,7 +71,7 @@ export function OrderItemsAccordion({
                 {isSelected && (
                   <div className="flex items-center gap-2 mt-2">
                     <Label htmlFor={`qty-${item.id}`} className="text-xs whitespace-nowrap">
-                      Miktar:
+                      {t('goodsReceipt.orderDetails.quantity')}
                     </Label>
                     <Input
                       id={`qty-${item.id}`}
