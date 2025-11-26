@@ -1,4 +1,5 @@
 import { type ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -17,12 +18,8 @@ import { Form } from '@/components/ui/form';
 import { Step1BasicInfo } from './steps/Step1BasicInfo';
 import { Step2OrderSelection } from './steps/Step2OrderSelection';
 
-const steps = [
-  { label: 'Temel Bilgiler' },
-  { label: 'Sipariş ve Kalem Seçimi' },
-];
-
 export function GoodsReceiptCreatePage(): ReactElement {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedItems, setSelectedItems] = useState<SelectedOrderItem[]>([]);
@@ -112,6 +109,11 @@ export function GoodsReceiptCreatePage(): ReactElement {
     });
   };
 
+  const steps = [
+    { label: t('goodsReceipt.create.steps.basicInfo') },
+    { label: t('goodsReceipt.create.steps.orderSelection') },
+  ];
+
   const renderStepContent = (): ReactElement => {
     switch (currentStep) {
       case 1:
@@ -126,16 +128,16 @@ export function GoodsReceiptCreatePage(): ReactElement {
           />
         );
       default:
-        return <div>Bilinmeyen adım</div>;
+        return <div>{t('goodsReceipt.create.unknownStep')}</div>;
     }
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Yeni Mal Kabul Girişi</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('goodsReceipt.create.title')}</h1>
         <p className="text-muted-foreground">
-          Mal kabul bilgilerini girin ve sipariş kalemlerini seçin
+          {t('goodsReceipt.create.subtitle')}
         </p>
       </div>
 
@@ -157,18 +159,18 @@ export function GoodsReceiptCreatePage(): ReactElement {
               {renderStepContent()}
 
               <div className="flex justify-between pt-6 border-t">
-                <Button
+                  <Button
                   type="button"
                   variant="outline"
                   onClick={handlePrevious}
                   disabled={currentStep === 1}
                 >
-                  Önceki
+                  {t('common.previous')}
                 </Button>
                 <div className="flex gap-2">
                   {currentStep < steps.length ? (
                     <Button type="button" onClick={handleNext}>
-                      Sonraki
+                      {t('common.next')}
                     </Button>
                   ) : (
                     <Button
@@ -176,7 +178,7 @@ export function GoodsReceiptCreatePage(): ReactElement {
                       onClick={handleSave}
                       disabled={createMutation.isPending || selectedItems.length === 0}
                     >
-                      {createMutation.isPending ? 'Kaydediliyor...' : 'Kaydet'}
+                      {createMutation.isPending ? t('common.saving') : t('common.save')}
                     </Button>
                   )}
                 </div>
