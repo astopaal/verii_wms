@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "reset": "Réinitialiser",
+    "submit": "Soumettre",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "optional": "Optionnel",
+    "required": "Requis",
+    "notFound": "Introuvable",
+    "noData": "Aucune donnée",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion au système",
+      "subtitle": "VERII WMS",
+      "branch": "Succursale",
+      "selectBranch": "Sélectionner une succursale",
+      "branchNotFound": "Succursale introuvable",
+      "username": "Nom d'utilisateur",
+      "usernamePlaceholder": "Entrez votre nom d'utilisateur",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Se connecter",
+      "loggingIn": "Connexion en cours...",
+      "copyright": "© 2025 VERII. Tous droits réservés."
+    },
+    "logout": "Déconnexion"
+  },
+  "navbar": {
+    "VERII WMS": "VERII WMS"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "goodsReceipt": "Réception de marchandises",
+    "goodsReceiptCreate": "Saisie de réception",
+    "goodsReceiptList": "Liste des réceptions",
+    "inventory": "Inventaire",
+    "reports": "Rapports",
+    "shipment": "Expédition"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Bienvenue dans le système de gestion d'entrepôt",
+    "totalStock": "Stock total",
+    "totalStockChange": "par rapport au mois dernier",
+    "goodsReceipt": "Réception de marchandises",
+    "goodsReceiptPending": "Transactions en attente aujourd'hui",
+    "shipment": "Expédition",
+    "shipmentPrepared": "Expéditions préparées",
+    "criticalStock": "Stock critique",
+    "criticalStockItems": "Produits à faible stock",
+    "recentTransactions": "Transactions récentes",
+    "recentTransactionsSubtitle": "Transactions des dernières 24 heures",
+    "quickAccess": "Accès rapide",
+    "quickAccessSubtitle": "Opérations courantes",
+    "newGoodsReceipt": "Nouvelle réception",
+    "newShipment": "Nouvelle expédition",
+    "stockQuery": "Requête de stock",
+    "completed": "Terminé",
+    "preparing": "En préparation",
+    "goodsReceiptNumber": "Réception #{{number}}",
+    "shipmentNumber": "Expédition #{{number}}",
+    "inventoryUpdate": "Mise à jour de l'inventaire",
+    "hoursAgo": "il y a {{hours}} heures"
+  },
+  "goodsReceipt": {
+    "create": {
+      "title": "Nouvelle réception de marchandises",
+      "subtitle": "Entrez les informations de réception et sélectionnez les articles de commande",
+      "steps": {
+        "basicInfo": "Informations de base",
+        "orderSelection": "Sélection de commande et d'articles"
+      },
+      "unknownStep": "Étape inconnue"
+    },
+    "list": {
+      "title": "Liste des réceptions"
+    },
+    "step1": {
+      "receiptDate": "Date de réception",
+      "documentNo": "N° de document",
+      "documentNoPlaceholder": "Entrez le numéro de document",
+      "warehouse": "Entrepôt",
+      "selectWarehouse": "Sélectionner un entrepôt",
+      "projectCode": "Code projet",
+      "selectProjectCode": "Sélectionner le code projet (optionnel)",
+      "noProject": "Aucun projet",
+      "customer": "Client",
+      "selectCustomer": "Sélectionner un client",
+      "selectedCustomer": "Client sélectionné",
+      "isInvoice": "E - Facture",
+      "isInvoiceDescription": "Si coché, il sera traité comme une facture",
+      "notes": "Notes",
+      "notesPlaceholder": "Notes (optionnel)"
+    },
+    "step2": {
+      "selectCustomerFirst": "Veuillez d'abord sélectionner un client",
+      "orders": "Commandes",
+      "noOrders": "Aucune commande trouvée pour ce client",
+      "selectedItems": "Articles sélectionnés",
+      "selectedItemsCount": "{{count}} articles",
+      "noItemsSelected": "Aucun article sélectionné pour le moment"
+    },
+    "orderDetails": {
+      "title": "Détails de la commande",
+      "description": "Vous pouvez sélectionner les articles de commande pour les ajouter à la liste de réception",
+      "orderQuantity": "Quantité commandée",
+      "unitPrice": "Prix unitaire",
+      "total": "Total",
+      "quantity": "Quantité :"
+    },
+    "orderItems": {
+      "itemNotFound": "Article introuvable"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} WMS. Tous droits réservés."
+  }
+}
+

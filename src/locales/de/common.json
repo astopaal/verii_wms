@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Wird geladen...",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "reset": "Zurücksetzen",
+    "submit": "Absenden",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "optional": "Optional",
+    "required": "Erforderlich",
+    "notFound": "Nicht gefunden",
+    "noData": "Keine Daten",
+    "error": "Fehler",
+    "success": "Erfolg"
+  },
+  "auth": {
+    "login": {
+      "title": "Systemanmeldung",
+      "subtitle": "VERII WMS",
+      "branch": "Filiale",
+      "selectBranch": "Filiale auswählen",
+      "branchNotFound": "Filiale nicht gefunden",
+      "username": "Benutzername",
+      "usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+      "password": "Passwort",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Anmelden",
+      "loggingIn": "Wird angemeldet...",
+      "copyright": "© 2025 VERII. Alle Rechte vorbehalten."
+    },
+    "logout": "Abmelden"
+  },
+  "navbar": {
+    "VERII WMS": "VERII WMS"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "goodsReceipt": "Wareneingang",
+    "goodsReceiptCreate": "Wareneingang erfassen",
+    "goodsReceiptList": "Wareneingangsliste",
+    "inventory": "Inventar",
+    "reports": "Berichte",
+    "shipment": "Versand"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Willkommen im Lagerverwaltungssystem",
+    "totalStock": "Gesamtbestand",
+    "totalStockChange": "im Vergleich zum Vormonat",
+    "goodsReceipt": "Wareneingang",
+    "goodsReceiptPending": "Ausstehende Transaktionen heute",
+    "shipment": "Versand",
+    "shipmentPrepared": "Vorbereitete Sendungen",
+    "criticalStock": "Kritischer Bestand",
+    "criticalStockItems": "Produkte mit niedrigem Bestand",
+    "recentTransactions": "Letzte Transaktionen",
+    "recentTransactionsSubtitle": "Transaktionen der letzten 24 Stunden",
+    "quickAccess": "Schnellzugriff",
+    "quickAccessSubtitle": "Häufige Vorgänge",
+    "newGoodsReceipt": "Neuer Wareneingang",
+    "newShipment": "Neue Sendung",
+    "stockQuery": "Bestandsabfrage",
+    "completed": "Abgeschlossen",
+    "preparing": "Wird vorbereitet",
+    "goodsReceiptNumber": "Wareneingang #{{number}}",
+    "shipmentNumber": "Sendung #{{number}}",
+    "inventoryUpdate": "Inventaraktualisierung",
+    "hoursAgo": "vor {{hours}} Stunden"
+  },
+  "goodsReceipt": {
+    "create": {
+      "title": "Neuer Wareneingang",
+      "subtitle": "Geben Sie Wareneingangsinformationen ein und wählen Sie Bestellpositionen aus",
+      "steps": {
+        "basicInfo": "Grundinformationen",
+        "orderSelection": "Bestellung und Positionsauswahl"
+      },
+      "unknownStep": "Unbekannter Schritt"
+    },
+    "list": {
+      "title": "Wareneingangsliste"
+    },
+    "step1": {
+      "receiptDate": "Wareneingangsdatum",
+      "documentNo": "Belegnummer",
+      "documentNoPlaceholder": "Belegnummer eingeben",
+      "warehouse": "Lager",
+      "selectWarehouse": "Lager auswählen",
+      "projectCode": "Projektcode",
+      "selectProjectCode": "Projektcode auswählen (optional)",
+      "noProject": "Kein Projekt",
+      "customer": "Kunde",
+      "selectCustomer": "Kunde auswählen",
+      "selectedCustomer": "Ausgewählter Kunde",
+      "isInvoice": "E - Rechnung",
+      "isInvoiceDescription": "Wenn aktiviert, wird es als Rechnung verarbeitet",
+      "notes": "Notizen",
+      "notesPlaceholder": "Notizen (optional)"
+    },
+    "step2": {
+      "selectCustomerFirst": "Bitte wählen Sie zuerst einen Kunden aus",
+      "orders": "Bestellungen",
+      "noOrders": "Keine Bestellungen für diesen Kunden gefunden",
+      "selectedItems": "Ausgewählte Positionen",
+      "selectedItemsCount": "{{count}} Positionen",
+      "noItemsSelected": "Noch keine Positionen ausgewählt"
+    },
+    "orderDetails": {
+      "title": "Bestelldetails",
+      "description": "Sie können Bestellpositionen auswählen, um sie zur Wareneingangsliste hinzuzufügen",
+      "orderQuantity": "Bestellmenge",
+      "unitPrice": "Einzelpreis",
+      "total": "Gesamt",
+      "quantity": "Menge:"
+    },
+    "orderItems": {
+      "itemNotFound": "Position nicht gefunden"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} WMS. Alle Rechte vorbehalten."
+  }
+}
+

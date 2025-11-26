@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "back": "Back",
+    "optional": "Optional",
+    "required": "Required",
+    "notFound": "Not Found",
+    "noData": "No Data",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "login": {
+      "title": "System Login",
+      "subtitle": "VERII WMS",
+      "branch": "Branch",
+      "selectBranch": "Select branch",
+      "branchNotFound": "Branch not found",
+      "username": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Sign In",
+      "loggingIn": "Signing in...",
+      "copyright": "© 2025 VERII. All rights reserved."
+    },
+    "logout": "Logout"
+  },
+  "navbar": {
+    "VERII WMS": "VERII WMS"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "goodsReceipt": "Goods Receipt",
+    "goodsReceiptCreate": "Goods Receipt Entry",
+    "goodsReceiptList": "Goods Receipt List",
+    "inventory": "Inventory",
+    "reports": "Reports",
+    "shipment": "Shipment"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Welcome to the warehouse management system",
+    "totalStock": "Total Stock",
+    "totalStockChange": "compared to last month",
+    "goodsReceipt": "Goods Receipt",
+    "goodsReceiptPending": "Pending transactions today",
+    "shipment": "Shipment",
+    "shipmentPrepared": "Prepared shipments",
+    "criticalStock": "Critical Stock",
+    "criticalStockItems": "Low stock products",
+    "recentTransactions": "Recent Transactions",
+    "recentTransactionsSubtitle": "Transactions in the last 24 hours",
+    "quickAccess": "Quick Access",
+    "quickAccessSubtitle": "Common operations",
+    "newGoodsReceipt": "New Goods Receipt",
+    "newShipment": "New Shipment",
+    "stockQuery": "Stock Query",
+    "completed": "Completed",
+    "preparing": "Preparing",
+    "goodsReceiptNumber": "Goods Receipt #{{number}}",
+    "shipmentNumber": "Shipment #{{number}}",
+    "inventoryUpdate": "Inventory Update",
+    "hoursAgo": "{{hours}} hours ago"
+  },
+  "goodsReceipt": {
+    "create": {
+      "title": "New Goods Receipt Entry",
+      "subtitle": "Enter goods receipt information and select order items",
+      "steps": {
+        "basicInfo": "Basic Information",
+        "orderSelection": "Order and Item Selection"
+      },
+      "unknownStep": "Unknown step"
+    },
+    "list": {
+      "title": "Goods Receipt List"
+    },
+    "step1": {
+      "receiptDate": "Goods Receipt Date",
+      "documentNo": "Document No",
+      "documentNoPlaceholder": "Enter document number",
+      "warehouse": "Warehouse",
+      "selectWarehouse": "Select warehouse",
+      "projectCode": "Project Code",
+      "selectProjectCode": "Select project code (optional)",
+      "noProject": "No project",
+      "customer": "Customer",
+      "selectCustomer": "Select customer",
+      "selectedCustomer": "Selected Customer",
+      "isInvoice": "E - Invoice",
+      "isInvoiceDescription": "If checked, it will be processed as an invoice",
+      "notes": "Notes",
+      "notesPlaceholder": "Notes (optional)"
+    },
+    "step2": {
+      "selectCustomerFirst": "Please select a customer first",
+      "orders": "Orders",
+      "noOrders": "No orders found for this customer",
+      "selectedItems": "Selected Items",
+      "selectedItemsCount": "{{count}} items",
+      "noItemsSelected": "No items selected yet"
+    },
+    "orderDetails": {
+      "title": "Order Details",
+      "description": "You can select order items to add to the goods receipt list",
+      "orderQuantity": "Order Quantity",
+      "unitPrice": "Unit Price",
+      "total": "Total",
+      "quantity": "Quantity:"
+    },
+    "orderItems": {
+      "itemNotFound": "Item not found"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} WMS. All rights reserved."
+  }
+}
+

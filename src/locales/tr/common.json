@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "reset": "Sıfırla",
+    "submit": "Gönder",
+    "confirm": "Onayla",
+    "back": "Geri",
+    "optional": "Opsiyonel",
+    "required": "Zorunlu",
+    "notFound": "Bulunamadı",
+    "noData": "Veri yok",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "auth": {
+    "login": {
+      "title": "Sistem Girişi",
+      "subtitle": "VERII WMS",
+      "branch": "Şube",
+      "selectBranch": "Şube seçiniz",
+      "branchNotFound": "Şube bulunamadı",
+      "username": "Kullanıcı Adı",
+      "usernamePlaceholder": "Kullanıcı adınızı giriniz",
+      "password": "Şifre",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Giriş Yap",
+      "loggingIn": "Giriş yapılıyor...",
+      "copyright": "© 2025 VERII. Tüm hakları saklıdır."
+    },
+    "logout": "Çıkış"
+  },
+  "navbar": {
+    "VERII WMS": "VERII WMS"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "goodsReceipt": "Mal Kabul",
+    "goodsReceiptCreate": "Mal Kabul Girişi",
+    "goodsReceiptList": "Mal Kabul Listesi",
+    "inventory": "Envanter",
+    "reports": "Raporlar",
+    "shipment": "Sevkiyat"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Depo yönetim sistemine hoş geldiniz",
+    "totalStock": "Toplam Stok",
+    "totalStockChange": "geçen aya göre",
+    "goodsReceipt": "Mal Kabul",
+    "goodsReceiptPending": "Bugün bekleyen işlemler",
+    "shipment": "Sevkiyat",
+    "shipmentPrepared": "Hazırlanan sevkiyatlar",
+    "criticalStock": "Kritik Stok",
+    "criticalStockItems": "Düşük stoklu ürünler",
+    "recentTransactions": "Son İşlemler",
+    "recentTransactionsSubtitle": "Son 24 saatteki işlemler",
+    "quickAccess": "Hızlı Erişim",
+    "quickAccessSubtitle": "Yaygın işlemler",
+    "newGoodsReceipt": "Yeni Mal Kabul",
+    "newShipment": "Yeni Sevkiyat",
+    "stockQuery": "Stok Sorgula",
+    "completed": "Tamamlandı",
+    "preparing": "Hazırlanıyor",
+    "goodsReceiptNumber": "Mal Kabul #{{number}}",
+    "shipmentNumber": "Sevkiyat #{{number}}",
+    "inventoryUpdate": "Envanter Güncelleme",
+    "hoursAgo": "{{hours}} saat önce"
+  },
+  "goodsReceipt": {
+    "create": {
+      "title": "Yeni Mal Kabul Girişi",
+      "subtitle": "Mal kabul bilgilerini girin ve sipariş kalemlerini seçin",
+      "steps": {
+        "basicInfo": "Temel Bilgiler",
+        "orderSelection": "Sipariş ve Kalem Seçimi"
+      },
+      "unknownStep": "Bilinmeyen adım"
+    },
+    "list": {
+      "title": "Mal Kabul Listesi"
+    },
+    "step1": {
+      "receiptDate": "Mal Kabul Tarihi",
+      "documentNo": "Belge No",
+      "documentNoPlaceholder": "Belge numarasını giriniz",
+      "warehouse": "Depo",
+      "selectWarehouse": "Depo seçiniz",
+      "projectCode": "Proje Kodu",
+      "selectProjectCode": "Proje kodu seçiniz (opsiyonel)",
+      "noProject": "Proje yok",
+      "customer": "Cari",
+      "selectCustomer": "Cari seçiniz",
+      "selectedCustomer": "Seçilen Cari",
+      "isInvoice": "E - İrsaliye",
+      "isInvoiceDescription": "İşaretlenirse irsaliye olarak işlenecektir",
+      "notes": "Notlar",
+      "notesPlaceholder": "Notlar (opsiyonel)"
+    },
+    "step2": {
+      "selectCustomerFirst": "Lütfen önce bir cari seçiniz",
+      "orders": "Siparişler",
+      "noOrders": "Bu cariye ait sipariş bulunamadı",
+      "selectedItems": "Seçilen Kalemler",
+      "selectedItemsCount": "{{count}} kalem",
+      "noItemsSelected": "Henüz kalem seçilmedi"
+    },
+    "orderDetails": {
+      "title": "Sipariş Detayları",
+      "description": "Sipariş kalemlerini seçerek mal kabul listesine ekleyebilirsiniz",
+      "orderQuantity": "Sipariş Miktarı",
+      "unitPrice": "Birim Fiyat",
+      "total": "Toplam",
+      "quantity": "Miktar:"
+    },
+    "orderItems": {
+      "itemNotFound": "Kalem bulunamadı"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} WMS. Tüm hakları saklıdır."
+  }
+}
+
