@@ -1,4 +1,5 @@
 import { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -10,19 +11,20 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 export function DashboardPage(): ReactElement {
+  const { t } = useTranslation();
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h1>
         <p className="text-muted-foreground">
-          Depo yönetim sistemine hoş geldiniz
+          {t('dashboard.subtitle')}
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Toplam Stok</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.totalStock')}</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -41,14 +43,14 @@ export function DashboardPage(): ReactElement {
           <CardContent>
             <div className="text-2xl font-bold">1,234</div>
             <p className="text-xs text-muted-foreground">
-              +12.5% geçen aya göre
+              +12.5% {t('dashboard.totalStockChange')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Mal Kabul</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.goodsReceipt')}</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -68,14 +70,14 @@ export function DashboardPage(): ReactElement {
           <CardContent>
             <div className="text-2xl font-bold">45</div>
             <p className="text-xs text-muted-foreground">
-              Bugün bekleyen işlemler
+              {t('dashboard.goodsReceiptPending')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sevkiyat</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.shipment')}</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -94,14 +96,14 @@ export function DashboardPage(): ReactElement {
           <CardContent>
             <div className="text-2xl font-bold">23</div>
             <p className="text-xs text-muted-foreground">
-              Hazırlanan sevkiyatlar
+              {t('dashboard.shipmentPrepared')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Kritik Stok</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.criticalStock')}</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -118,7 +120,7 @@ export function DashboardPage(): ReactElement {
           <CardContent>
             <div className="text-2xl font-bold">8</div>
             <p className="text-xs text-muted-foreground">
-              Düşük stoklu ürünler
+              {t('dashboard.criticalStockItems')}
             </p>
           </CardContent>
         </Card>
@@ -127,37 +129,37 @@ export function DashboardPage(): ReactElement {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Son İşlemler</CardTitle>
-            <CardDescription>Son 24 saatteki işlemler</CardDescription>
+            <CardTitle>{t('dashboard.recentTransactions')}</CardTitle>
+            <CardDescription>{t('dashboard.recentTransactionsSubtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Mal Kabul #1234</p>
+                  <p className="text-sm font-medium">{t('dashboard.goodsReceiptNumber', { number: 1234 })}</p>
                   <p className="text-xs text-muted-foreground">
-                    2 saat önce
+                    {t('dashboard.hoursAgo', { hours: 2 })}
                   </p>
                 </div>
-                <Badge variant="secondary">Tamamlandı</Badge>
+                <Badge variant="secondary">{t('dashboard.completed')}</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Sevkiyat #5678</p>
+                  <p className="text-sm font-medium">{t('dashboard.shipmentNumber', { number: 5678 })}</p>
                   <p className="text-xs text-muted-foreground">
-                    4 saat önce
+                    {t('dashboard.hoursAgo', { hours: 4 })}
                   </p>
                 </div>
-                <Badge variant="default">Hazırlanıyor</Badge>
+                <Badge variant="default">{t('dashboard.preparing')}</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium">Envanter Güncelleme</p>
+                  <p className="text-sm font-medium">{t('dashboard.inventoryUpdate')}</p>
                   <p className="text-xs text-muted-foreground">
-                    6 saat önce
+                    {t('dashboard.hoursAgo', { hours: 6 })}
                   </p>
                 </div>
-                <Badge variant="secondary">Tamamlandı</Badge>
+                <Badge variant="secondary">{t('dashboard.completed')}</Badge>
               </div>
             </div>
           </CardContent>
@@ -165,8 +167,8 @@ export function DashboardPage(): ReactElement {
 
         <Card className="col-span-3">
           <CardHeader>
-            <CardTitle>Hızlı Erişim</CardTitle>
-            <CardDescription>Yaygın işlemler</CardDescription>
+            <CardTitle>{t('dashboard.quickAccess')}</CardTitle>
+            <CardDescription>{t('dashboard.quickAccessSubtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -191,7 +193,7 @@ export function DashboardPage(): ReactElement {
                     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
-                  <span className="text-sm">Yeni Mal Kabul</span>
+                  <span className="text-sm">{t('dashboard.newGoodsReceipt')}</span>
                 </div>
               </Link>
               <Link
@@ -214,7 +216,7 @@ export function DashboardPage(): ReactElement {
                     <path d="m13 6 4 4-4 4" />
                     <path d="M17 10h5" />
                   </svg>
-                  <span className="text-sm">Yeni Sevkiyat</span>
+                  <span className="text-sm">{t('dashboard.newShipment')}</span>
                 </div>
               </Link>
               <Link
@@ -237,7 +239,7 @@ export function DashboardPage(): ReactElement {
                     <path d="M3 6h18" />
                     <path d="M16 10a4 4 0 0 1-8 0" />
                   </svg>
-                  <span className="text-sm">Stok Sorgula</span>
+                  <span className="text-sm">{t('dashboard.stockQuery')}</span>
                 </div>
               </Link>
             </div>
