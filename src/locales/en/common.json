@@ -35,6 +35,8 @@
       "passwordPlaceholder": "••••••••",
       "loginButton": "Sign In",
       "loggingIn": "Signing in...",
+      "wrongPassword": "Email or password is incorrect",
+      "loginError": "An error occurred while signing in",
       "copyright": "© 2025 VERII. All rights reserved."
     },
     "logout": "Logout"

@@ -35,6 +35,8 @@
       "passwordPlaceholder": "••••••••",
       "loginButton": "Giriş Yap",
       "loggingIn": "Giriş yapılıyor...",
+      "wrongPassword": "E-posta veya şifre yanlış",
+      "loginError": "Giriş yapılırken bir hata oluştu",
       "copyright": "© 2025 VERII. Tüm hakları saklıdır."
     },
     "logout": "Çıkış"

@@ -35,6 +35,8 @@
       "passwordPlaceholder": "••••••••",
       "loginButton": "Se connecter",
       "loggingIn": "Connexion en cours...",
+      "wrongPassword": "L'e-mail ou le mot de passe est incorrect",
+      "loginError": "Une erreur s'est produite lors de la connexion",
       "copyright": "© 2025 VERII. Tous droits réservés."
     },
     "logout": "Déconnexion"

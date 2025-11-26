@@ -35,6 +35,8 @@
       "passwordPlaceholder": "••••••••",
       "loginButton": "Anmelden",
       "loggingIn": "Wird angemeldet...",
+      "wrongPassword": "E-Mail oder Passwort ist falsch",
+      "loginError": "Beim Anmelden ist ein Fehler aufgetreten",
       "copyright": "© 2025 VERII. Alle Rechte vorbehalten."
     },
     "logout": "Abmelden"
