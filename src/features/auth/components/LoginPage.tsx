@@ -23,7 +23,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import loginImage from '@/assets/login.jpg';
-import { Building2, Lock, User } from 'lucide-react';
+import { Building2, Lock, Mail } from 'lucide-react';
 
 export function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export function LoginPage(): React.JSX.Element {
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
       branchId: '',
     },
@@ -119,17 +119,17 @@ export function LoginPage(): React.JSX.Element {
 
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="email"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2">
-                        <User className="size-4" />
-                        {t('auth.login.username')}
+                        <Mail className="size-4" />
+                        {t('auth.login.email')}
                       </FormLabel>
                       <FormControl>
                         <Input
-                          type="text"
-                          placeholder={t('auth.login.usernamePlaceholder')}
+                          type="email"
+                          placeholder={t('auth.login.emailPlaceholder')}
                           className="h-11"
                           {...field}
                         />
