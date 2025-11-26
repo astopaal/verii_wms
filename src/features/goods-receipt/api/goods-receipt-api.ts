@@ -3,7 +3,6 @@ import type { Customer, Order, OrderItem } from '../types/goods-receipt';
 
 export const goodsReceiptApi = {
   getCustomers: async (): Promise<Customer[]> => {
-    // Mock data
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
@@ -16,7 +15,6 @@ export const goodsReceiptApi = {
   },
 
   getOrdersByCustomer: async (customerId: string): Promise<Order[]> => {
-    // Mock data
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
@@ -47,7 +45,6 @@ export const goodsReceiptApi = {
   },
 
   getOrderItems: async (orderId: string): Promise<OrderItem[]> => {
-    // Mock data
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
@@ -84,7 +81,6 @@ export const goodsReceiptApi = {
   },
 
   createGoodsReceipt: async (data: unknown): Promise<{ id: string }> => {
-    // Mock API
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({ id: 'GR-' + Date.now() });
