@@ -1,4 +1,5 @@
 import { type ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormContext } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { goodsReceiptApi } from '../../api/goods-receipt-api';
@@ -30,6 +31,7 @@ export function Step2OrderSelection({
   onUpdateQuantity,
   onRemoveItem,
 }: Step2OrderSelectionProps): ReactElement {
+  const { t } = useTranslation();
   const { watch } = useFormContext<GoodsReceiptFormData>();
   const customerId = watch('customerId');
   const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
@@ -43,7 +45,7 @@ export function Step2OrderSelection({
   if (!customerId) {
     return (
       <div className="text-center text-muted-foreground py-8">
-        Lütfen önce bir cari seçiniz
+        {t('goodsReceipt.step2.selectCustomerFirst')}
       </div>
     );
   }
@@ -51,17 +53,16 @@ export function Step2OrderSelection({
   return (
     <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Sipariş Listesi */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Siparişler</h3>
-            {ordersLoading && <Badge variant="secondary">Yükleniyor...</Badge>}
+            <h3 className="text-lg font-semibold">{t('goodsReceipt.step2.orders')}</h3>
+            {ordersLoading && <Badge variant="secondary">{t('common.loading')}</Badge>}
           </div>
 
           <div className="space-y-2 max-h-[600px] overflow-y-auto">
             {orders && orders.length === 0 && (
               <div className="text-center text-muted-foreground py-8 border rounded-lg">
-                Bu cariye ait sipariş bulunamadı
+                {t('goodsReceipt.step2.noOrders')}
               </div>
             )}
 
@@ -109,17 +110,16 @@ export function Step2OrderSelection({
           </div>
         </div>
 
-        {/* Seçilen Kalemler */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Seçilen Kalemler</h3>
-            <Badge variant="secondary">{selectedItems.length} kalem</Badge>
+            <h3 className="text-lg font-semibold">{t('goodsReceipt.step2.selectedItems')}</h3>
+            <Badge variant="secondary">{t('goodsReceipt.step2.selectedItemsCount', { count: selectedItems.length })}</Badge>
           </div>
 
           <div className="space-y-1.5 max-h-[600px] overflow-y-auto">
             {selectedItems.length === 0 ? (
               <div className="text-center text-muted-foreground py-6 border rounded text-sm">
-                Henüz kalem seçilmedi
+                {t('goodsReceipt.step2.noItemsSelected')}
               </div>
             ) : (
               selectedItems.map((item) => (
