@@ -1,4 +1,5 @@
 import { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/auth-store';
 import { useUIStore } from '@/stores/ui-store';
@@ -6,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export function Navbar(): ReactElement {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
@@ -82,7 +84,7 @@ export function Navbar(): ReactElement {
               </svg>
             )}
           </Button>
-          <h1 className="text-xl font-semibold">WMS</h1>
+          <h1 className="text-xl font-semibold">{t('navbar.wms')}</h1>
         </div>
         <div className="ml-auto flex items-center gap-4">
           {user && (
@@ -91,7 +93,7 @@ export function Navbar(): ReactElement {
             </span>
           )}
           <Button variant="ghost" size="sm" onClick={handleLogout}>
-            Çıkış
+            {t('auth.logout')}
           </Button>
         </div>
       </div>
