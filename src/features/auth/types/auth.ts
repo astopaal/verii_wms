@@ -1,8 +1,9 @@
 import { z } from 'zod';
+import type { ApiResponse } from '@/types/api';
 
 export const loginRequestSchema = z.object({
-  username: z.string().min(1, 'Kullanıcı adı zorunludur'),
-  password: z.string().min(8, 'Şifre en az 8 karakter olmalıdır'),
+  email: z.string().email('Geçerli bir email adresi giriniz'),
+  password: z.string().min(1, 'Şifre zorunludur'),
   branchId: z.string().min(1, 'Şube seçimi zorunludur'),
 });
 
@@ -15,11 +16,4 @@ export const registerRequestSchema = z.object({
 
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
-export interface LoginResponse {
-  user: {
-    id: number;
-    email: string;
-    name?: string;
-  };
-  token: string;
-}
+export type LoginResponse = ApiResponse<string>;
