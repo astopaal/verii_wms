@@ -152,7 +152,6 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 lg:hidden"
@@ -161,7 +160,6 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
           'fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-background transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto',
