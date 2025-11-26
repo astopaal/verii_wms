@@ -1,4 +1,5 @@
 import { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormContext } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { goodsReceiptApi } from '../../api/goods-receipt-api';
@@ -17,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { GoodsReceiptFormData } from '../../types/goods-receipt';
 
 const warehouses = [
@@ -27,6 +28,7 @@ const warehouses = [
 ];
 
 export function Step1BasicInfo(): ReactElement {
+  const { t } = useTranslation();
   const { control, watch } = useFormContext<GoodsReceiptFormData>();
   const { data: customers, isLoading: customersLoading } = useQuery({
     queryKey: ['customers'],
@@ -43,7 +45,7 @@ export function Step1BasicInfo(): ReactElement {
         name="receiptDate"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Mal Kabul Tarihi *</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.receiptDate')} *</FormLabel>
             <FormControl>
               <Input type="date" {...field} />
             </FormControl>
@@ -57,9 +59,9 @@ export function Step1BasicInfo(): ReactElement {
         name="documentNo"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Belge No *</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.documentNo')} *</FormLabel>
             <FormControl>
-              <Input placeholder="Belge numarasını giriniz" {...field} />
+              <Input placeholder={t('goodsReceipt.step1.documentNoPlaceholder')} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -71,11 +73,11 @@ export function Step1BasicInfo(): ReactElement {
         name="warehouseId"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Depo *</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.warehouse')} *</FormLabel>
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Depo seçiniz" />
+                  <SelectValue placeholder={t('goodsReceipt.step1.selectWarehouse')} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -96,7 +98,7 @@ export function Step1BasicInfo(): ReactElement {
         name="projectCode"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Proje Kodu</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.projectCode')}</FormLabel>
             <Select
               onValueChange={(value) => {
                 field.onChange(value === 'none' ? '' : value);
@@ -105,11 +107,11 @@ export function Step1BasicInfo(): ReactElement {
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Proje kodu seçiniz (opsiyonel)" />
+                  <SelectValue placeholder={t('goodsReceipt.step1.selectProjectCode')} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="none">Proje yok</SelectItem>
+                <SelectItem value="none">{t('goodsReceipt.step1.noProject')}</SelectItem>
                 <SelectItem value="PROJ-001">Proje 1 (PROJ-001)</SelectItem>
                 <SelectItem value="PROJ-002">Proje 2 (PROJ-002)</SelectItem>
                 <SelectItem value="PROJ-003">Proje 3 (PROJ-003)</SelectItem>
@@ -125,7 +127,7 @@ export function Step1BasicInfo(): ReactElement {
         name="customerId"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Cari *</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.customer')} *</FormLabel>
             <Select
               onValueChange={field.onChange}
               value={field.value}
@@ -133,7 +135,7 @@ export function Step1BasicInfo(): ReactElement {
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Cari seçiniz" />
+                  <SelectValue placeholder={t('goodsReceipt.step1.selectCustomer')} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -163,9 +165,9 @@ export function Step1BasicInfo(): ReactElement {
               />
             </FormControl>
             <div className="space-y-1 leading-none">
-              <FormLabel>E - İrsaliye</FormLabel>
+              <FormLabel>{t('goodsReceipt.step1.isInvoice')}</FormLabel>
               <p className="text-sm text-muted-foreground">
-                İşaretlenirse irsaliye olarak işlenecektir
+                {t('goodsReceipt.step1.isInvoiceDescription')}
               </p>
             </div>
           </FormItem>
@@ -175,7 +177,7 @@ export function Step1BasicInfo(): ReactElement {
       {selectedCustomer && (
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Seçilen Cari</CardTitle>
+            <CardTitle>{t('goodsReceipt.step1.selectedCustomer')}</CardTitle>
             <CardDescription>{selectedCustomer.name}</CardDescription>
           </CardHeader>
         </Card>
@@ -186,9 +188,9 @@ export function Step1BasicInfo(): ReactElement {
         name="notes"
         render={({ field }) => (
           <FormItem className="md:col-span-2">
-            <FormLabel>Notlar</FormLabel>
+            <FormLabel>{t('goodsReceipt.step1.notes')}</FormLabel>
             <FormControl>
-              <Input placeholder="Notlar (opsiyonel)" {...field} />
+              <Input placeholder={t('goodsReceipt.step1.notesPlaceholder')} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
