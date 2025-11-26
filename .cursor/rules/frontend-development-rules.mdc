@@ -2,11 +2,16 @@
 alwaysApply: true
 ---
 
+
 # 📘 WMS Frontend - Developer & Contribution Guidelines
 
 Bu belge, WMS (Warehouse Management System) projesinde kod standartlarını, mimari kararları ve geliştirme süreçlerini tanımlar. Projeye katkıda bulunan tüm geliştiricilerin bu kurallara uyması beklenir.
 
 ---
+
+
+## TEMEL KURAL
+Asla yorum satırı kullanmayın. Mümkün olduğunca shadcn componentlerini kullanmalısın. Folder structure ve proje yapısına aykırı geliştirme yapmayın. İstekleri tanstack query ile atın. Her isteğe özel staletime ekleyin ve lütfen global olanı kullanmamaya özen gösterin.
 
 ## Component Kutuphanesi
 
