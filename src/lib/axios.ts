@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
 import i18n from './i18n';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://booker-uncompromising-tari.ngrok-free.dev';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn('VITE_API_URL environment variable not found, using default:', API_URL);
@@ -31,7 +31,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       const token = localStorage.getItem('access_token');
-      if (token) {
+      const isLoginPage = window.location.pathname === '/auth/login';
+      if (token && !isLoginPage) {
         localStorage.removeItem('access_token');
         window.location.href = '/auth/login';
       }
