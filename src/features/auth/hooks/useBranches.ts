@@ -11,10 +11,9 @@ export const useBranches = () => {
   return useQuery<Branch[]>({
     queryKey: ['branches'],
     queryFn: async (): Promise<Branch[]> => {
-      // Config dosyasından şubeleri oku
       return branchesConfig.branches as Branch[];
     },
-    staleTime: Infinity, // Config dosyası değişmediği için cache süresiz
+    staleTime: Infinity,
   });
 };
 
