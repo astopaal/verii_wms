@@ -146,17 +146,17 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
   const { isSidebarOpen } = useUIStore();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col overflow-hidden">
       <Navbar />
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar items={items} />
         <main
           className={cn(
-            'flex-1 transition-all duration-300',
+            'flex-1 overflow-y-auto transition-all duration-300 pb-16',
             isSidebarOpen ? 'lg:ml-64' : 'lg:ml-16'
           )}
         >
-          <div className="container h-full px-4 py-6">
+          <div className="container px-4 py-3">
             <Outlet />
           </div>
         </main>

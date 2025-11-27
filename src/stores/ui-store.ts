@@ -5,6 +5,8 @@ interface UIState {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
+  pageTitle: string | null;
+  setPageTitle: (title: string | null) => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -13,6 +15,8 @@ export const useUIStore = create<UIState>()(
       isSidebarOpen: true,
       toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
       setSidebarOpen: (open) => set({ isSidebarOpen: open }),
+      pageTitle: null,
+      setPageTitle: (title) => set({ pageTitle: title }),
     }),
     {
       name: 'ui-storage',

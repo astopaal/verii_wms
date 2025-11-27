@@ -6,7 +6,7 @@ export function Footer(): ReactElement {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background">
       <div className="container flex h-16 items-center justify-center px-4">
         <p className="text-sm text-muted-foreground">
           {t('footer.copyright', { year: currentYear })}

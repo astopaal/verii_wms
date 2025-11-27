@@ -162,7 +162,7 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
 
       <aside
         className={cn(
-          'fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-background transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto',
+          'fixed left-0 top-16 bottom-16 z-40 w-64 border-r bg-background transition-transform duration-300 ease-in-out lg:translate-x-0 overflow-y-auto',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:w-16'
         )}
       >
