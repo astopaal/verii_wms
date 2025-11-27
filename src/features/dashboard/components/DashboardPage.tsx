@@ -1,6 +1,7 @@
-import { type ReactElement } from 'react';
+import { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useUIStore } from '@/stores/ui-store';
 import {
   Card,
   CardContent,
@@ -12,14 +13,17 @@ import { Badge } from '@/components/ui/badge';
 
 export function DashboardPage(): ReactElement {
   const { t } = useTranslation();
+  const { setPageTitle } = useUIStore();
+
+  useEffect(() => {
+    setPageTitle(t('dashboard.title', 'Dashboard'));
+    return () => {
+      setPageTitle(null);
+    };
+  }, [t, setPageTitle]);
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h1>
-        <p className="text-muted-foreground">
-          {t('dashboard.subtitle')}
-        </p>
-      </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -173,7 +177,7 @@ export function DashboardPage(): ReactElement {
           <CardContent>
             <div className="space-y-2">
               <Link
-                to="/goods-receipt"
+                to="/goods-receipt/create"
                 className="flex items-center justify-between rounded-lg border p-3 hover:bg-accent cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-2">
