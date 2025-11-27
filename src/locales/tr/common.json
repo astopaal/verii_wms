@@ -20,7 +20,9 @@
     "notFound": "Bulunamadı",
     "noData": "Veri yok",
     "error": "Hata",
-    "success": "Başarılı"
+    "success": "Başarılı",
+    "complete": "Tamamlandı",
+    "over": "Fazla"
   },
   "auth": {
     "login": {
@@ -86,7 +88,9 @@
         "basicInfo": "Temel Bilgiler",
         "orderSelection": "Sipariş ve Kalem Seçimi"
       },
-      "unknownStep": "Bilinmeyen adım"
+      "unknownStep": "Bilinmeyen adım",
+      "success": "Mal kabul başarıyla oluşturuldu",
+      "error": "Mal kabul oluşturulurken bir hata oluştu"
     },
     "list": {
       "title": "Mal Kabul Listesi"
@@ -104,13 +108,23 @@
       "selectCustomer": "Cari seçiniz",
       "selectedCustomer": "Seçilen Cari",
       "isInvoice": "E - İrsaliye",
-      "isInvoiceDescription": "İşaretlenirse irsaliye olarak işlenecektir",
+      "isInvoiceDescription": "İşaretlenirse E-irsaliye olarak işlenecektir",
       "notes": "Notlar",
       "notesPlaceholder": "Notlar (opsiyonel)"
     },
     "step2": {
       "selectCustomerFirst": "Lütfen önce bir cari seçiniz",
       "orders": "Siparişler",
+      "selectOrderDesc": "İşlem yapılacak siparişi seçin",
+      "noOrderSelected": "Sipariş Seçimi",
+      "selectOrderPrompt": "İşlem yapmak için soldaki listeden bir sipariş seçiniz.",
+      "orderContent": "Sipariş İçeriği",
+      "itemsCount": "{{count}} kalem ürün",
+      "started": "Başlanan",
+      "searchItems": "Stok kodu veya adı ile ara...",
+      "pending": "Beklemede",
+      "completed": "Tamamlandı",
+      "remaining": "Kalan",
       "noOrders": "Bu cariye ait sipariş bulunamadı",
       "selectedItems": "Seçilen Kalemler",
       "selectedItemsCount": "{{count}} kalem",
@@ -119,17 +133,41 @@
     "orderDetails": {
       "title": "Sipariş Detayları",
       "description": "Sipariş kalemlerini seçerek mal kabul listesine ekleyebilirsiniz",
+      "ordered": "Sipariş",
       "orderQuantity": "Sipariş Miktarı",
       "unitPrice": "Birim Fiyat",
       "total": "Toplam",
-      "quantity": "Miktar:"
+      "quantity": "Miktar:",
+      "unit": "Adet"
+    },
+    "details": {
+      "serialNo": "Seri No",
+      "serialNoPlaceholder": "Seri No giriniz",
+      "lotNo": "Parti No",
+      "lotNoPlaceholder": "Parti No giriniz",
+      "batchNo": "Batch No",
+      "batchNoPlaceholder": "Batch No giriniz",
+      "configCode": "Yapılandırma Kodu",
+      "configCodePlaceholder": "Yapılandırma Kodu giriniz"
     },
     "orderItems": {
       "itemNotFound": "Kalem bulunamadı"
+    },
+    "validation": {
+      "receiptDateRequired": "Tarih zorunludur",
+      "documentNoRequired": "Belge No zorunludur",
+      "warehouseRequired": "Depo seçimi zorunludur",
+      "customerRequired": "Cari seçimi zorunludur"
     }
   },
   "footer": {
     "copyright": "© {{year}} WMS. Tüm hakları saklıdır."
+  },
+  "theme": {
+    "toggle": "Tema değiştir",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
   }
 }
 

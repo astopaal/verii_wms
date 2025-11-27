@@ -20,7 +20,9 @@
     "notFound": "Nicht gefunden",
     "noData": "Keine Daten",
     "error": "Fehler",
-    "success": "Erfolg"
+    "success": "Erfolg",
+    "complete": "Abgeschlossen",
+    "over": "Überschuss"
   },
   "auth": {
     "login": {
@@ -86,7 +88,9 @@
         "basicInfo": "Grundinformationen",
         "orderSelection": "Bestellung und Positionsauswahl"
       },
-      "unknownStep": "Unbekannter Schritt"
+      "unknownStep": "Unbekannter Schritt",
+      "success": "Wareneingang erfolgreich erstellt",
+      "error": "Beim Erstellen des Wareneingangs ist ein Fehler aufgetreten"
     },
     "list": {
       "title": "Wareneingangsliste"
@@ -104,13 +108,23 @@
       "selectCustomer": "Kunde auswählen",
       "selectedCustomer": "Ausgewählter Kunde",
       "isInvoice": "E - Rechnung",
-      "isInvoiceDescription": "Wenn aktiviert, wird es als Rechnung verarbeitet",
+      "isInvoiceDescription": "Wenn aktiviert, wird es als E-Rechnung verarbeitet",
       "notes": "Notizen",
       "notesPlaceholder": "Notizen (optional)"
     },
     "step2": {
       "selectCustomerFirst": "Bitte wählen Sie zuerst einen Kunden aus",
       "orders": "Bestellungen",
+      "selectOrderDesc": "Wählen Sie eine Bestellung zur Bearbeitung aus",
+      "noOrderSelected": "Bestellauswahl",
+      "selectOrderPrompt": "Wählen Sie eine Bestellung aus der Liste links aus, um fortzufahren.",
+      "orderContent": "Bestellinhalt",
+      "itemsCount": "{{count}} Positionen",
+      "started": "Begonnen",
+      "searchItems": "Nach Lagerbestandscode oder Name suchen...",
+      "pending": "Ausstehend",
+      "completed": "Abgeschlossen",
+      "remaining": "Verbleibend",
       "noOrders": "Keine Bestellungen für diesen Kunden gefunden",
       "selectedItems": "Ausgewählte Positionen",
       "selectedItemsCount": "{{count}} Positionen",
@@ -119,17 +133,41 @@
     "orderDetails": {
       "title": "Bestelldetails",
       "description": "Sie können Bestellpositionen auswählen, um sie zur Wareneingangsliste hinzuzufügen",
+      "ordered": "Bestellt",
       "orderQuantity": "Bestellmenge",
       "unitPrice": "Einzelpreis",
       "total": "Gesamt",
-      "quantity": "Menge:"
+      "quantity": "Menge:",
+      "unit": "Stk"
+    },
+    "details": {
+      "serialNo": "Seriennummer",
+      "serialNoPlaceholder": "Seriennummer eingeben",
+      "lotNo": "Chargennummer",
+      "lotNoPlaceholder": "Chargennummer eingeben",
+      "batchNo": "Batch-Nummer",
+      "batchNoPlaceholder": "Batch-Nummer eingeben",
+      "configCode": "Konfigurationscode",
+      "configCodePlaceholder": "Konfigurationscode eingeben"
     },
     "orderItems": {
       "itemNotFound": "Position nicht gefunden"
+    },
+    "validation": {
+      "receiptDateRequired": "Datum ist erforderlich",
+      "documentNoRequired": "Belegnummer ist erforderlich",
+      "warehouseRequired": "Lagerauswahl ist erforderlich",
+      "customerRequired": "Kundenauswahl ist erforderlich"
     }
   },
   "footer": {
     "copyright": "© {{year}} WMS. Alle Rechte vorbehalten."
+  },
+  "theme": {
+    "toggle": "Design wechseln",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
   }
 }
 

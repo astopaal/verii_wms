@@ -20,7 +20,9 @@
     "notFound": "Introuvable",
     "noData": "Aucune donnée",
     "error": "Erreur",
-    "success": "Succès"
+    "success": "Succès",
+    "complete": "Terminé",
+    "over": "Excédent"
   },
   "auth": {
     "login": {
@@ -86,7 +88,9 @@
         "basicInfo": "Informations de base",
         "orderSelection": "Sélection de commande et d'articles"
       },
-      "unknownStep": "Étape inconnue"
+      "unknownStep": "Étape inconnue",
+      "success": "Réception de marchandises créée avec succès",
+      "error": "Une erreur s'est produite lors de la création de la réception de marchandises"
     },
     "list": {
       "title": "Liste des réceptions"
@@ -104,13 +108,23 @@
       "selectCustomer": "Sélectionner un client",
       "selectedCustomer": "Client sélectionné",
       "isInvoice": "E - Facture",
-      "isInvoiceDescription": "Si coché, il sera traité comme une facture",
+      "isInvoiceDescription": "Si coché, il sera traité comme une E-facture",
       "notes": "Notes",
       "notesPlaceholder": "Notes (optionnel)"
     },
     "step2": {
       "selectCustomerFirst": "Veuillez d'abord sélectionner un client",
       "orders": "Commandes",
+      "selectOrderDesc": "Sélectionnez une commande à traiter",
+      "noOrderSelected": "Sélection de commande",
+      "selectOrderPrompt": "Sélectionnez une commande dans la liste de gauche pour continuer.",
+      "orderContent": "Contenu de la commande",
+      "itemsCount": "{{count}} articles",
+      "started": "Commencé",
+      "searchItems": "Rechercher par code stock ou nom...",
+      "pending": "En attente",
+      "completed": "Terminé",
+      "remaining": "Restant",
       "noOrders": "Aucune commande trouvée pour ce client",
       "selectedItems": "Articles sélectionnés",
       "selectedItemsCount": "{{count}} articles",
@@ -119,17 +133,41 @@
     "orderDetails": {
       "title": "Détails de la commande",
       "description": "Vous pouvez sélectionner les articles de commande pour les ajouter à la liste de réception",
+      "ordered": "Commandé",
       "orderQuantity": "Quantité commandée",
       "unitPrice": "Prix unitaire",
       "total": "Total",
-      "quantity": "Quantité :"
+      "quantity": "Quantité :",
+      "unit": "Pcs"
+    },
+    "details": {
+      "serialNo": "N° de série",
+      "serialNoPlaceholder": "Entrez le numéro de série",
+      "lotNo": "N° de lot",
+      "lotNoPlaceholder": "Entrez le numéro de lot",
+      "batchNo": "N° de batch",
+      "batchNoPlaceholder": "Entrez le numéro de batch",
+      "configCode": "Code de config",
+      "configCodePlaceholder": "Entrez le code de configuration"
     },
     "orderItems": {
       "itemNotFound": "Article introuvable"
+    },
+    "validation": {
+      "receiptDateRequired": "La date est requise",
+      "documentNoRequired": "Le numéro de document est requis",
+      "warehouseRequired": "La sélection de l'entrepôt est requise",
+      "customerRequired": "La sélection du client est requise"
     }
   },
   "footer": {
     "copyright": "© {{year}} WMS. Tous droits réservés."
+  },
+  "theme": {
+    "toggle": "Changer le thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
   }
 }
 

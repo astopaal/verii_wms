@@ -20,7 +20,9 @@
     "notFound": "Not Found",
     "noData": "No Data",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "complete": "Completed",
+    "over": "Over"
   },
   "auth": {
     "login": {
@@ -86,7 +88,9 @@
         "basicInfo": "Basic Information",
         "orderSelection": "Order and Item Selection"
       },
-      "unknownStep": "Unknown step"
+      "unknownStep": "Unknown step",
+      "success": "Goods receipt created successfully",
+      "error": "An error occurred while creating goods receipt"
     },
     "list": {
       "title": "Goods Receipt List"
@@ -104,13 +108,23 @@
       "selectCustomer": "Select customer",
       "selectedCustomer": "Selected Customer",
       "isInvoice": "E - Invoice",
-      "isInvoiceDescription": "If checked, it will be processed as an invoice",
+      "isInvoiceDescription": "If checked, it will be processed as an E-invoice",
       "notes": "Notes",
       "notesPlaceholder": "Notes (optional)"
     },
     "step2": {
       "selectCustomerFirst": "Please select a customer first",
       "orders": "Orders",
+      "selectOrderDesc": "Select an order to process",
+      "noOrderSelected": "Order Selection",
+      "selectOrderPrompt": "Select an order from the list on the left to proceed.",
+      "orderContent": "Order Content",
+      "itemsCount": "{{count}} items",
+      "started": "Started",
+      "searchItems": "Search by stock code or name...",
+      "pending": "Pending",
+      "completed": "Completed",
+      "remaining": "Remaining",
       "noOrders": "No orders found for this customer",
       "selectedItems": "Selected Items",
       "selectedItemsCount": "{{count}} items",
@@ -119,17 +133,41 @@
     "orderDetails": {
       "title": "Order Details",
       "description": "You can select order items to add to the goods receipt list",
+      "ordered": "Ordered",
       "orderQuantity": "Order Quantity",
       "unitPrice": "Unit Price",
       "total": "Total",
-      "quantity": "Quantity:"
+      "quantity": "Quantity:",
+      "unit": "Pcs"
+    },
+    "details": {
+      "serialNo": "Serial No",
+      "serialNoPlaceholder": "Enter serial number",
+      "lotNo": "Lot No",
+      "lotNoPlaceholder": "Enter lot number",
+      "batchNo": "Batch No",
+      "batchNoPlaceholder": "Enter batch number",
+      "configCode": "Config Code",
+      "configCodePlaceholder": "Enter configuration code"
     },
     "orderItems": {
       "itemNotFound": "Item not found"
+    },
+    "validation": {
+      "receiptDateRequired": "Date is required",
+      "documentNoRequired": "Document number is required",
+      "warehouseRequired": "Warehouse selection is required",
+      "customerRequired": "Customer selection is required"
     }
   },
   "footer": {
     "copyright": "© {{year}} WMS. All rights reserved."
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }
 
