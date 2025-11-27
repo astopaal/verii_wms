@@ -1,14 +1,16 @@
-import { type ReactElement, useState } from 'react';
+import { type ReactElement, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useUIStore } from '@/stores/ui-store';
 import {
-  goodsReceiptFormSchema,
+  createGoodsReceiptFormSchema,
   type SelectedOrderItem,
-  type GoodsReceiptItem,
   type OrderItem,
+  type GoodsReceiptFormData,
 } from '../types/goods-receipt';
 import { goodsReceiptApi } from '../api/goods-receipt-api';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
@@ -21,11 +23,21 @@ import { Step2OrderSelection } from './steps/Step2OrderSelection';
 export function GoodsReceiptCreatePage(): ReactElement {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { setPageTitle } = useUIStore();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedItems, setSelectedItems] = useState<SelectedOrderItem[]>([]);
 
+  useEffect(() => {
+    setPageTitle(t('goodsReceipt.create.title', 'Yeni Mal Kabul Girişi'));
+    return () => {
+      setPageTitle(null);
+    };
+  }, [t, setPageTitle]);
+
+  const schema = useMemo(() => createGoodsReceiptFormSchema(t), [t]);
+
   const form = useForm({
-    resolver: zodResolver(goodsReceiptFormSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       receiptDate: new Date().toISOString().split('T')[0],
       documentNo: '',
@@ -38,9 +50,17 @@ export function GoodsReceiptCreatePage(): ReactElement {
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: unknown) => goodsReceiptApi.createGoodsReceipt(data),
+    mutationFn: async (formData: GoodsReceiptFormData) => {
+      return goodsReceiptApi.createGoodsReceipt(formData, selectedItems);
+    },
     onSuccess: () => {
+      toast.success(t('goodsReceipt.create.success', 'Mal kabul başarıyla oluşturuldu'));
       navigate('/goods-receipt/list');
+    },
+    onError: (error: Error) => {
+      toast.error(
+        error.message || t('goodsReceipt.create.error', 'Mal kabul oluşturulurken bir hata oluştu')
+      );
     },
   });
 
@@ -77,11 +97,11 @@ export function GoodsReceiptCreatePage(): ReactElement {
     });
   };
 
-  const handleUpdateQuantity = (itemId: string, quantity: number): void => {
+  const handleUpdateItem = (itemId: string, updates: Partial<SelectedOrderItem>): void => {
     setSelectedItems((prev) =>
       prev.map((item) =>
         item.id === itemId
-          ? { ...item, receiptQuantity: Math.min(quantity, item.quantity) }
+          ? { ...item, ...updates }
           : item
       )
     );
@@ -93,20 +113,7 @@ export function GoodsReceiptCreatePage(): ReactElement {
 
   const handleSave = async (): Promise<void> => {
     const formData = form.getValues();
-    const goodsReceiptItems: GoodsReceiptItem[] = selectedItems.map((item) => ({
-      orderItemId: item.id,
-      productCode: item.productCode,
-      productName: item.productName,
-      quantity: item.receiptQuantity,
-      unit: item.unit,
-      unitPrice: item.unitPrice,
-      totalPrice: item.unitPrice * item.receiptQuantity,
-    }));
-
-    await createMutation.mutateAsync({
-      ...formData,
-      items: goodsReceiptItems,
-    });
+    await createMutation.mutateAsync(formData);
   };
 
   const steps = [
@@ -123,7 +130,7 @@ export function GoodsReceiptCreatePage(): ReactElement {
           <Step2OrderSelection
             selectedItems={selectedItems}
             onToggleItem={handleToggleItem}
-            onUpdateQuantity={handleUpdateQuantity}
+            onUpdateItem={handleUpdateItem}
             onRemoveItem={handleRemoveItem}
           />
         );
@@ -134,13 +141,6 @@ export function GoodsReceiptCreatePage(): ReactElement {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t('goodsReceipt.create.title')}</h1>
-        <p className="text-muted-foreground">
-          {t('goodsReceipt.create.subtitle')}
-        </p>
-      </div>
-
       <Breadcrumb
         items={steps.map((step, index) => ({
           label: step.label,
@@ -159,7 +159,7 @@ export function GoodsReceiptCreatePage(): ReactElement {
               {renderStepContent()}
 
               <div className="flex justify-between pt-6 border-t">
-                  <Button
+                <Button
                   type="button"
                   variant="outline"
                   onClick={handlePrevious}
