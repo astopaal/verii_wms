@@ -9,7 +9,9 @@ import { useUIStore } from '@/stores/ui-store';
 import {
   createGoodsReceiptFormSchema,
   type SelectedOrderItem,
+  type SelectedStockItem,
   type OrderItem,
+  type Product,
   type GoodsReceiptFormData,
 } from '../types/goods-receipt';
 import { goodsReceiptApi } from '../api/goods-receipt-api';
@@ -17,15 +19,20 @@ import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { Badge } from '@/components/ui/badge';
 import { Step1BasicInfo } from './steps/Step1BasicInfo';
 import { Step2OrderSelection } from './steps/Step2OrderSelection';
+import { Step2StockSelection } from './steps/Step2StockSelection';
+
+type ReceiptMode = 'order' | 'stock';
 
 export function GoodsReceiptCreatePage(): ReactElement {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setPageTitle } = useUIStore();
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedItems, setSelectedItems] = useState<SelectedOrderItem[]>([]);
+  const [receiptMode, setReceiptMode] = useState<ReceiptMode>('order');
+  const [selectedItems, setSelectedItems] = useState<(SelectedOrderItem | SelectedStockItem)[]>([]);
 
   useEffect(() => {
     setPageTitle(t('goodsReceipt.create.title', 'Yeni Mal Kabul Girişi'));
@@ -41,7 +48,6 @@ export function GoodsReceiptCreatePage(): ReactElement {
     defaultValues: {
       receiptDate: new Date().toISOString().split('T')[0],
       documentNo: '',
-      warehouseId: '',
       projectCode: '',
       isInvoice: false,
       customerId: '',
@@ -51,7 +57,7 @@ export function GoodsReceiptCreatePage(): ReactElement {
 
   const createMutation = useMutation({
     mutationFn: async (formData: GoodsReceiptFormData) => {
-      return goodsReceiptApi.createGoodsReceipt(formData, selectedItems);
+      return goodsReceiptApi.createGoodsReceipt(formData, selectedItems, receiptMode === 'stock');
     },
     onSuccess: () => {
       toast.success(t('goodsReceipt.create.success', 'Mal kabul başarıyla oluşturuldu'));
@@ -80,35 +86,64 @@ export function GoodsReceiptCreatePage(): ReactElement {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleToggleItem = (item: OrderItem): void => {
+  const handleToggleItem = (item: OrderItem | Product): void => {
     setSelectedItems((prev) => {
-      const existingIndex = prev.findIndex((si) => si.id === item.id);
+      const existingIndex = prev.findIndex((si) => {
+        if (receiptMode === 'order') {
+          return 'id' in si && si.id === (item as OrderItem).id;
+        }
+        return 'stockCode' in si && si.stockCode === (item as Product).stokKodu;
+      });
       if (existingIndex >= 0) {
-        return prev.filter((si) => si.id !== item.id);
+        return prev.filter((_, idx) => idx !== existingIndex);
       }
-      return [
-        ...prev,
-        {
-          ...item,
-          receiptQuantity: item.quantity,
-          isSelected: true,
-        },
-      ];
+      if (receiptMode === 'order') {
+        const orderItem = item as OrderItem;
+        return [
+          ...prev,
+          {
+            ...orderItem,
+            receiptQuantity: orderItem.quantity || 0,
+            isSelected: true,
+          } as SelectedOrderItem,
+        ];
+      } else {
+        const product = item as Product;
+        return [
+          ...prev,
+          {
+            id: `stock-${product.stokKodu}`,
+            stockCode: product.stokKodu,
+            stockName: product.stokAdi,
+            unit: product.olcuBr1,
+            receiptQuantity: 0,
+            isSelected: true,
+          } as SelectedStockItem,
+        ];
+      }
     });
   };
 
-  const handleUpdateItem = (itemId: string, updates: Partial<SelectedOrderItem>): void => {
+  const handleUpdateItem = (itemId: string, updates: Partial<SelectedOrderItem | SelectedStockItem>): void => {
     setSelectedItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId
-          ? { ...item, ...updates }
-          : item
-      )
+      prev.map((item) => {
+        const itemIdMatch = receiptMode === 'order' 
+          ? ('id' in item && item.id === itemId)
+          : ('stockCode' in item && item.stockCode === itemId);
+        return itemIdMatch ? { ...item, ...updates } : item;
+      })
     );
   };
 
   const handleRemoveItem = (itemId: string): void => {
-    setSelectedItems((prev) => prev.filter((item) => item.id !== itemId));
+    setSelectedItems((prev) => 
+      prev.filter((item) => {
+        if (receiptMode === 'order') {
+          return !('id' in item && item.id === itemId);
+        }
+        return !('stockCode' in item && item.stockCode === itemId);
+      })
+    );
   };
 
   const handleSave = async (): Promise<void> => {
@@ -118,7 +153,10 @@ export function GoodsReceiptCreatePage(): ReactElement {
 
   const steps = [
     { label: t('goodsReceipt.create.steps.basicInfo') },
-    { label: t('goodsReceipt.create.steps.orderSelection') },
+    { label: receiptMode === 'order' 
+        ? t('goodsReceipt.create.steps.orderSelection')
+        : t('goodsReceipt.create.steps.stockSelection', 'Stok Seçimi')
+    },
   ];
 
   const renderStepContent = (): ReactElement => {
@@ -126,9 +164,19 @@ export function GoodsReceiptCreatePage(): ReactElement {
       case 1:
         return <Step1BasicInfo />;
       case 2:
+        if (receiptMode === 'order') {
+          return (
+            <Step2OrderSelection
+              selectedItems={selectedItems as SelectedOrderItem[]}
+              onToggleItem={handleToggleItem}
+              onUpdateItem={handleUpdateItem}
+              onRemoveItem={handleRemoveItem}
+            />
+          );
+        }
         return (
-          <Step2OrderSelection
-            selectedItems={selectedItems}
+          <Step2StockSelection
+            selectedItems={selectedItems as SelectedStockItem[]}
             onToggleItem={handleToggleItem}
             onUpdateItem={handleUpdateItem}
             onRemoveItem={handleRemoveItem}
@@ -141,6 +189,31 @@ export function GoodsReceiptCreatePage(): ReactElement {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Badge
+          variant={receiptMode === 'order' ? 'default' : 'outline'}
+          className="cursor-pointer"
+          onClick={() => {
+            setReceiptMode('order');
+            setSelectedItems([]);
+            if (currentStep > 1) setCurrentStep(1);
+          }}
+        >
+          {t('goodsReceipt.create.mode.order', 'Sipariş Bazlı')}
+        </Badge>
+        <Badge
+          variant={receiptMode === 'stock' ? 'default' : 'outline'}
+          className="cursor-pointer"
+          onClick={() => {
+            setReceiptMode('stock');
+            setSelectedItems([]);
+            if (currentStep > 1) setCurrentStep(1);
+          }}
+        >
+          {t('goodsReceipt.create.mode.stock', 'Stok Bazlı')}
+        </Badge>
+      </div>
+
       <Breadcrumb
         items={steps.map((step, index) => ({
           label: step.label,
@@ -150,9 +223,6 @@ export function GoodsReceiptCreatePage(): ReactElement {
       />
 
       <Card>
-        <CardHeader>
-          <CardTitle>{steps[currentStep - 1].label}</CardTitle>
-        </CardHeader>
         <CardContent>
           <Form {...form}>
             <form className="space-y-6">

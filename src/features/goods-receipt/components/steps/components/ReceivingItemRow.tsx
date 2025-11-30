@@ -6,14 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import type { OrderItem, SelectedOrderItem, Warehouse } from '../../../types/goods-receipt';
+import type { OrderItem, SelectedOrderItem, SelectedStockItem, Warehouse } from '../../../types/goods-receipt';
 import { SearchableSelect } from './SearchableSelect';
 
 interface ReceivingItemRowProps {
     item: OrderItem;
-    selectedItem?: SelectedOrderItem;
+    selectedItem?: SelectedOrderItem | SelectedStockItem;
     warehouses: Warehouse[];
-    onUpdateItem: (itemId: string, updates: Partial<SelectedOrderItem>) => void;
+    onUpdateItem: (itemId: string, updates: Partial<SelectedOrderItem | SelectedStockItem>) => void;
     onToggleItem: (item: OrderItem) => void;
     onRemoveItem: (itemId: string) => void;
 }
@@ -53,10 +53,10 @@ export function ReceivingItemRow({
         }
     };
 
-    const handleDetailChange = (field: keyof SelectedOrderItem, val: string) => {
+    const handleDetailChange = (field: keyof (SelectedOrderItem | SelectedStockItem), val: string) => {
         if (!selectedItem) return;
         const itemId = item.id || '';
-        onUpdateItem(itemId, { [field]: val });
+        onUpdateItem(itemId, { [field]: val } as Partial<SelectedOrderItem | SelectedStockItem>);
     };
 
     const quantity = parseFloat(value) || 0;
