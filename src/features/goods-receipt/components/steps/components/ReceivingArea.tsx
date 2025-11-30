@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { PackageOpen, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { goodsReceiptApi } from '../../../api/goods-receipt-api';
 import { useWarehouses } from '../../../hooks/useWarehouses';
@@ -127,14 +128,22 @@ export function ReceivingArea({
             <p className="text-sm font-semibold">{startedItems}/{totalItems}</p>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative flex items-center">
           <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
             placeholder={t('goodsReceipt.step2.searchItems', 'Stok kodu veya adı ile ara...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-7 h-7 text-xs"
+            className="pl-7 pr-9 h-7 text-xs"
           />
+          <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
+            <VoiceSearchButton
+              onResult={(text) => setSearchQuery(text)}
+              size="sm"
+              variant="ghost"
+              className="h-5 w-5"
+            />
+          </div>
         </div>
       </div>
       <div className="overflow-y-auto space-y-1.5 p-2 max-h-[500px]">

@@ -1,6 +1,7 @@
 import { type ReactElement, useState, useMemo } from 'react';
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -94,11 +95,21 @@ export function SearchableSelect<T>({
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start" style={{ width: 'var(--radix-popover-trigger-width)' }}>
         <Command shouldFilter={false}>
-          <CommandInput
-            placeholder={searchPlaceholder}
-            value={searchQuery}
-            onValueChange={setSearchQuery}
-          />
+          <div className="relative [&_[data-slot=command-input-wrapper]]:pr-10">
+            <CommandInput
+              placeholder={searchPlaceholder}
+              value={searchQuery}
+              onValueChange={setSearchQuery}
+            />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-10">
+              <VoiceSearchButton
+                onResult={(text) => setSearchQuery(text)}
+                size="sm"
+                variant="ghost"
+                className="h-5 w-5"
+              />
+            </div>
+          </div>
           <CommandList style={{ maxHeight }}>
             {isLoading ? (
               <div className="flex items-center justify-center py-6">
