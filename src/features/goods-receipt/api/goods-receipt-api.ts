@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios';
 import type { ApiResponse } from '@/types/api';
-import type { Customer, Order, OrderItem, Project, Warehouse, GoodsReceiptFormData, SelectedOrderItem } from '../types/goods-receipt';
+import type { Customer, Order, OrderItem, Project, Warehouse, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, PagedResponse, GrHeadersPagedParams, GrLine, GrImportLine, Product } from '../types/goods-receipt';
 
 interface BulkCreateRequest {
   header: {
@@ -32,7 +32,7 @@ interface BulkCreateRequest {
     description?: string;
   }>;
   importLines?: Array<{
-    lineClientKey: string;
+    lineClientKey: string | null;
     clientKey: string;
     stockCode: string;
     configurationCode?: string;
@@ -109,7 +109,15 @@ export const goodsReceiptApi = {
     throw new Error(response.message || 'Depolar yüklenemedi');
   },
 
-  createGoodsReceipt: async (formData: GoodsReceiptFormData, selectedItems: SelectedOrderItem[]): Promise<number> => {
+  getProducts: async (): Promise<Product[]> => {
+    const response = await api.get('/api/Erp/getAllProducts') as ApiResponse<Product[]>;
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Stoklar yüklenemedi');
+  },
+
+  createGoodsReceipt: async (formData: GoodsReceiptFormData, selectedItems: (SelectedOrderItem | SelectedStockItem)[], isStockBased: boolean = false): Promise<number> => {
     const generateGuid = (): string => {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         const r = (Math.random() * 16) | 0;
@@ -121,7 +129,7 @@ export const goodsReceiptApi = {
     const currentYear = new Date().getFullYear().toString();
     const plannedDate = formData.receiptDate ? new Date(formData.receiptDate).toISOString() : new Date().toISOString();
 
-    const lines = selectedItems.map((item) => {
+    const lines = isStockBased ? [] : selectedItems.map((item) => {
       const clientKey = generateGuid();
       return {
         clientKey,
@@ -134,15 +142,20 @@ export const goodsReceiptApi = {
       };
     });
 
-    const importLines = selectedItems.map((item, index) => {
+    const importLines = selectedItems.map((item) => {
       const clientKey = generateGuid();
-      const correspondingLine = lines[index];
+      const correspondingLine = isStockBased ? null : lines.find((line) => {
+        const itemStockCode = 'stockCode' in item ? item.stockCode : (item.productCode || '');
+        return line.stockCode === itemStockCode;
+      });
+      const stockCode = 'stockCode' in item ? item.stockCode : (item.productCode || '');
+      const stockName = 'stockName' in item ? item.stockName : (item.productName || '');
       return {
-        lineClientKey: correspondingLine?.clientKey || '',
+        lineClientKey: correspondingLine?.clientKey || null,
         clientKey,
-        stockCode: item.stockCode || item.productCode || '',
+        stockCode,
         configurationCode: item.configCode || undefined,
-        description1: item.stockName || item.productName || undefined,
+        description1: stockName || undefined,
         description2: undefined,
       };
     });
@@ -171,11 +184,12 @@ export const goodsReceiptApi = {
       .map((item, index) => {
         const importLine = importLines[index];
         if (!importLine || !item.receiptQuantity || item.receiptQuantity <= 0) return null;
+        const stockName = 'stockName' in item ? item.stockName : (item.productName || '');
         return {
           importLineClientKey: importLine.clientKey,
           scannedBarcode: '',
           quantity: item.receiptQuantity,
-          description: item.stockName || item.productName || undefined,
+          description: stockName || undefined,
           serialNo: item.serialNo,
           serialNo2: item.lotNo,
           serialNo3: item.batchNo,
@@ -192,7 +206,7 @@ export const goodsReceiptApi = {
       header: {
         branchCode: '',
         projectCode: formData.projectCode || undefined,
-        orderId: selectedItems[0]?.siparisNo || undefined,
+        orderId: isStockBased ? undefined : (selectedItems[0] && 'siparisNo' in selectedItems[0] ? selectedItems[0].siparisNo : undefined),
         documentType: formData.isInvoice ? 'E-İrsaliye' : 'Mal Kabul',
         yearCode: currentYear,
         description1: formData.documentNo || undefined,
@@ -219,6 +233,49 @@ export const goodsReceiptApi = {
       return response.data || 0;
     }
     throw new Error(response.message || 'Mal kabul oluşturulamadı');
+  },
+
+  getGrHeadersPaged: async (params: GrHeadersPagedParams = {}): Promise<PagedResponse<GrHeader>> => {
+    const { pageNumber = 1, pageSize = 10, sortBy, sortDirection = 'asc' } = params;
+    const queryParams = new URLSearchParams({
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString(),
+    });
+    
+    if (sortBy) {
+      queryParams.append('sortBy', sortBy);
+      queryParams.append('sortDirection', sortDirection);
+    }
+
+    const response = await api.get(`/api/GrHeader/paged?${queryParams.toString()}`) as ApiResponse<PagedResponse<GrHeader>>;
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Mal kabul listesi yüklenemedi');
+  },
+
+  getGrHeaderById: async (id: number): Promise<GrHeader> => {
+    const response = await api.get(`/api/GrHeader/${id}`) as ApiResponse<GrHeader>;
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Mal kabul detayı yüklenemedi');
+  },
+
+  getGrLines: async (headerId: number): Promise<GrLine[]> => {
+    const response = await api.get(`/api/GrLine/by-header/${headerId}`) as ApiResponse<GrLine[]>;
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Mal kabul satırları yüklenemedi');
+  },
+
+  getGrImportLinesWithRoutes: async (headerId: number): Promise<GrImportLine[]> => {
+    const response = await api.get(`/api/GrImportL/by-header-with-routes/${headerId}`) as ApiResponse<GrImportLine[]>;
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Mal kabul içerik satırları yüklenemedi');
   },
 };
 
