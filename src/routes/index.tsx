@@ -8,6 +8,10 @@ import {
   GoodsReceiptCreatePage,
   GoodsReceiptListPage,
 } from '@/features/goods-receipt';
+import {
+  TransferCreatePage,
+  TransferListPage,
+} from '@/features/transfer';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +36,19 @@ export const router = createBrowserRouter([
           {
             path: 'list',
             element: <GoodsReceiptListPage />,
+          },
+        ],
+      },
+      {
+        path: 'transfer',
+        children: [
+          {
+            path: 'create',
+            element: <TransferCreatePage />,
+          },
+          {
+            path: 'list',
+            element: <TransferListPage />,
           },
         ],
       },
