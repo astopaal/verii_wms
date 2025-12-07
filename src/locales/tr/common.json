@@ -24,7 +24,8 @@
     "complete": "Tamamlandı",
     "over": "Fazla",
     "yes": "Evet",
-    "no": "Hayır"
+    "no": "Hayır",
+    "add": "Ekle"
   },
   "auth": {
     "login": {
@@ -55,7 +56,10 @@
     "goodsReceiptList": "Mal Kabul Listesi",
     "inventory": "Envanter",
     "reports": "Raporlar",
-    "shipment": "Sevkiyat"
+    "shipment": "Sevkiyat",
+    "transfer": "Transfer",
+    "transferCreate": "Transfer Emri Oluştur",
+    "transferList": "Transfer Emri Listesi"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -219,6 +223,125 @@
       "createdBy": "Oluşturan",
       "updatedBy": "Güncelleyen",
       "updatedDate": "Güncellenme Tarihi"
+    }
+  },
+  "transfer": {
+    "create": {
+      "title": "Yeni Transfer Emri",
+      "subtitle": "Transfer bilgilerini girin ve kalemlerini seçin",
+      "steps": {
+        "basicInfo": "Temel Bilgiler",
+        "orderSelection": "Sipariş ve Kalem Seçimi",
+        "stockSelection": "Stok Seçimi"
+      },
+      "unknownStep": "Bilinmeyen adım",
+      "success": "Transfer emri başarıyla oluşturuldu",
+      "error": "Transfer emri oluşturulurken bir hata oluştu",
+      "mode": {
+        "order": "Siparişe Bağlı Transfer",
+        "free": "Serbest Transfer"
+      }
+    },
+    "list": {
+      "title": "Transfer Emri Listesi",
+      "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+      "id": "ID",
+      "documentNo": "Belge No",
+      "documentDate": "Belge Tarihi",
+      "customerCode": "Cari Kodu",
+      "customerName": "Cari Adı",
+      "sourceWarehouse": "Çıkış Deposu",
+      "targetWarehouse": "Varış Deposu",
+      "documentType": "Belge Tipi",
+      "status": "Durum",
+      "createdDate": "Oluşturulma Tarihi",
+      "completed": "Tamamlandı",
+      "inProgress": "Devam Ediyor",
+      "pendingApproval": "Onay Bekliyor",
+      "viewDetails": "Detay",
+      "noData": "Veri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu",
+      "paginationInfo": "{{current}} - {{total}} arası, Toplam: {{totalCount}}",
+      "page": "Sayfa {{page}} / {{totalPages}}",
+      "detailTitle": "Transfer Emri Detayı",
+      "lines": "Kalemler",
+      "lineDetails": "Kalem Detayları",
+      "stockCode": "Stok Kodu",
+      "stockName": "Stok Adı",
+      "quantity": "Miktar",
+      "unit": "Birim",
+      "serialNo": "Seri No",
+      "serialNo2": "Seri No 2",
+      "serialNo3": "Seri No 3",
+      "serialNo4": "Seri No 4",
+      "sourceCellCode": "Çıkış Hücre",
+      "targetCellCode": "Varış Hücre",
+      "detailDescription": "Transfer emrinin detaylı bilgileri"
+    },
+    "step1": {
+      "transferDate": "Transfer Tarihi",
+      "documentNo": "Belge No",
+      "documentNoPlaceholder": "Belge numarasını giriniz",
+      "projectCode": "Proje Kodu",
+      "selectProjectCode": "Proje kodu seçiniz (opsiyonel)",
+      "noProject": "Proje yok",
+      "customer": "Cari",
+      "selectCustomer": "Cari seçiniz",
+      "sourceWarehouse": "Çıkış Deposu",
+      "selectSourceWarehouse": "Çıkış deposu seçiniz",
+      "targetWarehouse": "Varış Deposu",
+      "selectTargetWarehouse": "Varış deposu seçiniz",
+      "notes": "Notlar",
+      "notesPlaceholder": "Notlar (opsiyonel)"
+    },
+    "step2": {
+      "selectCustomerFirst": "Lütfen önce bir cari seçiniz",
+      "customerPrompt": "Siparişleri görüntülemek için lütfen önceki adımdan bir cari seçin.",
+      "orders": "Siparişler",
+      "selectOrderDesc": "İşlem yapılacak siparişi seçin",
+      "noOrderSelected": "Sipariş Seçimi",
+      "selectOrderPrompt": "İşlem yapmak için siparişler sekmesinden bir sipariş seçiniz.",
+      "orderContent": "Sipariş İçeriği",
+      "searchItems": "Stok kodu veya adı ile ara...",
+      "noOrders": "Bu cariye ait sipariş bulunamadı",
+      "noItemsFound": "Bu siparişte ürün bulunamadı.",
+      "ordered": "Sipariş",
+      "remaining": "Kalan",
+      "selected": "Seçildi",
+      "started": "Başlanan",
+      "itemsCount": "{{count}} kalem ürün",
+      "pending": "Beklemede",
+      "completed": "Tamamlandı",
+      "errorLoadingOrders": "Siparişler yüklenirken hata oluştu",
+      "stockSelection": "Stok Seçimi",
+      "searchStocks": "Stok kodu veya adı ile ara...",
+      "unit": "Birim"
+    },
+    "details": {
+      "transferQuantity": "Transfer Miktarı",
+      "sourceWarehouse": "Çıkış Deposu",
+      "selectSourceWarehouse": "Çıkış Depo",
+      "serialNo": "Seri No",
+      "serialNoPlaceholder": "Seri No giriniz",
+      "serialNo2": "Seri No 2",
+      "serialNo2Placeholder": "Seri No 2 giriniz",
+      "lotNo": "Parti No",
+      "lotNoPlaceholder": "Parti No giriniz",
+      "batchNo": "Batch No",
+      "batchNoPlaceholder": "Batch No giriniz",
+      "configCode": "Yapılandırma Kodu",
+      "configCodePlaceholder": "Yapılandırma Kodu giriniz",
+      "sourceCellCode": "Çıkış Hücre Kodu",
+      "sourceCellCodePlaceholder": "Çıkış hücre kodu giriniz",
+      "targetCellCode": "Varış Hücre Kodu",
+      "targetCellCodePlaceholder": "Varış hücre kodu giriniz"
+    },
+    "validation": {
+      "transferDateRequired": "Tarih zorunludur",
+      "documentNoRequired": "Belge No zorunludur",
+      "customerRequired": "Cari seçimi zorunludur",
+      "sourceWarehouseRequired": "Çıkış deposu zorunludur",
+      "targetWarehouseRequired": "Varış deposu zorunludur"
     }
   },
   "footer": {
