@@ -12,6 +12,18 @@ import {
   TransferCreatePage,
   TransferListPage,
 } from '@/features/transfer';
+import {
+  SubcontractingIssueCreatePage,
+  SubcontractingReceiptCreatePage,
+  SubcontractingReceiptListPage,
+  SubcontractingIssueListPage,
+} from '@/features/subcontracting';
+import {
+  WarehouseInboundCreatePage,
+  WarehouseOutboundCreatePage,
+  WarehouseInboundListPage,
+  WarehouseOutboundListPage,
+} from '@/features/warehouse';
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +61,68 @@ export const router = createBrowserRouter([
           {
             path: 'list',
             element: <TransferListPage />,
+          },
+        ],
+      },
+      {
+        path: 'subcontracting',
+        children: [
+          {
+            path: 'issue',
+            children: [
+              {
+                path: 'create',
+                element: <SubcontractingIssueCreatePage />,
+              },
+              {
+                path: 'list',
+                element: <SubcontractingIssueListPage />,
+              },
+            ],
+          },
+          {
+            path: 'receipt',
+            children: [
+              {
+                path: 'create',
+                element: <SubcontractingReceiptCreatePage />,
+              },
+              {
+                path: 'list',
+                element: <SubcontractingReceiptListPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'warehouse',
+        children: [
+          {
+            path: 'inbound',
+            children: [
+              {
+                path: 'create',
+                element: <WarehouseInboundCreatePage />,
+              },
+              {
+                path: 'list',
+                element: <WarehouseInboundListPage />,
+              },
+            ],
+          },
+          {
+            path: 'outbound',
+            children: [
+              {
+                path: 'create',
+                element: <WarehouseOutboundCreatePage />,
+              },
+              {
+                path: 'list',
+                element: <WarehouseOutboundListPage />,
+              },
+            ],
           },
         ],
       },

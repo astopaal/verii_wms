@@ -168,6 +168,81 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         },
       ],
     },
+    {
+      title: t('sidebar.subcontracting', 'Fason İşlemleri'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+      ),
+      children: [
+        {
+          title: t('sidebar.subcontractingIssueCreate', 'Fason Çıkış Emri'),
+          href: '/subcontracting/issue/create',
+        },
+        {
+          title: t('sidebar.subcontractingIssueList', 'Fason Çıkış Listesi'),
+          href: '/subcontracting/issue/list',
+        },
+        {
+          title: t('sidebar.subcontractingReceiptCreate', 'Fason Giriş Emri'),
+          href: '/subcontracting/receipt/create',
+        },
+        {
+          title: t('sidebar.subcontractingReceiptList', 'Fason Giriş Listesi'),
+          href: '/subcontracting/receipt/list',
+        },
+      ],
+    },
+    {
+      title: t('sidebar.warehouse', 'Ambar İşlemleri'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35l8 2.8 8-2.8z" />
+          <path d="M6 18h12" />
+          <path d="M6 14h12" />
+          <path d="M22 8.35l-10-3.57L2 8.35" />
+        </svg>
+      ),
+      children: [
+        {
+          title: t('sidebar.warehouseInboundCreate', 'Ambar Giriş Emri'),
+          href: '/warehouse/inbound/create',
+        },
+        {
+          title: t('sidebar.warehouseInboundList', 'Ambar Giriş Listesi'),
+          href: '/warehouse/inbound/list',
+        },
+        {
+          title: t('sidebar.warehouseOutboundCreate', 'Ambar Çıkış Emri'),
+          href: '/warehouse/outbound/create',
+        },
+        {
+          title: t('sidebar.warehouseOutboundList', 'Ambar Çıkış Listesi'),
+          href: '/warehouse/outbound/list',
+        },
+      ],
+    },
   ];
 
   const items = navItems || defaultNavItems;

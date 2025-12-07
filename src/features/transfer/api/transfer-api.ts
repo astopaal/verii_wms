@@ -119,4 +119,3 @@ export const transferApi = {
     return response;
   },
 };
-
