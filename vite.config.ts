@@ -14,5 +14,6 @@ export default defineConfig({
   },
   server: {
     allowedHosts: allowedHosts,
+    host: "0.0.0.0",
   },
 })
