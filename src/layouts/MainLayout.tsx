@@ -1,6 +1,7 @@
+import { type ReactElement } from 'react';
 import { Outlet } from 'react-router-dom';
 
-export default function MainLayout(): JSX.Element {
+export default function MainLayout(): ReactElement {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">

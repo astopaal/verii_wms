@@ -1,16 +1,12 @@
 import { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Footer(): ReactElement {
-  const { t } = useTranslation();
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background">
-      <div className="container flex h-16 items-center justify-center px-4">
-        <p className="text-sm text-muted-foreground">
-          {t('footer.copyright', { year: currentYear })}
-        </p>
+    <footer className="fixed bottom-0 right-0 z-30">
+      <div className="p-4">
+        <LanguageSwitcher />
       </div>
     </footer>
   );

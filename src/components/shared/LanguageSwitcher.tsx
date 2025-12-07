@@ -26,31 +26,29 @@ export function LanguageSwitcher(): ReactElement {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      <Select value={i18n.language} onValueChange={handleLanguageChange}>
-        <SelectTrigger className="w-[140px] h-10 bg-background border shadow-lg hover:bg-accent">
-          <div className="flex items-center gap-2 flex-1">
-            <Languages className="h-4 w-4 shrink-0" />
-            <SelectValue>
-              <span className="flex items-center gap-1.5">
-                <span className="text-base">{currentLanguage.flag}</span>
-                <span className="hidden sm:inline text-sm">{currentLanguage.name}</span>
-              </span>
-            </SelectValue>
-          </div>
-        </SelectTrigger>
-        <SelectContent>
-          {languages.map((language) => (
-            <SelectItem key={language.code} value={language.code}>
-              <div className="flex items-center gap-2">
-                <span className="text-base">{language.flag}</span>
-                <span>{language.name}</span>
-              </div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select value={i18n.language} onValueChange={handleLanguageChange}>
+      <SelectTrigger className="w-[140px] h-10 bg-background border shadow-lg hover:bg-accent">
+        <div className="flex items-center gap-2 flex-1">
+          <Languages className="h-4 w-4 shrink-0" />
+          <SelectValue>
+            <span className="flex items-center gap-1.5">
+              <span className="text-base">{currentLanguage.flag}</span>
+              <span className="hidden sm:inline text-sm">{currentLanguage.name}</span>
+            </span>
+          </SelectValue>
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        {languages.map((language) => (
+          <SelectItem key={language.code} value={language.code}>
+            <div className="flex items-center gap-2">
+              <span className="text-base">{language.flag}</span>
+              <span>{language.name}</span>
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
