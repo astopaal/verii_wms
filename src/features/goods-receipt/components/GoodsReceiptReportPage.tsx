@@ -108,16 +108,16 @@ export function GoodsReceiptReportPage(): ReactElement {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <CardTitle>{t('goodsReceipt.report.title', 'Mal Kabul Raporu')}</CardTitle>
             <div className="flex items-center gap-2">
-              <div className="relative flex items-center">
+              <div className="relative flex items-center w-full md:w-auto">
                 <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4" />
                 <Input
                   placeholder={t('goodsReceipt.report.searchPlaceholder', 'Sipariş No, Cari Kodu, Belge No...')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 pr-10 w-64"
+                  className="pl-8 pr-10 w-full md:w-64"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
                   <VoiceSearchButton
@@ -131,7 +131,7 @@ export function GoodsReceiptReportPage(): ReactElement {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="rounded-md border">
+          <div className="hidden md:block rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -251,6 +251,100 @@ export function GoodsReceiptReportPage(): ReactElement {
                 )}
               </TableBody>
             </Table>
+          </div>
+          <div className="md:hidden space-y-4">
+            {filteredData && filteredData.length > 0 ? (
+              filteredData.map((item: GrHeader) => (
+                <Card key={item.id} className="border">
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.id', 'ID')}
+                        </p>
+                        <p className="text-base font-semibold">{item.id}</p>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        {item.isCompleted ? (
+                          <Badge variant="default" className="w-fit">
+                            {t('goodsReceipt.report.completed', 'Tamamlandı')}
+                          </Badge>
+                        ) : item.isPendingApproval ? (
+                          <Badge variant="secondary" className="w-fit">
+                            {t('goodsReceipt.report.pendingApproval', 'Onay Bekliyor')}
+                          </Badge>
+                        ) : item.completionDate ? (
+                          <Badge variant="default" className="w-fit">
+                            {t('goodsReceipt.report.completed', 'Tamamlandı')}
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="w-fit">
+                            {t('goodsReceipt.report.inProgress', 'Devam Ediyor')}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.orderId', 'Sipariş No')}
+                        </p>
+                        <p className="text-base">{item.orderId || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.customerCode', 'Cari Kodu')}
+                        </p>
+                        <p className="text-base">{item.customerCode || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.projectCode', 'Proje Kodu')}
+                        </p>
+                        <p className="text-base">{item.projectCode || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.documentType', 'Belge Tipi')}
+                        </p>
+                        <Badge variant={item.documentType === 'E-İrsaliye' ? 'secondary' : 'default'} className="mt-1">
+                          {item.documentType || '-'}
+                        </Badge>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.plannedDate', 'Planlanan Tarih')}
+                        </p>
+                        <p className="text-base">{formatDate(item.plannedDate)}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('goodsReceipt.report.createdDate', 'Oluşturulma Tarihi')}
+                        </p>
+                        <p className="text-base">{formatDateTime(item.createdDate)}</p>
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => setSelectedGrHeaderId(item.id)}
+                      >
+                        <Eye className="size-4 mr-2" />
+                        {t('goodsReceipt.report.viewDetails', 'Detay')}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">
+                  {t('goodsReceipt.report.noData', 'Veri bulunamadı')}
+                </p>
+              </div>
+            )}
           </div>
           {data && (
             <div className="flex items-center justify-between mt-4">

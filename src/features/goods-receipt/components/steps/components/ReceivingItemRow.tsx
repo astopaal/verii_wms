@@ -133,7 +133,7 @@ export function ReceivingItemRow({
                                 value={value}
                                 onChange={(e) => handleChange(e.target.value)}
                                 className={cn(
-                                    'w-full sm:w-20 text-right font-mono h-8 text-sm',
+                                    'w-full sm:w-20 text-right font-mono h-8 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
                                     isOver && 'border-destructive focus-visible:ring-destructive'
                                 )}
                                 placeholder="0"
@@ -153,53 +153,53 @@ export function ReceivingItemRow({
                 </div>
             </div>
             {isExpanded && (
-                <div className="pt-2 mt-2 border-t">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                        <div className="space-y-1">
-                            <Label htmlFor={`serial-${item.id || ''}`} className="text-xs">
+                <div className="pt-3 mt-3 border-t">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor={`serial-${item.id || ''}`} className="text-sm font-medium">
                                 {t('goodsReceipt.details.serialNo', 'Seri No')}
                             </Label>
                             <Input
                                 id={`serial-${item.id || ''}`}
                                 value={selectedItem?.serialNo || ''}
                                 onChange={(e) => handleDetailChange('serialNo', e.target.value)}
-                                className="h-7 text-xs"
+                                className="h-9 text-sm"
                                 placeholder={t('goodsReceipt.details.serialNoPlaceholder', 'Seri No giriniz')}
                             />
                         </div>
-                        <div className="space-y-1">
-                            <Label htmlFor={`lot-${item.id || ''}`} className="text-xs">
+                        <div className="space-y-2">
+                            <Label htmlFor={`lot-${item.id || ''}`} className="text-sm font-medium">
                                 {t('goodsReceipt.details.lotNo', 'Parti No')}
                             </Label>
                             <Input
                                 id={`lot-${item.id || ''}`}
                                 value={selectedItem?.lotNo || ''}
                                 onChange={(e) => handleDetailChange('lotNo', e.target.value)}
-                                className="h-7 text-xs"
+                                className="h-9 text-sm"
                                 placeholder={t('goodsReceipt.details.lotNoPlaceholder', 'Parti No giriniz')}
                             />
                         </div>
-                        <div className="space-y-1">
-                            <Label htmlFor={`batch-${item.id || ''}`} className="text-xs">
+                        <div className="space-y-2">
+                            <Label htmlFor={`batch-${item.id || ''}`} className="text-sm font-medium">
                                 {t('goodsReceipt.details.batchNo', 'Batch No')}
                             </Label>
                             <Input
                                 id={`batch-${item.id || ''}`}
                                 value={selectedItem?.batchNo || ''}
                                 onChange={(e) => handleDetailChange('batchNo', e.target.value)}
-                                className="h-7 text-xs"
+                                className="h-9 text-sm"
                                 placeholder={t('goodsReceipt.details.batchNoPlaceholder', 'Batch No giriniz')}
                             />
                         </div>
-                        <div className="space-y-1">
-                            <Label htmlFor={`config-${item.id || ''}`} className="text-xs">
+                        <div className="space-y-2">
+                            <Label htmlFor={`config-${item.id || ''}`} className="text-sm font-medium">
                                 {t('goodsReceipt.details.configCode', 'Yapılandırma Kodu')}
                             </Label>
                             <Input
                                 id={`config-${item.id || ''}`}
                                 value={selectedItem?.configCode || ''}
                                 onChange={(e) => handleDetailChange('configCode', e.target.value)}
-                                className="h-7 text-xs"
+                                className="h-9 text-sm"
                                 placeholder={t('goodsReceipt.details.configCodePlaceholder', 'Yapılandırma Kodu giriniz')}
                             />
                         </div>
