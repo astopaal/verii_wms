@@ -1,6 +1,8 @@
 import { api } from '@/lib/axios';
+import { DocumentType } from '@/types/document-type';
 import type { ApiResponse } from '@/types/api';
-import type { Customer, Order, OrderItem, Project, Warehouse, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, PagedResponse, GrHeadersPagedParams, GrLine, GrImportLine, Product } from '../types/goods-receipt';
+import type { Order, OrderItem, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, PagedResponse, GrHeadersPagedParams, GrLine, GrImportLine } from '../types/goods-receipt';
+import { erpCommonApi } from '@/services/erp-common-api';
 
 interface BulkCreateRequest {
   header: {
@@ -66,21 +68,10 @@ interface BulkCreateRequest {
 }
 
 export const goodsReceiptApi = {
-  getCustomers: async (): Promise<Customer[]> => {
-    const response = await api.get('/api/Erp/getAllCustomers') as ApiResponse<Customer[]>;
-    if (response.success && response.data) {
-      return response.data;
-    }
-    throw new Error(response.message || 'Cariler yüklenemedi');
-  },
-
-  getProjects: async (): Promise<Project[]> => {
-    const response = await api.get('/api/Erp/getAllProjects') as ApiResponse<Project[]>;
-    if (response.success && response.data) {
-      return response.data;
-    }
-    throw new Error(response.message || 'Projeler yüklenemedi');
-  },
+  getCustomers: erpCommonApi.getCustomers,
+  getProjects: erpCommonApi.getProjects,
+  getWarehouses: erpCommonApi.getWarehouses,
+  getProducts: erpCommonApi.getProducts,
 
   getOrdersByCustomer: async (customerCode: string): Promise<Order[]> => {
     const response = await api.get(`/api/GoodReciptFunctions/headers/customer/${customerCode}`) as ApiResponse<Order[]>;
@@ -96,25 +87,6 @@ export const goodsReceiptApi = {
       return response.data;
     }
     throw new Error(response.message || 'Sipariş kalemleri yüklenemedi');
-  },
-
-  getWarehouses: async (depoKodu?: number): Promise<Warehouse[]> => {
-    const url = depoKodu 
-      ? `/api/Erp/getAllWarehouses?depoKodu=${depoKodu}`
-      : '/api/Erp/getAllWarehouses';
-    const response = await api.get(url) as ApiResponse<Warehouse[]>;
-    if (response.success && response.data) {
-      return response.data;
-    }
-    throw new Error(response.message || 'Depolar yüklenemedi');
-  },
-
-  getProducts: async (): Promise<Product[]> => {
-    const response = await api.get('/api/Erp/getAllProducts') as ApiResponse<Product[]>;
-    if (response.success && response.data) {
-      return response.data;
-    }
-    throw new Error(response.message || 'Stoklar yüklenemedi');
   },
 
   createGoodsReceipt: async (formData: GoodsReceiptFormData, selectedItems: (SelectedOrderItem | SelectedStockItem)[], isStockBased: boolean = false): Promise<number> => {
@@ -207,7 +179,7 @@ export const goodsReceiptApi = {
         branchCode: '',
         projectCode: formData.projectCode || undefined,
         orderId: isStockBased ? undefined : (selectedItems[0] && 'siparisNo' in selectedItems[0] ? selectedItems[0].siparisNo : undefined),
-        documentType: formData.isInvoice ? 'E-İrsaliye' : 'Mal Kabul',
+        documentType: DocumentType.GR,
         yearCode: currentYear,
         description1: formData.documentNo || undefined,
         description2: formData.notes || undefined,
