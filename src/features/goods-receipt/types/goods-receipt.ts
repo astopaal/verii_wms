@@ -219,3 +219,66 @@ export interface GrImportLine {
   updatedByFullUser: string | null;
   deletedByFullUser: string | null;
 }
+
+export interface BulkCreateRequest {
+  header: {
+    branchCode: string;
+    projectCode?: string;
+    orderId?: string;
+    documentType: string;
+    yearCode: string;
+    description1?: string;
+    description2?: string;
+    priorityLevel?: number;
+    plannedDate: string;
+    isPlanned: boolean;
+    customerCode: string;
+    returnCode: boolean;
+    ocrSource: boolean;
+    description3?: string;
+    description4?: string;
+    description5?: string;
+  };
+  documents?: Array<{ base64: string }> | null;
+  lines?: Array<{
+    clientKey: string;
+    stockCode: string;
+    quantity: number;
+    unit?: string;
+    erpOrderNo?: string;
+    erpOrderId?: string;
+    description?: string;
+  }>;
+  importLines?: Array<{
+    lineClientKey: string | null;
+    clientKey: string;
+    stockCode: string;
+    configurationCode?: string;
+    description1?: string;
+    description2?: string;
+  }>;
+  serialLines?: Array<{
+    importLineClientKey: string;
+    serialNo: string;
+    quantity: number;
+    sourceCellCode?: string;
+    targetCellCode?: string;
+    serialNo2?: string;
+    serialNo3?: string;
+    serialNo4?: string;
+  }>;
+  routes?: Array<{
+    importLineClientKey: string;
+    scannedBarcode: string;
+    quantity: number;
+    description?: string;
+    serialNo?: string;
+    serialNo2?: string;
+    serialNo3?: string;
+    serialNo4?: string;
+    sourceWarehouse?: number;
+    targetWarehouse?: number;
+    sourceCellCode?: string;
+    targetCellCode?: string;
+  }>;
+}
