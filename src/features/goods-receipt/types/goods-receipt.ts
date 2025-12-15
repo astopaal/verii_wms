@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { ApiResponse } from '@/types/api';
 import type { TFunction } from 'i18next';
+import type { ErpCustomer, ErpProject, ErpWarehouse, ErpProduct } from '@/services/erp-types';
 
 export const createGoodsReceiptFormSchema = (t: TFunction) => z.object({
   receiptDate: z.string().min(1, t('goodsReceipt.validation.receiptDateRequired', 'Tarih zorunludur')),
@@ -13,79 +14,13 @@ export const createGoodsReceiptFormSchema = (t: TFunction) => z.object({
 
 export type GoodsReceiptFormData = z.infer<ReturnType<typeof createGoodsReceiptFormSchema>>;
 
-export interface Customer {
-  subeKodu: number;
-  isletmeKodu: number;
-  cariKod: string;
-  cariTel: string;
-  cariIl: string;
-  ulkeKodu: string;
-  cariIsim: string;
-  cariTip: string;
-  grupKodu: string;
-  raporKodu1: string;
-  raporKodu2: string;
-  raporKodu3: string;
-  raporKodu4: string;
-  raporKodu5: string;
-  cariAdres: string;
-  cariIlce: string;
-  vergiDairesi: string;
-  vergiNumarasi: string;
-  fax: string;
-  postaKodu: string;
-  detayKodu: number;
-  nakliyeKatsayisi: number;
-  riskSiniri: number;
-  teminati: number;
-  cariRisk: number;
-  ccRisk: number;
-  saRisk: number;
-  scRisk: number;
-  cmBorct: number;
-  cmAlact: number;
-  cmRapTarih: string;
-  kosulKodu: string;
-  iskontoOrani: number;
-  vadeGunu: number;
-  listeFiati: number;
-  acik1: string;
-  acik2: string;
-  acik3: string;
-  mKod: string;
-  dovizTipi: number;
-  dovizTuru: number;
-  hesapTutmaSekli: string;
-  dovizLimi: string;
-}
+export type Customer = ErpCustomer;
 
-export interface Project {
-  projeKod: string;
-  projeAciklama: string;
-}
+export type Project = ErpProject;
 
-export interface Warehouse {
-  depoKodu: number;
-  depoIsmi: string;
-}
+export type Warehouse = ErpWarehouse;
 
-export interface Product {
-  subeKodu: number;
-  isletmeKodu: number;
-  stokKodu: string;
-  ureticiKodu: string;
-  stokAdi: string;
-  grupKodu: string;
-  saticiKodu: string;
-  olcuBr1: string;
-  olcuBr2: string;
-  pay1: number;
-  kod1: string;
-  kod2: string;
-  kod3: string;
-  kod4: string;
-  kod5: string;
-}
+export type Product = ErpProduct;
 
 export type CustomersResponse = ApiResponse<Customer[]>;
 export type ProjectsResponse = ApiResponse<Project[]>;
@@ -301,4 +236,3 @@ export interface GrImportLine {
   updatedByFullUser: string | null;
   deletedByFullUser: string | null;
 }
-
