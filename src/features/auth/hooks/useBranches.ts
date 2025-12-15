@@ -1,19 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import branchesConfig from '@/config/config.json';
-
-export interface Branch {
-  id: string;
-  name: string;
-  code?: string;
-}
+import { erpCommonApi } from '@/services/erp-common-api';
+import type { Branch } from '../types/auth';
+import { AUTH_QUERY_KEYS } from '../utils/query-keys';
 
 export const useBranches = () => {
   return useQuery<Branch[]>({
-    queryKey: ['branches'],
+    queryKey: [AUTH_QUERY_KEYS.BRANCHES],
     queryFn: async (): Promise<Branch[]> => {
-      return branchesConfig.branches as Branch[];
+      const data = await erpCommonApi.getBranches();
+      return data.map((branch) => ({
+        id: String(branch.subeKodu),
+        name: branch.unvan && branch.unvan.trim().length > 0 ? branch.unvan : '-',
+      }));
     },
     staleTime: Infinity,
   });
 };
-

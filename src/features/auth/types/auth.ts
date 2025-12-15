@@ -17,3 +17,9 @@ export const registerRequestSchema = z.object({
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
 export type LoginResponse = ApiResponse<string>;
+
+export interface Branch {
+  id: string;
+  name: string;
+  code?: string;
+}
