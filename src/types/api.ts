@@ -9,3 +9,26 @@ export interface ApiResponse<T> {
   className: string;
 }
 
+export interface PagedFilter {
+  column: string;
+  operator: string;
+  value: string;
+}
+
+export interface PagedParams {
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortDirection?: string;
+  filters?: PagedFilter[];
+}
+
+export interface PagedResponse<T> {
+  data: T[];
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}

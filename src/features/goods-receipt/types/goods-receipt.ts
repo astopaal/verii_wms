@@ -145,23 +145,6 @@ export interface GrHeader {
   description5: string | null;
 }
 
-export interface PagedResponse<T> {
-  data: T[];
-  totalCount: number;
-  pageNumber: number;
-  pageSize: number;
-  totalPages: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-}
-
-export interface GrHeadersPagedParams {
-  pageNumber?: number;
-  pageSize?: number;
-  sortBy?: string;
-  sortDirection?: 'asc' | 'desc';
-}
-
 export interface GrLine {
   headerId: number;
   orderId: number | null;

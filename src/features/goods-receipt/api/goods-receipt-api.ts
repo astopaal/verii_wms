@@ -1,7 +1,7 @@
 import { api } from '@/lib/axios';
 import { DocumentType } from '@/types/document-type';
-import type { ApiResponse } from '@/types/api';
-import type { Order, OrderItem, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, PagedResponse, GrHeadersPagedParams, GrLine, GrImportLine } from '../types/goods-receipt';
+import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
+import type { Order, OrderItem, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, GrLine, GrImportLine } from '../types/goods-receipt';
 import { erpCommonApi } from '@/services/erp-common-api';
 
 interface BulkCreateRequest {
@@ -207,19 +207,18 @@ export const goodsReceiptApi = {
     throw new Error(response.message || 'Mal kabul oluşturulamadı');
   },
 
-  getGrHeadersPaged: async (params: GrHeadersPagedParams = {}): Promise<PagedResponse<GrHeader>> => {
-    const { pageNumber = 1, pageSize = 10, sortBy, sortDirection = 'asc' } = params;
-    const queryParams = new URLSearchParams({
-      pageNumber: pageNumber.toString(),
-      pageSize: pageSize.toString(),
-    });
-    
-    if (sortBy) {
-      queryParams.append('sortBy', sortBy);
-      queryParams.append('sortDirection', sortDirection);
-    }
+  getGrHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<GrHeader>> => {
+    const { pageNumber = 1, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
 
-    const response = await api.get(`/api/GrHeader/paged?${queryParams.toString()}`) as ApiResponse<PagedResponse<GrHeader>>;
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post('/api/GrHeader/paged', requestBody) as ApiResponse<PagedResponse<GrHeader>>;
     if (response.success && response.data) {
       return response.data;
     }
@@ -250,4 +249,3 @@ export const goodsReceiptApi = {
     throw new Error(response.message || 'Mal kabul içerik satırları yüklenemedi');
   },
 };
-
