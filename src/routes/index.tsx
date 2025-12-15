@@ -11,6 +11,7 @@ import {
 import {
   TransferCreatePage,
   TransferListPage,
+  AssignedTransferListPage,
 } from '@/features/transfer';
 import {
   SubcontractingIssueCreatePage,
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
           {
             path: 'list',
             element: <TransferListPage />,
+          },
+          {
+            path: 'assigned',
+            element: <AssignedTransferListPage />,
           },
         ],
       },

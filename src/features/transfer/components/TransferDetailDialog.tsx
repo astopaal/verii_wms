@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { useTransferHeaders } from '../hooks/useTransferHeaders';
-import { useTransferLines } from '../hooks/useTransferLines';
-import type { TransferLine } from '../types/transfer';
-import { useTransferLineSerials } from '../hooks/useTransferLineSerials';
+import { useAssignedTransferOrderLines } from '../hooks/useAssignedTransferOrderLines';
+import type { AssignedTransferLine, AssignedTransferLineSerial } from '../types/transfer';
 import {
   Dialog,
   DialogContent,
@@ -32,7 +31,7 @@ export function TransferDetailDialog({
 }: TransferDetailDialogProps): ReactElement {
   const { t } = useTranslation();
   const { data: headersData } = useTransferHeaders();
-  const { data: linesData, isLoading: isLoadingLines } = useTransferLines(headerId);
+  const { data: assignedData, isLoading: isLoadingLines } = useAssignedTransferOrderLines(headerId);
   const [searchQuery, setSearchQuery] = useState('');
 
   const header = headersData?.data?.find((h) => h.id === headerId);
@@ -58,17 +57,32 @@ export function TransferDetailDialog({
   };
 
   const filteredLines = useMemo(() => {
-    if (!linesData?.data) return [];
-    if (!searchQuery.trim()) return linesData.data;
+    if (!assignedData?.data?.lines) return [];
+    if (!searchQuery.trim()) return assignedData.data.lines;
     const query = searchQuery.toLowerCase();
-    return linesData.data.filter((line) => {
+    return assignedData.data.lines.filter((line) => {
       return (
         line.stockCode?.toLowerCase().includes(query) ||
+        line.stockName?.toLowerCase().includes(query) ||
         line.yapKod?.toLowerCase().includes(query) ||
         line.description?.toLowerCase().includes(query)
       );
     });
-  }, [linesData?.data, searchQuery]);
+  }, [assignedData?.data?.lines, searchQuery]);
+
+  const serialsByLineId = useMemo(() => {
+    const map: Record<number, AssignedTransferLineSerial[]> = {};
+    if (!assignedData?.data?.lineSerials) {
+      return map;
+    }
+    assignedData.data.lineSerials.forEach((serial) => {
+      if (!map[serial.lineId]) {
+        map[serial.lineId] = [];
+      }
+      map[serial.lineId].push(serial);
+    });
+    return map;
+  }, [assignedData?.data?.lineSerials]);
 
 
   return (
@@ -231,8 +245,12 @@ export function TransferDetailDialog({
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredLines.map((line: TransferLine) => (
-                        <TransferLineRow key={line.id} line={line} />
+                      {filteredLines.map((line: AssignedTransferLine) => (
+                        <TransferLineRow
+                          key={line.id}
+                          line={line}
+                          serials={serialsByLineId[line.id] || []}
+                        />
                       ))}
                     </TableBody>
                   </Table>
@@ -247,13 +265,12 @@ export function TransferDetailDialog({
 }
 
 interface TransferLineRowProps {
-  line: TransferLine;
+  line: AssignedTransferLine;
+  serials: AssignedTransferLineSerial[];
 }
 
-function TransferLineRow({ line }: TransferLineRowProps): ReactElement {
-  const { data: lineSerialsData } = useTransferLineSerials(line.id);
-
-  const firstSerial = lineSerialsData?.data && lineSerialsData.data.length > 0 ? lineSerialsData.data[0] : null;
+function TransferLineRow({ line, serials }: TransferLineRowProps): ReactElement {
+  const firstSerial = serials.length > 0 ? serials[0] : null;
   const serialNo = firstSerial?.serialNo || '-';
   const lotNo = firstSerial?.serialNo3 || '-';
   const batchNo = firstSerial?.serialNo4 || '-';
@@ -266,7 +283,7 @@ function TransferLineRow({ line }: TransferLineRowProps): ReactElement {
         </Badge>
       </TableCell>
       <TableCell>
-        <span className="text-sm font-medium">{line.description || '-'}</span>
+        <span className="text-sm font-medium">{line.stockName || '-'}</span>
       </TableCell>
       <TableCell>
         <span className="text-sm">{line.yapKod || '-'}</span>

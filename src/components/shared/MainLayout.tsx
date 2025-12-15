@@ -145,6 +145,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.transferList'),
           href: '/transfer/list',
         },
+        {
+          title: t('sidebar.transferAssigned', 'Atanmış Transfer Emirleri'),
+          href: '/transfer/assigned',
+        },
       ],
     },
     {

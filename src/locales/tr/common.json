@@ -59,7 +59,8 @@
     "shipment": "Sevkiyat",
     "transfer": "Transfer",
     "transferCreate": "Transfer Emri Oluştur",
-    "transferList": "Transfer Emri Listesi"
+    "transferList": "Transfer Emri Listesi",
+    "transferAssigned": "Atanmış Transfer Emirleri"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -277,6 +278,12 @@
       "sourceCellCode": "Çıkış Hücre",
       "targetCellCode": "Varış Hücre",
       "detailDescription": "Transfer emrinin detaylı bilgileri"
+    },
+    "assignedList": {
+      "title": "Atanmış Transfer Emirleri",
+      "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+      "noData": "Atanmış transfer emri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu"
     },
     "step1": {
       "transferDate": "Transfer Tarihi",
