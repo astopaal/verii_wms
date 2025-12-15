@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { transferApi } from '../api/transfer-api';
+import { TRANSFER_QUERY_KEYS } from '../utils/query-keys';
 
 export function useTransferLineSerials(lineId: number | null) {
   return useQuery({
-    queryKey: ['transferLineSerials', lineId],
+    queryKey: [TRANSFER_QUERY_KEYS.LINE_SERIALS, lineId],
     queryFn: () => {
       if (!lineId) throw new Error('Line ID is required');
       return transferApi.getLineSerials(lineId);

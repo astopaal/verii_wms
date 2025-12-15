@@ -228,3 +228,112 @@ export type TransferHeadersResponse = ApiResponse<TransferHeader[]>;
 export type TransferLinesResponse = ApiResponse<TransferLine[]>;
 export type TransferLineSerialsResponse = ApiResponse<TransferLineSerial[]>;
 
+export interface AssignedTransferLine {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  quantity: number;
+  unit: string;
+  erpOrderNo: string;
+  erpOrderId: string;
+  description: string;
+  headerId: number;
+  orderId: number;
+  erpLineReference: string;
+}
+
+export interface AssignedTransferLineSerial {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceCellCode: string;
+  targetCellCode: string;
+  lineId: number;
+}
+
+export interface AssignedTransferImportLine {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  description1: string;
+  description2: string;
+  description: string;
+  headerId: number;
+  lineId: number;
+  routeId: number;
+}
+
+export interface AssignedTransferRoute {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  scannedBarcode: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceWarehouse: number;
+  targetWarehouse: number;
+  sourceCellCode: string;
+  targetCellCode: string;
+  importLineId: number;
+  stockCode: string;
+  yapKod: string;
+  description: string;
+}
+
+export interface AssignedTransferOrderLinesData {
+  lines: AssignedTransferLine[];
+  lineSerials: AssignedTransferLineSerial[];
+  importLines: AssignedTransferImportLine[];
+  routes: AssignedTransferRoute[];
+}
+
+export type AssignedTransferOrderLinesResponse = ApiResponse<AssignedTransferOrderLinesData>;
+
