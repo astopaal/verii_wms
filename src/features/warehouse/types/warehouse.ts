@@ -231,4 +231,3 @@ export interface WarehouseLineSerial {
 export type WarehouseHeadersResponse = ApiResponse<WarehouseHeader[]>;
 export type WarehouseLinesResponse = ApiResponse<WarehouseLine[]>;
 export type WarehouseLineSerialsResponse = ApiResponse<WarehouseLineSerial[]>;
-

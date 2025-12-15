@@ -120,27 +120,6 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
     },
     {
-      title: t('sidebar.shipment'),
-      href: '/shipment',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M5 18l6-6M5 18v-5a2 2 0 0 1 2-2h5" />
-          <path d="m13 6 4 4-4 4" />
-          <path d="M17 10h5" />
-        </svg>
-      ),
-    },
-    {
       title: t('sidebar.transfer'),
       icon: (
         <svg
@@ -243,6 +222,36 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         },
       ],
     },
+    {
+      title: t('sidebar.shipment', 'Sevkiyat'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M5 18l6-6M5 18v-5a2 2 0 0 1 2-2h5" />
+          <path d="m13 6 4 4-4 4" />
+          <path d="M17 10h5" />
+        </svg>
+      ),
+      children: [
+        {
+          title: t('sidebar.shipmentCreate', 'Sevkiyat Emri'),
+          href: '/shipment/create',
+        },
+        {
+          title: t('sidebar.shipmentList', 'Sevkiyat Emri Listesi'),
+          href: '/shipment/list',
+        },
+      ],
+    },
   ];
 
   const items = navItems || defaultNavItems;
@@ -256,7 +265,7 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         <main
           className={cn(
             'flex-1 overflow-y-auto transition-all duration-300 pb-16',
-            isSidebarOpen ? 'lg:ml-64' : 'lg:ml-16'
+            isSidebarOpen ? 'lg:ml-64' : 'lg:ml-16',
           )}
         >
           <div className="container px-4 py-3">
@@ -268,4 +277,3 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
     </div>
   );
 }
-

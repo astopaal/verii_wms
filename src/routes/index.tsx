@@ -24,6 +24,7 @@ import {
   WarehouseInboundListPage,
   WarehouseOutboundListPage,
 } from '@/features/warehouse';
+import { ShipmentCreatePage, ShipmentListPage } from '@/features/shipment';
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +127,19 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'shipment',
+        children: [
+          {
+            path: 'create',
+            element: <ShipmentCreatePage />,
+          },
+          {
+            path: 'list',
+            element: <ShipmentListPage />,
+          },
+        ],
+      },
     ],
   },
   {
@@ -139,4 +153,3 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
-
