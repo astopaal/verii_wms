@@ -1,4 +1,4 @@
-import { type ReactElement, useState, useEffect, useMemo } from 'react';
+import { type ReactElement, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/stores/ui-store';
@@ -7,12 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useStokBarcode } from '../hooks/useStokBarcode';
 import { useAddBarcode } from '../hooks/useAddBarcode';
 import { useCollectedBarcodes } from '../hooks/useCollectedBarcodes';
 import { useAssignedTransferOrderLines } from '../hooks/useAssignedTransferOrderLines';
-import { Barcode, Package, ArrowLeft, Loader2, CheckCircle2, List } from 'lucide-react';
+import { Barcode, Package, ArrowLeft, Loader2, CheckCircle2, List, Camera } from 'lucide-react';
 import { toast } from 'sonner';
+import { Html5Qrcode, Html5QrcodeScanType, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import type { StokBarcodeDto } from '../types/transfer';
 
 export function TransferCollectionPage(): ReactElement {
@@ -25,6 +27,9 @@ export function TransferCollectionPage(): ReactElement {
   const [enableSearch, setEnableSearch] = useState(false);
   const [selectedStock, setSelectedStock] = useState<StokBarcodeDto | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const qrCodeScannerRef = useRef<Html5Qrcode | null>(null);
+  const scannerContainerRef = useRef<HTMLDivElement>(null);
 
   const headerIdNum = headerId ? parseInt(headerId, 10) : 0;
 
@@ -50,14 +55,14 @@ export function TransferCollectionPage(): ReactElement {
     }
   }, [barcodeData, t]);
 
-  const handleBarcodeSearch = () => {
+  const handleBarcodeSearch = useCallback(() => {
     if (!barcodeInput.trim()) {
       toast.error(t('transfer.collection.enterBarcode', 'Lütfen barkod giriniz'));
       return;
     }
     setSearchBarcode(barcodeInput);
     setEnableSearch(true);
-  };
+  }, [barcodeInput, t]);
 
   const handleCollect = () => {
     if (!selectedStock) {
@@ -120,6 +125,73 @@ export function TransferCollectionPage(): ReactElement {
     }
   };
 
+  const handleOpenCamera = () => {
+    setIsCameraOpen(true);
+  };
+
+  const handleCloseCamera = () => {
+    if (qrCodeScannerRef.current) {
+      qrCodeScannerRef.current.stop().catch(() => {
+        // Ignore errors when stopping
+      });
+      qrCodeScannerRef.current.clear();
+      qrCodeScannerRef.current = null;
+    }
+    setIsCameraOpen(false);
+  };
+
+  useEffect(() => {
+    if (isCameraOpen && scannerContainerRef.current) {
+      const scannerId = 'barcode-scanner';
+      const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        aspectRatio: 1.0,
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.UPC_A,
+          Html5QrcodeSupportedFormats.UPC_E,
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39,
+          Html5QrcodeSupportedFormats.CODE_93,
+          Html5QrcodeSupportedFormats.CODABAR,
+          Html5QrcodeSupportedFormats.ITF,
+        ],
+      };
+
+      const html5QrCode = new Html5Qrcode(scannerId);
+      qrCodeScannerRef.current = html5QrCode;
+
+      html5QrCode
+        .start(
+          { facingMode: 'environment' },
+          config,
+          (decodedText) => {
+            setBarcodeInput(decodedText);
+            handleCloseCamera();
+            toast.success(t('transfer.collection.barcodeScanned', 'Barkod okundu'));
+            setTimeout(() => {
+              handleBarcodeSearch();
+            }, 100);
+          },
+          () => {
+            // Error callback - ignore
+          }
+        )
+        .catch((err) => {
+          toast.error(t('transfer.collection.cameraError', 'Kamera açılamadı'));
+          console.error('Camera error:', err);
+          handleCloseCamera();
+        });
+
+      return () => {
+        handleCloseCamera();
+      };
+    }
+  }, [isCameraOpen, t, handleBarcodeSearch]);
+
   const totalCollectedCount = useMemo(() => {
     if (!collectedData?.data) return 0;
     return collectedData.data.reduce((total, item) => total + item.routes.length, 0);
@@ -168,13 +240,22 @@ export function TransferCollectionPage(): ReactElement {
           <CardContent className="p-3 space-y-3">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Barcode className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4" />
+                <Barcode className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4 hidden md:block" />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-1 top-1/2 transform -translate-y-1/2 md:hidden h-8 w-8"
+                  onClick={handleOpenCamera}
+                >
+                  <Camera className="size-4 text-muted-foreground" />
+                </Button>
                 <Input
                   placeholder={t('transfer.collection.barcodePlaceholder', 'Barkod okutun veya yazın')}
                   value={barcodeInput}
                   onChange={(e) => setBarcodeInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="pl-9 h-10"
+                  className="pl-10 md:pl-9 h-10"
                 />
               </div>
               <Button onClick={handleBarcodeSearch} disabled={isSearching} size="default">
@@ -294,6 +375,37 @@ export function TransferCollectionPage(): ReactElement {
           </div>
         )}
       </div>
+
+      <Dialog open={isCameraOpen} onOpenChange={(open) => {
+        if (!open) {
+          handleCloseCamera();
+        }
+      }}>
+        <DialogContent className="max-w-[95vw] w-full p-0 gap-0" showCloseButton={true}>
+          <DialogHeader className="p-4 pb-2">
+            <DialogTitle>{t('transfer.collection.scanBarcode', 'Barkod Okut')}</DialogTitle>
+            <DialogDescription>
+              {t('transfer.collection.scanBarcodeDescription', 'Barkodu kameraya hizalayın')}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="relative w-full" style={{ minHeight: '300px' }}>
+            <div
+              id="barcode-scanner"
+              ref={scannerContainerRef}
+              className="w-full"
+              style={{ minHeight: '300px' }}
+            />
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="border-2 border-white rounded-lg" style={{ width: '250px', height: '250px' }}>
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-white rounded-tl-lg"></div>
+                <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-white rounded-tr-lg"></div>
+                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-white rounded-bl-lg"></div>
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-white rounded-br-lg"></div>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
