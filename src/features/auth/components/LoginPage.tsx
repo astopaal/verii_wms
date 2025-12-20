@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -23,12 +24,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import loginImage from '@/assets/login.jpg';
-import { Building2, Lock, Mail } from 'lucide-react';
+import { Building2, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 
 export function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();
   const { mutate: login, isPending } = useLogin();
   const { data: branches, isLoading: branchesLoading } = useBranches();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
     defaultValues: {
@@ -149,12 +151,26 @@ export function LoginPage(): React.JSX.Element {
                         {t('auth.login.password')}
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder={t('auth.login.passwordPlaceholder')}
-                          className="h-11"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder={t('auth.login.passwordPlaceholder')}
+                            className="h-11 pr-10"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                            aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="size-4" />
+                            ) : (
+                              <Eye className="size-4" />
+                            )}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
