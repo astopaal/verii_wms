@@ -16,7 +16,7 @@ interface SidebarProps {
 
 function NavItemComponent({ item }: { item: NavItem }): ReactElement {
   const location = useLocation();
-  const { isSidebarOpen } = useUIStore();
+  const { isSidebarOpen, setSidebarOpen } = useUIStore();
   const hasChildren = item.children && item.children.length > 0;
   const isActive = item.href ? location.pathname === item.href : false;
   const isChildActive = item.children?.some(
@@ -30,12 +30,26 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
     }
   }, [isChildActive]);
 
+  const handleIconClick = (e: React.MouseEvent): void => {
+    if (!isSidebarOpen) {
+      e.preventDefault();
+      e.stopPropagation();
+      setSidebarOpen(true);
+    }
+  };
+
   if (hasChildren) {
     return (
       <div className="space-y-1">
         <button
           type="button"
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => {
+            if (!isSidebarOpen) {
+              setSidebarOpen(true);
+            } else {
+              setIsExpanded(!isExpanded);
+            }
+          }}
           className={cn(
             'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
             'hover:bg-accent hover:text-accent-foreground',
@@ -46,7 +60,10 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
           )}
         >
           {item.icon && (
-            <span className={cn('flex-shrink-0', !isSidebarOpen && 'mx-auto')}>
+            <span
+              className={cn('flex-shrink-0', !isSidebarOpen && 'mx-auto')}
+              onClick={handleIconClick}
+            >
               {item.icon}
             </span>
           )}
@@ -124,14 +141,22 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
           : 'text-muted-foreground',
         !isSidebarOpen && 'justify-center'
       )}
-      onClick={() => {
-        if (window.innerWidth < 1024) {
-          useUIStore.getState().setSidebarOpen(false);
+      onClick={(e) => {
+        if (!isSidebarOpen) {
+          e.preventDefault();
+          setSidebarOpen(true);
+        } else {
+          if (window.innerWidth < 1024) {
+            setSidebarOpen(false);
+          }
         }
       }}
     >
       {item.icon && (
-        <span className={cn('flex-shrink-0', !isSidebarOpen && 'mx-auto')}>
+        <span
+          className={cn('flex-shrink-0', !isSidebarOpen && 'mx-auto')}
+          onClick={handleIconClick}
+        >
           {item.icon}
         </span>
       )}
