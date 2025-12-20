@@ -19,12 +19,14 @@
     "required": "Required",
     "notFound": "Not Found",
     "noData": "No Data",
+    "noResults": "No results found",
     "error": "Error",
     "success": "Success",
     "complete": "Completed",
     "over": "Over",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "add": "Add"
   },
   "auth": {
     "login": {
@@ -54,8 +56,11 @@
     "goodsReceiptCreate": "Goods Receipt Entry",
     "goodsReceiptList": "Goods Receipt List",
     "inventory": "Inventory",
+    "warehouse3d": "3D Warehouse",
     "reports": "Reports",
     "shipment": "Shipment",
+    "shipmentCreate": "Shipment Order",
+    "shipmentList": "Shipment Order List",
     "transfer": "Transfer",
     "transferCreate": "Create Transfer Order",
     "transferList": "Transfer Order List",
@@ -225,6 +230,96 @@
       "updatedDate": "Updated Date"
     }
   },
+  "shipment": {
+    "create": {
+      "title": "New Shipment Order",
+      "subtitle": "Enter shipment information and select order items",
+      "steps": {
+        "basicInfo": "Basic Information",
+        "orderSelection": "Order Selection"
+      },
+      "unknownStep": "Unknown step",
+      "success": "Shipment order created successfully",
+      "error": "An error occurred while creating shipment order"
+    },
+    "list": {
+      "title": "Shipment Order List",
+      "searchPlaceholder": "Document No, Customer Code, Warehouse...",
+      "id": "ID",
+      "documentNo": "Document No",
+      "documentDate": "Document Date",
+      "customerCode": "Customer Code",
+      "customerName": "Customer Name",
+      "sourceWarehouse": "Source Warehouse",
+      "targetWarehouse": "Target Warehouse",
+      "documentType": "Document Type",
+      "status": "Status",
+      "createdDate": "Created Date",
+      "actions": "Actions",
+      "completed": "Completed",
+      "pendingApproval": "Pending Approval",
+      "inProgress": "In Progress",
+      "viewDetails": "Details",
+      "noData": "No data found",
+      "error": "An error occurred while loading data",
+      "detailTitle": "Shipment Order Detail",
+      "detailDescription": "Detailed information of the shipment order",
+      "documentInfo": "Document Information",
+      "customerInfo": "Customer Information",
+      "warehouseInfo": "Warehouse Information",
+      "lines": "Lines",
+      "orderNo": "Order No",
+      "stockCode": "Stock Code",
+      "stockName": "Stock Name",
+      "serialNo": "Serial No"
+    },
+    "step1": {
+      "transferDate": "Shipment Date",
+      "documentNo": "Document No",
+      "documentNoPlaceholder": "Enter document number",
+      "customer": "Customer",
+      "selectCustomer": "Select customer",
+      "projectCode": "Project Code",
+      "selectProjectCode": "Select project code",
+      "noProject": "No project",
+      "sourceWarehouse": "Source Warehouse",
+      "selectSourceWarehouse": "Select source warehouse",
+      "notes": "Notes",
+      "notesPlaceholder": "Enter your notes"
+    },
+    "step2": {
+      "selectCustomerFirst": "Select Customer First",
+      "customerPrompt": "To view orders, please select a customer from the previous step.",
+      "orders": "Orders",
+      "orderContent": "Order Content",
+      "noOrderSelected": "Order Selection",
+      "selectOrderPrompt": "Select an order from the orders tab to proceed.",
+      "itemsCount": "{{count}} items",
+      "started": "Started",
+      "searchItems": "Search by stock code or name...",
+      "noItemsFound": "No items found in this order.",
+      "ordered": "Ordered",
+      "remaining": "Remaining",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "details": {
+      "serialNo": "Serial No",
+      "serialNoPlaceholder": "Enter serial number",
+      "lotNo": "Lot No",
+      "lotNoPlaceholder": "Enter lot number",
+      "batchNo": "Batch No",
+      "batchNoPlaceholder": "Enter batch number",
+      "configCode": "Config Code",
+      "configCodePlaceholder": "Enter configuration code"
+    },
+    "validation": {
+      "transferDateRequired": "Date is required",
+      "documentNoRequired": "Document number is required",
+      "customerRequired": "Customer selection is required",
+      "sourceWarehouseRequired": "Source warehouse is required"
+    }
+  },
   "transfer": {
     "create": {
       "title": "New Transfer Order",
@@ -336,18 +431,45 @@
       "targetCellCode": "Target Bin Code",
       "targetCellCodePlaceholder": "Enter target bin code"
     },
+    "assignedList": {
+      "title": "Assigned Transfer Orders",
+      "searchPlaceholder": "Document No, Customer Code, Warehouse...",
+      "noData": "No assigned transfer orders found",
+      "error": "An error occurred while loading data"
+    },
     "validation": {
       "transferDateRequired": "Date is required",
       "documentNoRequired": "Document number is required",
       "customerRequired": "Customer selection is required",
       "sourceWarehouseRequired": "Source warehouse is required",
       "targetWarehouseRequired": "Target warehouse is required"
-    },
-    "assignedList": {
-      "title": "Assigned Transfer Orders",
-      "searchPlaceholder": "Document No, Customer Code, Warehouse...",
-      "noData": "No assigned transfer orders found",
-      "error": "An error occurred while loading data"
+    }
+  },
+  "inventory": {
+    "warehouse3d": {
+      "title": "3D Warehouse Visualization",
+      "description": "3D visualization of the warehouse",
+      "selectWarehouse": "Select Warehouse",
+      "error": "An error occurred while loading data",
+      "totalStock": "Total Stock",
+      "products": "Products",
+      "quantity": "Quantity",
+      "empty": "Empty",
+      "lowStock": "Low Stock",
+      "mediumStock": "Medium Stock",
+      "highStock": "High Stock",
+      "emptyCell": "This cell is empty",
+      "desktopOnly": "3D warehouse modeling feature is only available on desktop devices.",
+      "pleaseSelectWarehouse": "Please select a warehouse",
+      "controls": "Controls",
+      "rotate": "Rotate",
+      "pan": "Pan",
+      "zoom": "Zoom In/Out",
+      "selectShelf": "Select Shelf",
+      "leftClickDrag": "🖱️ Left Click + Drag",
+      "rightClickDrag": "🖱️ Right Click + Drag",
+      "scroll": "🖱️ Scroll",
+      "clickShelf": "🖱️ Click Shelf"
     }
   },
   "footer": {

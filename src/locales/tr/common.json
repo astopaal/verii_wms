@@ -19,6 +19,7 @@
     "required": "Zorunlu",
     "notFound": "Bulunamadı",
     "noData": "Veri yok",
+    "noResults": "Sonuç bulunamadı",
     "error": "Hata",
     "success": "Başarılı",
     "complete": "Tamamlandı",
@@ -55,8 +56,11 @@
     "goodsReceiptCreate": "Mal Kabul Girişi",
     "goodsReceiptList": "Mal Kabul Listesi",
     "inventory": "Envanter",
+    "warehouse3d": "3D Depo",
     "reports": "Raporlar",
     "shipment": "Sevkiyat",
+    "shipmentCreate": "Sevkiyat Emri",
+    "shipmentList": "Sevkiyat Emri Listesi",
     "transfer": "Transfer",
     "transferCreate": "Transfer Emri Oluştur",
     "transferList": "Transfer Emri Listesi",
@@ -226,6 +230,96 @@
       "updatedDate": "Güncellenme Tarihi"
     }
   },
+  "shipment": {
+    "create": {
+      "title": "Yeni Sevkiyat Emri",
+      "subtitle": "Sevkiyat bilgilerini girin ve sipariş kalemlerini seçin",
+      "steps": {
+        "basicInfo": "Temel Bilgiler",
+        "orderSelection": "Sipariş Seçimi"
+      },
+      "unknownStep": "Bilinmeyen adım",
+      "success": "Sevkiyat emri başarıyla oluşturuldu",
+      "error": "Sevkiyat emri oluşturulurken bir hata oluştu"
+    },
+    "list": {
+      "title": "Sevkiyat Emri Listesi",
+      "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+      "id": "ID",
+      "documentNo": "Belge No",
+      "documentDate": "Belge Tarihi",
+      "customerCode": "Cari Kodu",
+      "customerName": "Cari Adı",
+      "sourceWarehouse": "Çıkış Deposu",
+      "targetWarehouse": "Varış Deposu",
+      "documentType": "Belge Tipi",
+      "status": "Durum",
+      "createdDate": "Oluşturulma Tarihi",
+      "actions": "İşlemler",
+      "completed": "Tamamlandı",
+      "pendingApproval": "Onay Bekliyor",
+      "inProgress": "Devam Ediyor",
+      "viewDetails": "Detay",
+      "noData": "Veri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu",
+      "detailTitle": "Sevkiyat Emri Detayı",
+      "detailDescription": "Sevkiyat emrinin detaylı bilgileri",
+      "documentInfo": "Belge Bilgileri",
+      "customerInfo": "Cari Bilgileri",
+      "warehouseInfo": "Depo Bilgileri",
+      "lines": "Kalemler",
+      "orderNo": "Sipariş No",
+      "stockCode": "Stok Kodu",
+      "stockName": "Stok Adı",
+      "serialNo": "Seri No"
+    },
+    "step1": {
+      "transferDate": "Sevkiyat Tarihi",
+      "documentNo": "Belge No",
+      "documentNoPlaceholder": "Belge No giriniz",
+      "customer": "Cari",
+      "selectCustomer": "Cari seçiniz",
+      "projectCode": "Proje Kodu",
+      "selectProjectCode": "Proje kodu seçiniz",
+      "noProject": "Proje yok",
+      "sourceWarehouse": "Çıkış Deposu",
+      "selectSourceWarehouse": "Çıkış deposu seçiniz",
+      "notes": "Notlar",
+      "notesPlaceholder": "Notlarınızı giriniz"
+    },
+    "step2": {
+      "selectCustomerFirst": "Önce Cari Seçiniz",
+      "customerPrompt": "Siparişleri görüntülemek için lütfen önceki adımdan bir cari seçin.",
+      "orders": "Siparişler",
+      "orderContent": "Sipariş İçeriği",
+      "noOrderSelected": "Sipariş Seçimi",
+      "selectOrderPrompt": "İşlem yapmak için siparişler sekmesinden bir sipariş seçiniz.",
+      "itemsCount": "{{count}} kalem ürün",
+      "started": "Başlanan",
+      "searchItems": "Stok kodu veya adı ile ara...",
+      "noItemsFound": "Bu siparişte ürün bulunamadı.",
+      "ordered": "Sipariş",
+      "remaining": "Kalan",
+      "pending": "Beklemede",
+      "completed": "Tamamlandı"
+    },
+    "details": {
+      "serialNo": "Seri No",
+      "serialNoPlaceholder": "Seri No giriniz",
+      "lotNo": "Parti No",
+      "lotNoPlaceholder": "Parti No giriniz",
+      "batchNo": "Batch No",
+      "batchNoPlaceholder": "Batch No giriniz",
+      "configCode": "Yapılandırma Kodu",
+      "configCodePlaceholder": "Yapılandırma Kodu giriniz"
+    },
+    "validation": {
+      "transferDateRequired": "Tarih zorunludur",
+      "documentNoRequired": "Belge No zorunludur",
+      "customerRequired": "Cari seçimi zorunludur",
+      "sourceWarehouseRequired": "Çıkış deposu zorunludur"
+    }
+  },
   "transfer": {
     "create": {
       "title": "Yeni Transfer Emri",
@@ -349,6 +443,33 @@
       "customerRequired": "Cari seçimi zorunludur",
       "sourceWarehouseRequired": "Çıkış deposu zorunludur",
       "targetWarehouseRequired": "Varış deposu zorunludur"
+    }
+  },
+  "inventory": {
+    "warehouse3d": {
+      "title": "3D Depo Görselleştirme",
+      "description": "Deponun 3 boyutlu görselleştirmesi",
+      "selectWarehouse": "Depo Seçin",
+      "error": "Veri yüklenirken bir hata oluştu",
+      "totalStock": "Toplam Stok",
+      "products": "Ürünler",
+      "quantity": "Miktar",
+      "empty": "Boş",
+      "lowStock": "Düşük Stok",
+      "mediumStock": "Normal Stok",
+      "highStock": "Yüksek Stok",
+      "emptyCell": "Bu hücre boş",
+      "desktopOnly": "3 boyutlu depo modelleme özelliği yalnızca masaüstü cihazlarda kullanılabilir.",
+      "pleaseSelectWarehouse": "Lütfen bir depo seçiniz",
+      "controls": "Kontroller",
+      "rotate": "Döndür",
+      "pan": "Kaydır",
+      "zoom": "Yakınlaştır/Uzaklaştır",
+      "selectShelf": "Raf Seç",
+      "leftClickDrag": "🖱️ Sol Tık + Sürükle",
+      "rightClickDrag": "🖱️ Sağ Tık + Sürükle",
+      "scroll": "🖱️ Scroll",
+      "clickShelf": "🖱️ Raf Tıkla"
     }
   },
   "footer": {

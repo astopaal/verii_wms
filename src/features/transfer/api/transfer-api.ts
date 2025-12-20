@@ -9,6 +9,10 @@ import type {
   TransferLinesResponse,
   TransferLineSerialsResponse,
   AssignedTransferOrderLinesResponse,
+  StokBarcodeResponse,
+  AddBarcodeRequest,
+  AddBarcodeResponse,
+  CollectedBarcodesResponse,
 } from '../types/transfer';
 import { buildTransferGenerateRequest } from '../utils/transfer-generate';
 import type { ApiResponse } from '@/types/api';
@@ -56,6 +60,28 @@ export const transferApi = {
 
   getLineSerials: async (lineId: number): Promise<TransferLineSerialsResponse> => {
     const response = await api.get(`/api/WtLineSerial/line/${lineId}`) as TransferLineSerialsResponse;
+    return response;
+  },
+
+  getStokBarcode: async (barcode: string, barcodeGroup: string = '1'): Promise<StokBarcodeResponse> => {
+    const response = await api.get('/api/Erp/getStokBarcode', {
+      params: { bar: barcode, barkodGrubu: barcodeGroup }
+    }) as StokBarcodeResponse;
+    return response;
+  },
+
+  addBarcodeToOrder: async (request: AddBarcodeRequest): Promise<AddBarcodeResponse> => {
+    const response = await api.post('/api/WtImportLine/addBarcodeBasedonAssignedOrder', request) as AddBarcodeResponse;
+    return response;
+  },
+
+  getCollectedBarcodes: async (headerId: number): Promise<CollectedBarcodesResponse> => {
+    const response = await api.get(`/api/WtImportLine/warehouseTransferOrderCollectedBarcodes/${headerId}`) as CollectedBarcodesResponse;
+    return response;
+  },
+
+  deleteRoute: async (routeId: number): Promise<ApiResponse<boolean>> => {
+    const response = await api.delete(`/api/WtRoute/${routeId}`) as ApiResponse<boolean>;
     return response;
   },
 };

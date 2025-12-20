@@ -12,6 +12,8 @@ import {
   TransferCreatePage,
   TransferListPage,
   AssignedTransferListPage,
+  TransferCollectionPage,
+  CollectedBarcodesPage,
 } from '@/features/transfer';
 import {
   SubcontractingIssueCreatePage,
@@ -26,6 +28,7 @@ import {
   WarehouseOutboundListPage,
 } from '@/features/warehouse';
 import { ShipmentCreatePage, ShipmentListPage } from '@/features/shipment';
+import { Warehouse3dPage } from '@/features/inventory/3d-warehouse';
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +70,14 @@ export const router = createBrowserRouter([
           {
             path: 'assigned',
             element: <AssignedTransferListPage />,
+          },
+          {
+            path: 'collection/:headerId',
+            element: <TransferCollectionPage />,
+          },
+          {
+            path: 'collected/:headerId',
+            element: <CollectedBarcodesPage />,
           },
         ],
       },
@@ -142,6 +153,15 @@ export const router = createBrowserRouter([
           {
             path: 'list',
             element: <ShipmentListPage />,
+          },
+        ],
+      },
+      {
+        path: 'inventory',
+        children: [
+          {
+            path: '3d-warehouse',
+            element: <Warehouse3dPage />,
           },
         ],
       },
