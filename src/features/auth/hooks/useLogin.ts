@@ -6,7 +6,6 @@ import { authApi } from '../api/auth-api';
 import { useAuthStore } from '@/stores/auth-store';
 import { getUserFromToken } from '@/utils/jwt';
 import type { LoginRequest } from '../types/auth';
-import type { AxiosError } from 'axios';
 
 export const useLogin = () => {
   const { t } = useTranslation();
@@ -24,12 +23,8 @@ export const useLogin = () => {
         }
       }
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        toast.error(t('auth.login.wrongPassword'));
-      } else {
-        toast.error(t('auth.login.loginError'));
-      }
+    onError: (error: Error) => {
+      toast.error(error.message || t('auth.login.loginError'));
     },
   });
 };

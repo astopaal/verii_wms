@@ -37,6 +37,16 @@ api.interceptors.response.use(
         window.location.href = '/auth/login';
       }
     }
+    
+    if (error.response?.data) {
+      const apiError = error.response.data;
+      if (apiError.message) {
+        error.message = apiError.message;
+      } else if (apiError.exceptionMessage) {
+        error.message = apiError.exceptionMessage;
+      }
+    }
+    
     return Promise.reject(error);
   }
 );
