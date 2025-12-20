@@ -64,7 +64,8 @@
     "transfer": "Transfer",
     "transferCreate": "Transferauftrag erstellen",
     "transferList": "Transferauftragsliste",
-    "transferAssigned": "Zugewiesene Transferaufträge"
+    "transferAssigned": "Zugewiesene Transferaufträge",
+    "search": "Suchen..."
   },
   "dashboard": {
     "title": "Dashboard",

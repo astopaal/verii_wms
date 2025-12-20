@@ -64,7 +64,8 @@
     "transfer": "Transfer",
     "transferCreate": "Transfer Emri Oluştur",
     "transferList": "Transfer Emri Listesi",
-    "transferAssigned": "Atanmış Transfer Emirleri"
+    "transferAssigned": "Atanmış Transfer Emirleri",
+    "search": "Ara..."
   },
   "dashboard": {
     "title": "Dashboard",

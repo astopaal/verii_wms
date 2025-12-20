@@ -1,7 +1,10 @@
-import { type ReactElement, useState, useEffect } from 'react';
+import { type ReactElement, useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/stores/ui-store';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Search, X } from 'lucide-react';
 
 interface NavItem {
   title: string;
@@ -14,7 +17,17 @@ interface SidebarProps {
   items: NavItem[];
 }
 
-function NavItemComponent({ item }: { item: NavItem }): ReactElement {
+function NavItemComponent({
+  item,
+  searchQuery,
+  expandedItemKey,
+  onToggle,
+}: {
+  item: NavItem;
+  searchQuery: string;
+  expandedItemKey: string | null;
+  onToggle: (key: string) => void;
+}): ReactElement {
   const location = useLocation();
   const { isSidebarOpen, setSidebarOpen } = useUIStore();
   const hasChildren = item.children && item.children.length > 0;
@@ -22,13 +35,45 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
   const isChildActive = item.children?.some(
     (child) => child.href && location.pathname === child.href
   );
-  const [isExpanded, setIsExpanded] = useState(isChildActive);
+  const itemKey = item.href || item.title;
+  const isExpanded = expandedItemKey === itemKey;
+  const onToggleRef = useRef(onToggle);
+  const lastActiveRef = useRef(false);
+  const lastSearchRef = useRef('');
+
+  onToggleRef.current = onToggle;
+
+  const matchesSearch = useMemo(() => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    const titleMatch = item.title.toLowerCase().includes(query);
+    const childrenMatch = item.children?.some((child) =>
+      child.title.toLowerCase().includes(query)
+    );
+    return titleMatch || childrenMatch || false;
+  }, [item, searchQuery]);
 
   useEffect(() => {
-    if (isChildActive) {
-      setIsExpanded(true);
+    if (isChildActive && hasChildren && !isExpanded && !lastActiveRef.current) {
+      lastActiveRef.current = true;
+      onToggleRef.current(itemKey);
+    } else if (!isChildActive) {
+      lastActiveRef.current = false;
     }
-  }, [isChildActive]);
+  }, [isChildActive, hasChildren, itemKey, isExpanded]);
+
+  useEffect(() => {
+    const searchChanged = lastSearchRef.current !== searchQuery;
+    lastSearchRef.current = searchQuery;
+
+    if (searchQuery.trim() && matchesSearch && hasChildren && !isExpanded && searchChanged) {
+      onToggleRef.current(itemKey);
+    }
+  }, [searchQuery, matchesSearch, hasChildren, itemKey, isExpanded]);
+
+  if (!matchesSearch) {
+    return <></>;
+  }
 
   const handleIconClick = (e: React.MouseEvent): void => {
     if (!isSidebarOpen) {
@@ -47,7 +92,11 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
             if (!isSidebarOpen) {
               setSidebarOpen(true);
             } else {
-              setIsExpanded(!isExpanded);
+              if (isExpanded) {
+                onToggle('');
+              } else {
+                onToggle(itemKey);
+              }
             }
           }}
           className={cn(
@@ -173,7 +222,19 @@ function NavItemComponent({ item }: { item: NavItem }): ReactElement {
 }
 
 export function Sidebar({ items }: SidebarProps): ReactElement {
+  const { t } = useTranslation();
   const { isSidebarOpen } = useUIStore();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedItemKey, setExpandedItemKey] = useState<string | null>(null);
+
+  const handleToggle = useCallback((key: string): void => {
+    setExpandedItemKey((prev) => {
+      if (prev === key) {
+        return null;
+      }
+      return key;
+    });
+  }, []);
 
   return (
     <>
@@ -192,8 +253,38 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
         )}
       >
         <nav className="flex h-full flex-col gap-1 p-4">
+          {isSidebarOpen && (
+            <div className="mb-3">
+              <div className="relative">
+                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder={t('sidebar.search', 'Ara...')}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={cn('h-9', searchQuery ? 'pl-8 pr-8' : 'pl-8')}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label="Temizle"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
           {items.map((item, index) => (
-            <NavItemComponent key={item.href || item.title || index} item={item} />
+            <NavItemComponent
+              key={item.href || item.title || index}
+              item={item}
+              searchQuery={searchQuery}
+              expandedItemKey={expandedItemKey}
+              onToggle={handleToggle}
+            />
           ))}
         </nav>
       </aside>

@@ -64,7 +64,8 @@
     "transfer": "Transfert",
     "transferCreate": "Créer un ordre de transfert",
     "transferList": "Liste des transferts",
-    "transferAssigned": "Transferts assignés"
+    "transferAssigned": "Transferts assignés",
+    "search": "Rechercher..."
   },
   "dashboard": {
     "title": "Tableau de bord",

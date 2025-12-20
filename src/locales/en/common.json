@@ -64,7 +64,8 @@
     "transfer": "Transfer",
     "transferCreate": "Create Transfer Order",
     "transferList": "Transfer Order List",
-    "transferAssigned": "Assigned Transfer Orders"
+    "transferAssigned": "Assigned Transfer Orders",
+    "search": "Search..."
   },
   "dashboard": {
     "title": "Dashboard",
