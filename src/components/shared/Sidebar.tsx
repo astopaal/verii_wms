@@ -80,6 +80,9 @@ function NavItemComponent({
       e.preventDefault();
       e.stopPropagation();
       setSidebarOpen(true);
+      if (hasChildren) {
+        onToggleRef.current(itemKey);
+      }
     }
   };
 
@@ -91,6 +94,7 @@ function NavItemComponent({
           onClick={() => {
             if (!isSidebarOpen) {
               setSidebarOpen(true);
+              onToggleRef.current(itemKey);
             } else {
               if (isExpanded) {
                 onToggle('');
