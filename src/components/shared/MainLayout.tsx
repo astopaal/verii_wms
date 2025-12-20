@@ -77,7 +77,6 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
     },
     {
       title: t('sidebar.inventory'),
-      href: '/inventory',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,6 +94,12 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           <path d="M16 10a4 4 0 0 1-8 0" />
         </svg>
       ),
+      children: [
+        {
+          title: t('sidebar.warehouse3d', '3D Depo'),
+          href: '/inventory/3d-warehouse',
+        },
+      ],
     },
     {
       title: t('sidebar.reports'),
