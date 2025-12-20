@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
 import i18n from './i18n';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.1.4:5000';
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn('VITE_API_URL environment variable not found, using default:', API_URL);

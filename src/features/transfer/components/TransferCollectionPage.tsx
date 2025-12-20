@@ -12,7 +12,8 @@ import { useStokBarcode } from '../hooks/useStokBarcode';
 import { useAddBarcode } from '../hooks/useAddBarcode';
 import { useCollectedBarcodes } from '../hooks/useCollectedBarcodes';
 import { useAssignedTransferOrderLines } from '../hooks/useAssignedTransferOrderLines';
-import { Barcode, Package, ArrowLeft, Loader2, CheckCircle2, List, Camera } from 'lucide-react';
+import { useCompleteTransfer } from '../hooks/useCompleteTransfer';
+import { Barcode, Package, ArrowLeft, Loader2, CheckCircle2, List, Camera, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { Html5Qrcode, Html5QrcodeScanType, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import type { StokBarcodeDto } from '../types/transfer';
@@ -33,10 +34,11 @@ export function TransferCollectionPage(): ReactElement {
 
   const headerIdNum = headerId ? parseInt(headerId, 10) : 0;
 
-  const { data: orderLinesData } = useAssignedTransferOrderLines(headerIdNum);
+  const { data: orderLinesData, isLoading: isLoadingOrderLines } = useAssignedTransferOrderLines(headerIdNum);
   const { data: collectedData, isLoading: isLoadingCollected } = useCollectedBarcodes(headerIdNum);
   const { data: barcodeData, isLoading: isSearching } = useStokBarcode(searchBarcode, '1', enableSearch);
   const addBarcodeMutation = useAddBarcode();
+  const completeTransferMutation = useCompleteTransfer();
 
   useEffect(() => {
     setPageTitle(t('transfer.collection.title', 'Transfer Toplama'));
@@ -123,6 +125,27 @@ export function TransferCollectionPage(): ReactElement {
     if (e.key === 'Enter') {
       handleBarcodeSearch();
     }
+  };
+
+  const handleComplete = () => {
+    if (!headerIdNum) {
+      toast.error(t('transfer.collection.invalidHeaderId', 'Geçersiz transfer emri'));
+      return;
+    }
+
+    completeTransferMutation.mutate(headerIdNum, {
+      onSuccess: (response) => {
+        if (response.success) {
+          toast.success(t('transfer.collection.completed', 'Transfer emri başarıyla tamamlandı'));
+          navigate('/transfer/assigned');
+        } else {
+          toast.error(response.message || t('transfer.collection.completeError', 'Tamamlama hatası'));
+        }
+      },
+      onError: (error: Error) => {
+        toast.error(error.message || t('transfer.collection.completeError', 'Tamamlama hatası'));
+      },
+    });
   };
 
   const handleOpenCamera = () => {
@@ -310,7 +333,11 @@ export function TransferCollectionPage(): ReactElement {
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-2 border border-#fee rounded-md">
-        {orderLinesWithCollected.length > 0 ? (
+        {isLoadingOrderLines ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="size-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : orderLinesWithCollected.length > 0 ? (
           orderLinesWithCollected.map((line) => (
             <Card key={line.id} className="border py-2">
               <CardContent className="px-3">
@@ -374,6 +401,22 @@ export function TransferCollectionPage(): ReactElement {
             </p>
           </div>
         )}
+      </div>
+
+      <div className="shrink-0 p-4 border-t bg-background">
+        <Button
+          onClick={handleComplete}
+          disabled={completeTransferMutation.isPending}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          size="lg"
+        >
+          {completeTransferMutation.isPending ? (
+            <Loader2 className="size-4 animate-spin mr-2" />
+          ) : (
+            <Check className="size-4 mr-2" />
+          )}
+          {t('transfer.collection.complete', 'Tamamla')}
+        </Button>
       </div>
 
       <Dialog open={isCameraOpen} onOpenChange={(open) => {

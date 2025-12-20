@@ -84,4 +84,9 @@ export const transferApi = {
     const response = await api.delete(`/api/WtRoute/${routeId}`) as ApiResponse<boolean>;
     return response;
   },
+
+  completeTransfer: async (headerId: number): Promise<ApiResponse<unknown>> => {
+    const response = await api.post(`/api/WtHeader/complete/${headerId}`) as ApiResponse<unknown>;
+    return response;
+  },
 };
