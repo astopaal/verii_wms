@@ -1,4 +1,5 @@
 import { type ReactElement, useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/stores/ui-store';
 import { useAssignedTransferHeaders } from '../hooks/useAssignedTransferHeaders';
@@ -14,6 +15,7 @@ import type { TransferHeader } from '../types/transfer';
 
 export function AssignedTransferListPage(): ReactElement {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { setPageTitle } = useUIStore();
   const [selectedHeaderId, setSelectedHeaderId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -123,7 +125,6 @@ export function AssignedTransferListPage(): ReactElement {
                   <TableHead>{t('transfer.list.sourceWarehouse', 'Çıkış Deposu')}</TableHead>
                   <TableHead>{t('transfer.list.targetWarehouse', 'Varış Deposu')}</TableHead>
                   <TableHead>{t('transfer.list.documentType', 'Belge Tipi')}</TableHead>
-                  <TableHead>{t('transfer.list.status', 'Durum')}</TableHead>
                   <TableHead>{t('transfer.list.createdDate', 'Oluşturulma Tarihi')}</TableHead>
                   <TableHead>{t('goodsReceipt.report.actions', 'İşlemler')}</TableHead>
                 </TableRow>
@@ -146,35 +147,28 @@ export function AssignedTransferListPage(): ReactElement {
                       <TableCell>
                         <Badge variant="outline">{item.documentType || '-'}</Badge>
                       </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-1">
-                          {item.isCompleted ? (
-                            <Badge variant="default" className="w-fit">
-                              {t('transfer.list.completed', 'Tamamlandı')}
-                            </Badge>
-                          ) : item.isPendingApproval ? (
-                            <Badge variant="secondary" className="w-fit">
-                              {t('transfer.list.pendingApproval', 'Onay Bekliyor')}
-                            </Badge>
-                          ) : (
-                            <Badge variant="outline" className="w-fit">
-                              {t('transfer.list.inProgress', 'Devam Ediyor')}
-                            </Badge>
-                          )}
-                        </div>
-                      </TableCell>
                       <TableCell>{formatDateTime(item.createdDate)}</TableCell>
                       <TableCell onClick={(e) => e.stopPropagation()}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setSelectedHeaderId(item.id)}
-                        >
-                          <Eye className="size-4" />
-                          <span className="ml-2">
-                            {t('transfer.list.viewDetails', 'Detay')}
-                          </span>
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedHeaderId(item.id)}
+                          >
+                            <Eye className="size-4" />
+                            <span className="ml-2">
+                              {t('transfer.list.viewDetails', 'Detay')}
+                            </span>
+                          </Button>
+                          <Button
+                            variant="default"
+                            size="sm"
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                            onClick={() => navigate(`/transfer/collection/${item.id}`)}
+                          >
+                            {t('common.start', 'Başla')}
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -201,21 +195,6 @@ export function AssignedTransferListPage(): ReactElement {
                           {t('transfer.list.id', 'ID')}
                         </p>
                         <p className="text-base font-semibold">{item.id}</p>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        {item.isCompleted ? (
-                          <Badge variant="default" className="w-fit">
-                            {t('transfer.list.completed', 'Tamamlandı')}
-                          </Badge>
-                        ) : item.isPendingApproval ? (
-                          <Badge variant="secondary" className="w-fit">
-                            {t('transfer.list.pendingApproval', 'Onay Bekliyor')}
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="w-fit">
-                            {t('transfer.list.inProgress', 'Devam Ediyor')}
-                          </Badge>
-                        )}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -256,15 +235,23 @@ export function AssignedTransferListPage(): ReactElement {
                         <p className="text-base">{item.targetWarehouse || '-'}</p>
                       </div>
                     </div>
-                    <div className="pt-2">
+                    <div className="pt-2 flex gap-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full"
+                        className="flex-1"
                         onClick={() => setSelectedHeaderId(item.id)}
                       >
                         <Eye className="size-4 mr-2" />
                         {t('transfer.list.viewDetails', 'Detay')}
+                      </Button>
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white"
+                        onClick={() => navigate(`/transfer/collection/${item.id}`)}
+                      >
+                        {t('common.start', 'Başla')}
                       </Button>
                     </div>
                   </CardContent>

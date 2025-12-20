@@ -146,24 +146,6 @@ export function TransferDetailDialog({
                       <span className="text-xs text-muted-foreground">{t('transfer.list.customerName', 'Cari Adı')}</span>
                       <span className="text-sm truncate max-w-[150px] text-right">{header.customerName || '-'}</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{t('transfer.list.status', 'Durum')}</span>
-                      <div>
-                        {header.isCompleted ? (
-                          <Badge variant="default" className="text-xs">
-                            {t('transfer.list.completed', 'Tamamlandı')}
-                          </Badge>
-                        ) : header.isPendingApproval ? (
-                          <Badge variant="secondary" className="text-xs">
-                            {t('transfer.list.pendingApproval', 'Onay Bekliyor')}
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="text-xs">
-                            {t('transfer.list.inProgress', 'Devam Ediyor')}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
                   </div>
                   {header.description1 && (
                     <>

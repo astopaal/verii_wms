@@ -118,7 +118,6 @@ export function TransferListPage(): ReactElement {
                   <TableHead>{t('transfer.list.sourceWarehouse', 'Çıkış Deposu')}</TableHead>
                   <TableHead>{t('transfer.list.targetWarehouse', 'Varış Deposu')}</TableHead>
                   <TableHead>{t('transfer.list.documentType', 'Belge Tipi')}</TableHead>
-                  <TableHead>{t('transfer.list.status', 'Durum')}</TableHead>
                   <TableHead>{t('transfer.list.createdDate', 'Oluşturulma Tarihi')}</TableHead>
                   <TableHead>{t('goodsReceipt.report.actions', 'İşlemler')}</TableHead>
                 </TableRow>
@@ -136,23 +135,6 @@ export function TransferListPage(): ReactElement {
                       <TableCell>{item.targetWarehouse || '-'}</TableCell>
                       <TableCell>
                         <Badge variant="outline">{item.documentType || '-'}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-1">
-                          {item.isCompleted ? (
-                            <Badge variant="default" className="w-fit">
-                              {t('transfer.list.completed', 'Tamamlandı')}
-                            </Badge>
-                          ) : item.isPendingApproval ? (
-                            <Badge variant="secondary" className="w-fit">
-                              {t('transfer.list.pendingApproval', 'Onay Bekliyor')}
-                            </Badge>
-                          ) : (
-                            <Badge variant="outline" className="w-fit">
-                              {t('transfer.list.inProgress', 'Devam Ediyor')}
-                            </Badge>
-                          )}
-                        </div>
                       </TableCell>
                       <TableCell>{formatDateTime(item.createdDate)}</TableCell>
                       <TableCell onClick={(e) => e.stopPropagation()}>
@@ -190,21 +172,6 @@ export function TransferListPage(): ReactElement {
                           {t('transfer.list.id', 'ID')}
                         </p>
                         <p className="text-base font-semibold">{item.id}</p>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        {item.isCompleted ? (
-                          <Badge variant="default" className="w-fit">
-                            {t('transfer.list.completed', 'Tamamlandı')}
-                          </Badge>
-                        ) : item.isPendingApproval ? (
-                          <Badge variant="secondary" className="w-fit">
-                            {t('transfer.list.pendingApproval', 'Onay Bekliyor')}
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="w-fit">
-                            {t('transfer.list.inProgress', 'Devam Ediyor')}
-                          </Badge>
-                        )}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
