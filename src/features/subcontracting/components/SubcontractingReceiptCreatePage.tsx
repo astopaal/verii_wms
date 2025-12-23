@@ -59,7 +59,7 @@ export function SubcontractingReceiptCreatePage(): ReactElement {
       queryClient.invalidateQueries({ queryKey: ['subcontracting-receipt-order-items'] });
       queryClient.invalidateQueries({ queryKey: ['subcontracting-receipt-headers'] });
       toast.success(t('subcontracting.receipt.create.success', 'Fason giriş emri başarıyla oluşturuldu'));
-      navigate('/subcontracting/receipt/create');
+      navigate('/subcontracting/receipt/list');
     },
     onError: (error: Error) => {
       toast.error(

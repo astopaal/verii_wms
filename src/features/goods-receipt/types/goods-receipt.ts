@@ -282,3 +282,102 @@ export interface BulkCreateRequest {
     targetCellCode?: string;
   }>;
 }
+
+export type GrHeadersResponse = ApiResponse<GrHeader[]>;
+
+export interface AssignedGrLine {
+  id: number;
+  createdDate: string;
+  updatedDate: string | null;
+  deletedDate: string | null;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number | null;
+  deletedBy: number | null;
+  createdByFullUser: string;
+  updatedByFullUser: string | null;
+  deletedByFullUser: string | null;
+  stockCode: string;
+  stockName: string;
+  yapKod: string | null;
+  quantity: number;
+  unit: string;
+  erpOrderNo: string;
+  erpOrderId: string;
+  description: string;
+  headerId: number;
+  orderId: number | null;
+}
+
+export interface AssignedGrOrderLinesData {
+  lines: AssignedGrLine[];
+}
+
+export type AssignedGrOrderLinesResponse = ApiResponse<AssignedGrOrderLinesData>;
+
+export interface StokBarcodeDto {
+  barkod: string;
+  stokKodu: string;
+  stokAdi: string;
+  depoKodu: string | null;
+  depoAdi: string | null;
+  rafKodu: string | null;
+  yapilandir: string;
+  olcuBr: number;
+  olcuAdi: string;
+  yapKod: string | null;
+  yapAcik: string | null;
+  cevrim: number;
+  seriBarkodMu: boolean;
+  sktVarmi: string | null;
+  isemriNo: string | null;
+}
+
+export type StokBarcodeResponse = ApiResponse<StokBarcodeDto[]>;
+
+export interface AddBarcodeRequest {
+  headerId: number;
+  lineId: number;
+  barcode: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceCellCode: string;
+  targetCellCode: string;
+}
+
+export interface AddBarcodeResponseData {
+  id: number;
+  createdDate: string;
+  updatedDate: string | null;
+  deletedDate: string | null;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number | null;
+  deletedBy: number | null;
+  createdByFullUser: string | null;
+  updatedByFullUser: string | null;
+  deletedByFullUser: string | null;
+  stockCode: string;
+  yapKod: string | null;
+  description1: string | null;
+  description2: string | null;
+  description: string | null;
+  headerId: number;
+  lineId: number;
+}
+
+export type AddBarcodeResponse = ApiResponse<AddBarcodeResponseData>;
+
+export interface CollectedBarcodeItem {
+  importLine: GrImportLine;
+  routes: GrImportRoute[];
+}
+
+export type CollectedBarcodesResponse = ApiResponse<CollectedBarcodeItem[]>;

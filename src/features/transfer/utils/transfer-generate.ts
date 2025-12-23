@@ -26,7 +26,7 @@ export function buildTransferGenerateRequest(
       yapKod: '',
       orderId: 0,
       quantity: item.transferQuantity,
-      unit: 'unit' in item ? item.unit : '',
+      unit: 'unit' in item ? item.unit || '' : '',
       erpOrderNo: '',
       erpOrderId: '',
       erpLineReference: '',

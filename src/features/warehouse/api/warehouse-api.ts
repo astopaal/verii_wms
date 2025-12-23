@@ -13,23 +13,19 @@ import type { ApiResponse } from '@/types/api';
 
 export const warehouseApi = {
   getInboundOrdersByCustomer: async (customerCode: string): Promise<WarehouseOrdersResponse> => {
-    const response = await api.get(`/api/WiFunction/headers/${customerCode}`) as WarehouseOrdersResponse;
-    return response;
+    return await api.get<WarehouseOrdersResponse>(`/api/WiFunction/headers/${customerCode}`);
   },
 
   getInboundOrderItems: async (orderNumbers: string): Promise<WarehouseOrderItemsResponse> => {
-    const response = await api.get(`/api/WiFunction/lines/${orderNumbers}`) as WarehouseOrderItemsResponse;
-    return response;
+    return await api.get<WarehouseOrderItemsResponse>(`/api/WiFunction/lines/${orderNumbers}`);
   },
 
   getOutboundOrdersByCustomer: async (customerCode: string): Promise<WarehouseOrdersResponse> => {
-    const response = await api.get(`/api/WoFunction/headers/${customerCode}`) as WarehouseOrdersResponse;
-    return response;
+    return await api.get<WarehouseOrdersResponse>(`/api/WoFunction/headers/${customerCode}`);
   },
 
   getOutboundOrderItems: async (orderNumbers: string): Promise<WarehouseOrderItemsResponse> => {
-    const response = await api.get(`/api/WoFunction/lines/${orderNumbers}`) as WarehouseOrderItemsResponse;
-    return response;
+    return await api.get<WarehouseOrderItemsResponse>(`/api/WoFunction/lines/${orderNumbers}`);
   },
 
   createWarehouseInbound: async (
@@ -37,8 +33,7 @@ export const warehouseApi = {
     selectedItems: SelectedWarehouseOrderItem[]
   ): Promise<ApiResponse<unknown>> => {
     const request = buildWarehouseInboundRequest(formData, selectedItems);
-    const response = await api.post('/api/WiHeader/generate', request) as ApiResponse<unknown>;
-    return response;
+    return await api.post<ApiResponse<unknown>>('/api/WiHeader/generate', request);
   },
 
   createWarehouseOutbound: async (
@@ -46,38 +41,47 @@ export const warehouseApi = {
     selectedItems: SelectedWarehouseOrderItem[]
   ): Promise<ApiResponse<unknown>> => {
     const request = buildWarehouseOutboundRequest(formData, selectedItems);
-    const response = await api.post('/api/WoHeader/generate', request) as ApiResponse<unknown>;
-    return response;
+    return await api.post<ApiResponse<unknown>>('/api/WoHeader/generate', request);
   },
 
   getInboundHeaders: async (): Promise<WarehouseHeadersResponse> => {
-    const response = await api.get('/api/WiHeader') as WarehouseHeadersResponse;
-    return response;
+    return await api.get<WarehouseHeadersResponse>('/api/WiHeader');
   },
 
   getOutboundHeaders: async (): Promise<WarehouseHeadersResponse> => {
-    const response = await api.get('/api/WoHeader') as WarehouseHeadersResponse;
-    return response;
+    return await api.get<WarehouseHeadersResponse>('/api/WoHeader');
+  },
+
+  getAssignedInboundHeaders: async (userId: number): Promise<WarehouseHeadersResponse> => {
+    return await api.get<WarehouseHeadersResponse>(`/api/WiHeader/assigned/${userId}`);
+  },
+
+  getAssignedOutboundHeaders: async (userId: number): Promise<WarehouseHeadersResponse> => {
+    return await api.get<WarehouseHeadersResponse>(`/api/WoHeader/assigned/${userId}`);
   },
 
   getInboundLines: async (headerId: number): Promise<WarehouseLinesResponse> => {
-    const response = await api.get(`/api/WiLine/header/${headerId}`) as WarehouseLinesResponse;
-    return response;
+    return await api.get<WarehouseLinesResponse>(`/api/WiLine/header/${headerId}`);
   },
 
   getOutboundLines: async (headerId: number): Promise<WarehouseLinesResponse> => {
-    const response = await api.get(`/api/WoLine/header/${headerId}`) as WarehouseLinesResponse;
-    return response;
+    return await api.get<WarehouseLinesResponse>(`/api/WoLine/header/${headerId}`);
+  },
+
+  getAssignedInboundLines: async (headerId: number): Promise<WarehouseLinesResponse> => {
+    return await api.get<WarehouseLinesResponse>(`/api/WiHeader/assigned-lines/${headerId}`);
+  },
+
+  getAssignedOutboundLines: async (headerId: number): Promise<WarehouseLinesResponse> => {
+    return await api.get<WarehouseLinesResponse>(`/api/WoHeader/assigned-lines/${headerId}`);
   },
 
   getInboundLineSerials: async (lineId: number): Promise<WarehouseLineSerialsResponse> => {
-    const response = await api.get(`/api/WiLineSerial/line/${lineId}`) as WarehouseLineSerialsResponse;
-    return response;
+    return await api.get<WarehouseLineSerialsResponse>(`/api/WiLineSerial/line/${lineId}`);
   },
 
   getOutboundLineSerials: async (lineId: number): Promise<WarehouseLineSerialsResponse> => {
-    const response = await api.get(`/api/WoLineSerial/line/${lineId}`) as WarehouseLineSerialsResponse;
-    return response;
+    return await api.get<WarehouseLineSerialsResponse>(`/api/WoLineSerial/line/${lineId}`);
   },
 };
 

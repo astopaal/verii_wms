@@ -26,7 +26,8 @@
     "over": "Fazla",
     "yes": "Evet",
     "no": "Hayır",
-    "add": "Ekle"
+    "add": "Ekle",
+    "start": "Başla"
   },
   "auth": {
     "login": {
@@ -43,6 +44,7 @@
       "loggingIn": "Giriş yapılıyor...",
       "wrongPassword": "E-posta veya şifre yanlış",
       "loginError": "Giriş yapılırken bir hata oluştu",
+      "sessionExpired": "Oturum süreniz doldu. Lütfen tekrar giriş yapın.",
       "copyright": "© 2025 VERII. Tüm hakları saklıdır."
     },
     "logout": "Çıkış"
@@ -55,16 +57,22 @@
     "goodsReceipt": "Mal Kabul",
     "goodsReceiptCreate": "Mal Kabul Girişi",
     "goodsReceiptList": "Mal Kabul Listesi",
+    "goodsReceiptAssigned": "Atanmış Mal Kabul Emirleri",
     "inventory": "Envanter",
     "warehouse3d": "3D Depo",
     "reports": "Raporlar",
     "shipment": "Sevkiyat",
     "shipmentCreate": "Sevkiyat Emri",
     "shipmentList": "Sevkiyat Emri Listesi",
+    "shipmentAssigned": "Atanmış Sevkiyat Emirleri",
     "transfer": "Transfer",
     "transferCreate": "Transfer Emri Oluştur",
     "transferList": "Transfer Emri Listesi",
     "transferAssigned": "Atanmış Transfer Emirleri",
+    "subcontractingIssueAssigned": "Atanmış Fason Çıkış Emirleri",
+    "subcontractingReceiptAssigned": "Atanmış Fason Giriş Emirleri",
+    "warehouseInboundAssigned": "Atanmış Ambar Giriş Emirleri",
+    "warehouseOutboundAssigned": "Atanmış Ambar Çıkış Emirleri",
     "search": "Ara..."
   },
   "dashboard": {
@@ -229,6 +237,38 @@
       "createdBy": "Oluşturan",
       "updatedBy": "Güncelleyen",
       "updatedDate": "Güncellenme Tarihi"
+    },
+    "assignedList": {
+      "title": "Atanmış Mal Kabul Emirleri",
+      "searchPlaceholder": "Sipariş No, Cari Kodu...",
+      "noData": "Atanmış mal kabul emri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu"
+    },
+    "collection": {
+      "title": "Mal Kabul Toplama",
+      "stockNotFound": "Stok bulunamadı",
+      "enterBarcode": "Lütfen barkod giriniz",
+      "noStockSelected": "Lütfen önce stok bilgisi getirin",
+      "invalidQuantity": "Geçersiz miktar",
+      "stockNotInOrder": "Bu stok mal kabul emrinde bulunmuyor",
+      "collected": "Ürün toplandı",
+      "collectError": "Toplama hatası",
+      "invalidHeaderId": "Geçersiz mal kabul emri",
+      "completed": "Mal kabul emri başarıyla tamamlandı",
+      "completeError": "Tamamlama hatası",
+      "barcodeScanned": "Barkod okundu",
+      "cameraError": "Kamera açılamadı",
+      "viewCollected": "Toplananlar",
+      "barcodePlaceholder": "Barkod okutun veya yazın",
+      "quantity": "Miktar",
+      "collect": "Topla",
+      "total": "Toplam",
+      "remaining": "Kalan",
+      "noOrderLines": "Mal kabul emri kalemleri bulunamadı",
+      "complete": "Tamamla",
+      "scanBarcode": "Barkod Okut",
+      "scanBarcodeDescription": "Barkodu kameraya hizalayın",
+      "yapKod": "Yapı"
     }
   },
   "shipment": {
@@ -319,6 +359,38 @@
       "documentNoRequired": "Belge No zorunludur",
       "customerRequired": "Cari seçimi zorunludur",
       "sourceWarehouseRequired": "Çıkış deposu zorunludur"
+    },
+    "assignedList": {
+      "title": "Atanmış Sevkiyat Emirleri",
+      "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+      "noData": "Atanmış sevkiyat emri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu"
+    },
+    "collection": {
+      "title": "Sevkiyat Toplama",
+      "stockNotFound": "Stok bulunamadı",
+      "enterBarcode": "Lütfen barkod giriniz",
+      "noStockSelected": "Lütfen önce stok bilgisi getirin",
+      "invalidQuantity": "Geçersiz miktar",
+      "stockNotInOrder": "Bu stok sevkiyat emrinde bulunmuyor",
+      "collected": "Ürün toplandı",
+      "collectError": "Toplama hatası",
+      "invalidHeaderId": "Geçersiz sevkiyat emri",
+      "completed": "Sevkiyat emri başarıyla tamamlandı",
+      "completeError": "Tamamlama hatası",
+      "barcodeScanned": "Barkod okundu",
+      "cameraError": "Kamera açılamadı",
+      "viewCollected": "Toplananlar",
+      "barcodePlaceholder": "Barkod okutun veya yazın",
+      "quantity": "Miktar",
+      "collect": "Topla",
+      "total": "Toplam",
+      "remaining": "Kalan",
+      "noOrderLines": "Sevkiyat emri kalemleri bulunamadı",
+      "complete": "Tamamla",
+      "scanBarcode": "Barkod Okut",
+      "scanBarcodeDescription": "Barkodu kameraya hizalayın",
+      "yapKod": "Yapı"
     }
   },
   "transfer": {
@@ -471,6 +543,98 @@
       "rightClickDrag": "🖱️ Sağ Tık + Sürükle",
       "scroll": "🖱️ Scroll",
       "clickShelf": "🖱️ Raf Tıkla"
+    }
+  },
+  "subcontracting": {
+    "sit": {
+      "assignedList": {
+        "title": "Atanmış SIT Emirleri",
+        "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+        "id": "ID",
+        "documentNo": "Belge No",
+        "documentDate": "Belge Tarihi",
+        "customerCode": "Cari Kodu",
+        "customerName": "Cari Adı",
+        "sourceWarehouse": "Çıkış Deposu",
+        "targetWarehouse": "Varış Deposu",
+        "documentType": "Belge Tipi",
+        "createdDate": "Oluşturulma Tarihi",
+        "actions": "İşlemler",
+        "viewDetails": "Detay",
+        "noData": "Atanmış SIT emri bulunamadı",
+        "error": "Veri yüklenirken bir hata oluştu"
+      },
+      "collection": {
+        "title": "SIT Toplama",
+        "stockNotFound": "Stok bulunamadı",
+        "enterBarcode": "Lütfen barkod giriniz",
+        "noStockSelected": "Lütfen önce stok bilgisi getirin",
+        "invalidQuantity": "Geçersiz miktar",
+        "stockNotInOrder": "Bu stok SIT emrinde bulunmuyor",
+        "collected": "Ürün toplandı",
+        "collectError": "Toplama hatası",
+        "invalidHeaderId": "Geçersiz SIT emri",
+        "completed": "SIT emri başarıyla tamamlandı",
+        "completeError": "Tamamlama hatası",
+        "barcodeScanned": "Barkod okundu",
+        "cameraError": "Kamera açılamadı",
+        "viewCollected": "Toplananlar",
+        "barcodePlaceholder": "Barkod okutun veya yazın",
+        "quantity": "Miktar",
+        "collect": "Topla",
+        "total": "Toplam",
+        "remaining": "Kalan",
+        "noOrderLines": "SIT emri kalemleri bulunamadı",
+        "complete": "Tamamla",
+        "scanBarcode": "Barkod Okut",
+        "scanBarcodeDescription": "Barkodu kameraya hizalayın",
+        "yapKod": "Yapı"
+      }
+    },
+    "srt": {
+      "assignedList": {
+        "title": "Atanmış SRT Emirleri",
+        "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
+        "id": "ID",
+        "documentNo": "Belge No",
+        "documentDate": "Belge Tarihi",
+        "customerCode": "Cari Kodu",
+        "customerName": "Cari Adı",
+        "sourceWarehouse": "Çıkış Deposu",
+        "targetWarehouse": "Varış Deposu",
+        "documentType": "Belge Tipi",
+        "createdDate": "Oluşturulma Tarihi",
+        "actions": "İşlemler",
+        "viewDetails": "Detay",
+        "noData": "Atanmış SRT emri bulunamadı",
+        "error": "Veri yüklenirken bir hata oluştu"
+      },
+      "collection": {
+        "title": "SRT Toplama",
+        "stockNotFound": "Stok bulunamadı",
+        "enterBarcode": "Lütfen barkod giriniz",
+        "noStockSelected": "Lütfen önce stok bilgisi getirin",
+        "invalidQuantity": "Geçersiz miktar",
+        "stockNotInOrder": "Bu stok SRT emrinde bulunmuyor",
+        "collected": "Ürün toplandı",
+        "collectError": "Toplama hatası",
+        "invalidHeaderId": "Geçersiz SRT emri",
+        "completed": "SRT emri başarıyla tamamlandı",
+        "completeError": "Tamamlama hatası",
+        "barcodeScanned": "Barkod okundu",
+        "cameraError": "Kamera açılamadı",
+        "viewCollected": "Toplananlar",
+        "barcodePlaceholder": "Barkod okutun veya yazın",
+        "quantity": "Miktar",
+        "collect": "Topla",
+        "total": "Toplam",
+        "remaining": "Kalan",
+        "noOrderLines": "SRT emri kalemleri bulunamadı",
+        "complete": "Tamamla",
+        "scanBarcode": "Barkod Okut",
+        "scanBarcodeDescription": "Barkodu kameraya hizalayın",
+        "yapKod": "Yapı"
+      }
     }
   },
   "footer": {

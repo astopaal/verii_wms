@@ -57,7 +57,7 @@ export function ShipmentCreatePage(): ReactElement {
       queryClient.invalidateQueries({ queryKey: ['shipment-orders'] });
       queryClient.invalidateQueries({ queryKey: ['shipment-order-items'] });
       toast.success(t('shipment.create.success', 'Sevkiyat emri başarıyla oluşturuldu'));
-      navigate('/shipment/create');
+      navigate('/shipment/list');
     },
     onError: (error: Error) => {
       toast.error(

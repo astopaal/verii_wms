@@ -19,23 +19,19 @@ import type { ApiResponse } from '@/types/api';
 
 export const transferApi = {
   getOrdersByCustomer: async (customerCode: string): Promise<TransferOrdersResponse> => {
-    const response = await api.get(`/api/WtFunction/headers/${customerCode}`) as TransferOrdersResponse;
-    return response;
+    return await api.get<TransferOrdersResponse>(`/api/WtFunction/headers/${customerCode}`);
   },
 
   getOrderItems: async (orderNumbers: string): Promise<TransferOrderItemsResponse> => {
-    const response = await api.get(`/api/WtFunction/lines/${orderNumbers}`) as TransferOrderItemsResponse;
-    return response;
+    return await api.get<TransferOrderItemsResponse>(`/api/WtFunction/lines/${orderNumbers}`);
   },
 
   getAssignedHeaders: async (userId: number): Promise<TransferHeadersResponse> => {
-    const response = await api.get(`/api/WtHeader/assigned/${userId}`) as TransferHeadersResponse;
-    return response;
+    return await api.get<TransferHeadersResponse>(`/api/WtHeader/assigned/${userId}`);
   },
 
   getAssignedOrderLines: async (headerId: number): Promise<AssignedTransferOrderLinesResponse> => {
-    const response = await api.get(`/api/WtHeader/getAssignedTransferOrderLines/${headerId}`) as AssignedTransferOrderLinesResponse;
-    return response;
+    return await api.get<AssignedTransferOrderLinesResponse>(`/api/WtHeader/getAssignedTransferOrderLines/${headerId}`);
   },
 
   createTransfer: async (
@@ -44,49 +40,40 @@ export const transferApi = {
     isFreeTransfer: boolean
   ): Promise<ApiResponse<unknown>> => {
     const request = buildTransferGenerateRequest(formData, selectedItems, isFreeTransfer);
-    const response = await api.post('/api/WtHeader/generate', request) as ApiResponse<unknown>;
-    return response;
+    return await api.post<ApiResponse<unknown>>('/api/WtHeader/generate', request);
   },
 
   getHeaders: async (): Promise<TransferHeadersResponse> => {
-    const response = await api.get('/api/WtHeader') as TransferHeadersResponse;
-    return response;
+    return await api.get<TransferHeadersResponse>('/api/WtHeader');
   },
 
   getLines: async (headerId: number): Promise<TransferLinesResponse> => {
-    const response = await api.get(`/api/WtLine/header/${headerId}`) as TransferLinesResponse;
-    return response;
+    return await api.get<TransferLinesResponse>(`/api/WtLine/header/${headerId}`);
   },
 
   getLineSerials: async (lineId: number): Promise<TransferLineSerialsResponse> => {
-    const response = await api.get(`/api/WtLineSerial/line/${lineId}`) as TransferLineSerialsResponse;
-    return response;
+    return await api.get<TransferLineSerialsResponse>(`/api/WtLineSerial/line/${lineId}`);
   },
 
   getStokBarcode: async (barcode: string, barcodeGroup: string = '1'): Promise<StokBarcodeResponse> => {
-    const response = await api.get('/api/Erp/getStokBarcode', {
+    return await api.get<StokBarcodeResponse>('/api/Erp/getStokBarcode', {
       params: { bar: barcode, barkodGrubu: barcodeGroup }
-    }) as StokBarcodeResponse;
-    return response;
+    });
   },
 
   addBarcodeToOrder: async (request: AddBarcodeRequest): Promise<AddBarcodeResponse> => {
-    const response = await api.post('/api/WtImportLine/addBarcodeBasedonAssignedOrder', request) as AddBarcodeResponse;
-    return response;
+    return await api.post<AddBarcodeResponse>('/api/WtImportLine/addBarcodeBasedonAssignedOrder', request);
   },
 
   getCollectedBarcodes: async (headerId: number): Promise<CollectedBarcodesResponse> => {
-    const response = await api.get(`/api/WtImportLine/warehouseTransferOrderCollectedBarcodes/${headerId}`) as CollectedBarcodesResponse;
-    return response;
+    return await api.get<CollectedBarcodesResponse>(`/api/WtImportLine/warehouseTransferOrderCollectedBarcodes/${headerId}`);
   },
 
   deleteRoute: async (routeId: number): Promise<ApiResponse<boolean>> => {
-    const response = await api.delete(`/api/WtRoute/${routeId}`) as ApiResponse<boolean>;
-    return response;
+    return await api.delete<ApiResponse<boolean>>(`/api/WtRoute/${routeId}`);
   },
 
   completeTransfer: async (headerId: number): Promise<ApiResponse<unknown>> => {
-    const response = await api.post(`/api/WtHeader/complete/${headerId}`) as ApiResponse<unknown>;
-    return response;
+    return await api.post<ApiResponse<unknown>>(`/api/WtHeader/complete/${headerId}`);
   },
 };

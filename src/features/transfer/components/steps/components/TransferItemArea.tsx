@@ -27,7 +27,7 @@ export function TransferItemArea({
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: orderItemsData, isLoading } = useTransferOrderItems(siparisNo);
+  const { data: orderItemsData, isLoading } = useTransferOrderItems(siparisNo ?? undefined);
   const { data: warehouses = [] } = useWarehouses();
 
   const mappedOrderItems = useMemo((): TransferOrderItem[] => {

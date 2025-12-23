@@ -259,9 +259,9 @@ function SubcontractingLineRow({ line, documentType }: SubcontractingLineRowProp
   const { data: lineSerialsData } = useSubcontractingLineSerials(line.id, documentType);
 
   const firstSerial = lineSerialsData?.data && lineSerialsData.data.length > 0 ? lineSerialsData.data[0] : null;
-  const serialNo = firstSerial?.serialNo || '-';
-  const lotNo = firstSerial?.serialNo3 || '-';
-  const batchNo = firstSerial?.serialNo4 || '-';
+  const serialNo = firstSerial?.serialNo ?? '-';
+  const lotNo = firstSerial?.serialNo3 ?? '-';
+  const batchNo = firstSerial?.serialNo4 ?? '-';
 
   return (
     <TableRow>

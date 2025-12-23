@@ -215,3 +215,182 @@ export type SubcontractingHeadersResponse = ApiResponse<SubcontractingHeader[]>;
 export type SubcontractingLinesResponse = ApiResponse<SubcontractingLine[]>;
 export type SubcontractingLineSerialsResponse = ApiResponse<SubcontractingLineSerial[]>;
 
+export interface AssignedSubcontractingLine {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  quantity: number;
+  unit: string;
+  erpOrderNo: string;
+  erpOrderId: string;
+  description: string;
+  headerId: number;
+  orderId: number;
+  erpLineReference: string;
+}
+
+export interface AssignedSubcontractingLineSerial {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceCellCode: string;
+  targetCellCode: string;
+  lineId: number;
+}
+
+export interface AssignedSubcontractingImportLine {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  description1: string;
+  description2: string;
+  description: string;
+  headerId: number;
+  lineId: number;
+  routeId: number;
+}
+
+export interface AssignedSubcontractingRoute {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  scannedBarcode: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceWarehouse: number;
+  targetWarehouse: number;
+  sourceCellCode: string;
+  targetCellCode: string;
+  importLineId: number;
+  stockCode: string;
+  yapKod: string;
+  description: string;
+}
+
+export interface AssignedSubcontractingOrderLinesData {
+  lines: AssignedSubcontractingLine[];
+  lineSerials: AssignedSubcontractingLineSerial[];
+  importLines: AssignedSubcontractingImportLine[];
+  routes: AssignedSubcontractingRoute[];
+}
+
+export type AssignedSubcontractingOrderLinesResponse = ApiResponse<AssignedSubcontractingOrderLinesData>;
+
+export interface StokBarcodeDto {
+  barkod: string;
+  stokKodu: string;
+  stokAdi: string;
+  depoKodu: string | null;
+  depoAdi: string | null;
+  rafKodu: string | null;
+  yapilandir: string;
+  olcuBr: number;
+  olcuAdi: string;
+  yapKod: string | null;
+  yapAcik: string | null;
+  cevrim: number;
+  seriBarkodMu: boolean;
+  sktVarmi: string | null;
+  isemriNo: string | null;
+}
+
+export type StokBarcodeResponse = ApiResponse<StokBarcodeDto[]>;
+
+export interface AddBarcodeRequest {
+  headerId: number;
+  lineId: number;
+  barcode: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  quantity: number;
+  serialNo: string;
+  serialNo2: string;
+  serialNo3: string;
+  serialNo4: string;
+  sourceCellCode: string;
+  targetCellCode: string;
+}
+
+export interface AddBarcodeResponseData {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  stockCode: string;
+  stockName: string;
+  yapKod: string;
+  yapAcik: string;
+  description1: string;
+  description2: string;
+  description: string;
+  headerId: number;
+  lineId: number;
+  routeId: number;
+}
+
+export type AddBarcodeResponse = ApiResponse<AddBarcodeResponseData>;
+
+export interface CollectedBarcodeItem {
+  importLine: AssignedSubcontractingImportLine;
+  routes: AssignedSubcontractingRoute[];
+}
+
+export type CollectedBarcodesResponse = ApiResponse<CollectedBarcodeItem[]>;
+

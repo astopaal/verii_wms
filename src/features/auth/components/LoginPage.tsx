@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
+import { toast } from 'sonner';
 import { loginRequestSchema, type LoginRequest } from '../types/auth';
 import { useLogin } from '../hooks/useLogin';
 import { useBranches } from '../hooks/useBranches';
@@ -28,6 +30,7 @@ import { Building2, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 
 export function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { mutate: login, isPending } = useLogin();
   const { data: branches, isLoading: branchesLoading } = useBranches();
   const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +42,13 @@ export function LoginPage(): React.JSX.Element {
       branchId: '',
     },
   });
+
+  useEffect(() => {
+    if (searchParams.get('sessionExpired') === 'true') {
+      toast.warning(t('auth.login.sessionExpired'));
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams, t]);
 
   const onSubmit = (data: LoginRequest): void => {
     login(data);

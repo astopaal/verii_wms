@@ -134,7 +134,7 @@ export function buildSubcontractingReceiptRequest(
       priorityLevel: 0,
       plannedDate: formData.transferDate,
       isPlanned: true,
-      isCompleted: true,
+      isCompleted: false,
       completedDate: now,
       documentNo: formData.documentNo,
       documentDate: formData.transferDate,

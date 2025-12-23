@@ -6,7 +6,7 @@ interface WarehouseFloorProps {
   bounds: { minX: number; maxX: number; minZ: number; maxZ: number };
 }
 
-export function WarehouseFloor({ center, bounds }: WarehouseFloorProps): ReactElement {
+export function WarehouseFloor({ bounds }: WarehouseFloorProps): ReactElement {
   const padding = 1.5;
   const minX = bounds.minX - padding;
   const maxX = bounds.maxX + padding;

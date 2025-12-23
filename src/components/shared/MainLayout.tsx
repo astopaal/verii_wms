@@ -73,6 +73,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.goodsReceiptList'),
           href: '/goods-receipt/list',
         },
+        {
+          title: t('sidebar.goodsReceiptAssigned', 'Atanmış Mal Kabul Emirleri'),
+          href: '/goods-receipt/assigned',
+        },
       ],
     },
     {
@@ -183,12 +187,20 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           href: '/subcontracting/issue/list',
         },
         {
+          title: t('sidebar.subcontractingIssueAssigned', 'Atanmış Fason Çıkış Emirleri'),
+          href: '/subcontracting/issue/assigned',
+        },
+        {
           title: t('sidebar.subcontractingReceiptCreate', 'Fason Giriş Emri'),
           href: '/subcontracting/receipt/create',
         },
         {
           title: t('sidebar.subcontractingReceiptList', 'Fason Giriş Listesi'),
           href: '/subcontracting/receipt/list',
+        },
+        {
+          title: t('sidebar.subcontractingReceiptAssigned', 'Atanmış Fason Giriş Emirleri'),
+          href: '/subcontracting/receipt/assigned',
         },
       ],
     },
@@ -229,6 +241,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.warehouseOutboundList', 'Ambar Çıkış Listesi'),
           href: '/warehouse/outbound/list',
         },
+        {
+          title: t('sidebar.warehouseInboundAssigned', 'Atanmış Ambar Giriş Emirleri'),
+          href: '/warehouse/inbound/assigned',
+        },
+        {
+          title: t('sidebar.warehouseOutboundAssigned', 'Atanmış Ambar Çıkış Emirleri'),
+          href: '/warehouse/outbound/assigned',
+        },
       ],
     },
     {
@@ -258,6 +278,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         {
           title: t('sidebar.shipmentList', 'Sevkiyat Emri Listesi'),
           href: '/shipment/list',
+        },
+        {
+          title: t('sidebar.shipmentAssigned', 'Atanmış Sevkiyat Emirleri'),
+          href: '/shipment/assigned',
         },
       ],
     },

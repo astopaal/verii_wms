@@ -32,10 +32,10 @@ export function SubcontractingItemArea({
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: receiptOrderItemsData, isLoading: receiptOrderItemsLoading } = useSubcontractingReceiptOrderItems(
-    type === 'receipt' ? siparisNo : undefined
+    type === 'receipt' ? siparisNo ?? undefined : undefined
   );
   const { data: issueOrderItemsData, isLoading: issueOrderItemsLoading } = useSubcontractingIssueOrderItems(
-    type === 'issue' ? siparisNo : undefined
+    type === 'issue' ? siparisNo ?? undefined : undefined
   );
 
   const orderItemsData = type === 'receipt' ? receiptOrderItemsData : issueOrderItemsData;

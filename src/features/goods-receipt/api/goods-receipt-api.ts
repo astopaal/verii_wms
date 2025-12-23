@@ -1,6 +1,21 @@
 import { api } from '@/lib/axios';
 import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
-import type { Order, OrderItem, GoodsReceiptFormData, SelectedOrderItem, SelectedStockItem, GrHeader, GrLine, GrImportLine, BulkCreateRequest } from '../types/goods-receipt';
+import type {
+  Order,
+  OrderItem,
+  GoodsReceiptFormData,
+  SelectedOrderItem,
+  SelectedStockItem,
+  GrHeader,
+  GrLine,
+  GrImportLine,
+  GrHeadersResponse,
+  AssignedGrOrderLinesResponse,
+  StokBarcodeResponse,
+  AddBarcodeRequest,
+  AddBarcodeResponse,
+  CollectedBarcodesResponse,
+} from '../types/goods-receipt';
 import { erpCommonApi } from '@/services/erp-common-api';
 import { buildGoodsReceiptBulkCreateRequest } from '../utils/goods-receipt-create';
 
@@ -11,7 +26,7 @@ export const goodsReceiptApi = {
   getProducts: erpCommonApi.getProducts,
 
   getOrdersByCustomer: async (customerCode: string): Promise<Order[]> => {
-    const response = await api.get(`/api/GoodReciptFunctions/headers/customer/${customerCode}`) as ApiResponse<Order[]>;
+    const response = await api.get<ApiResponse<Order[]>>(`/api/GoodReciptFunctions/headers/customer/${customerCode}`);
     if (response.success && response.data) {
       return response.data;
     }
@@ -19,7 +34,7 @@ export const goodsReceiptApi = {
   },
 
   getOrderItems: async (customerCode: string, siparisNoCsv: string): Promise<OrderItem[]> => {
-    const response = await api.get(`/api/GoodReciptFunctions/lines/customer/${customerCode}/orders/${siparisNoCsv}`) as ApiResponse<OrderItem[]>;
+    const response = await api.get<ApiResponse<OrderItem[]>>(`/api/GoodReciptFunctions/lines/customer/${customerCode}/orders/${siparisNoCsv}`);
     if (response.success && response.data) {
       return response.data;
     }
@@ -28,7 +43,7 @@ export const goodsReceiptApi = {
 
   createGoodsReceipt: async (formData: GoodsReceiptFormData, selectedItems: (SelectedOrderItem | SelectedStockItem)[], isStockBased: boolean = false): Promise<number> => {
     const request = buildGoodsReceiptBulkCreateRequest(formData, selectedItems, isStockBased);
-    const response = await api.post('/api/GrHeader/bulkCreate', request) as ApiResponse<number>;
+    const response = await api.post<ApiResponse<number>>('/api/GrHeader/bulkCreate', request);
     if (response.success) {
       return response.data || 0;
     }
@@ -46,7 +61,7 @@ export const goodsReceiptApi = {
       filters,
     };
 
-    const response = await api.post('/api/GrHeader/paged', requestBody) as ApiResponse<PagedResponse<GrHeader>>;
+    const response = await api.post<ApiResponse<PagedResponse<GrHeader>>>('/api/GrHeader/paged', requestBody);
     if (response.success && response.data) {
       return response.data;
     }
@@ -54,7 +69,7 @@ export const goodsReceiptApi = {
   },
 
   getGrHeaderById: async (id: number): Promise<GrHeader> => {
-    const response = await api.get(`/api/GrHeader/${id}`) as ApiResponse<GrHeader>;
+    const response = await api.get<ApiResponse<GrHeader>>(`/api/GrHeader/${id}`);
     if (response.success && response.data) {
       return response.data;
     }
@@ -62,7 +77,7 @@ export const goodsReceiptApi = {
   },
 
   getGrLines: async (headerId: number): Promise<GrLine[]> => {
-    const response = await api.get(`/api/GrLine/by-header/${headerId}`) as ApiResponse<GrLine[]>;
+    const response = await api.get<ApiResponse<GrLine[]>>(`/api/GrLine/by-header/${headerId}`);
     if (response.success && response.data) {
       return response.data;
     }
@@ -70,10 +85,36 @@ export const goodsReceiptApi = {
   },
 
   getGrImportLinesWithRoutes: async (headerId: number): Promise<GrImportLine[]> => {
-    const response = await api.get(`/api/GrImportL/by-header-with-routes/${headerId}`) as ApiResponse<GrImportLine[]>;
+    const response = await api.get<ApiResponse<GrImportLine[]>>(`/api/GrImportL/by-header-with-routes/${headerId}`);
     if (response.success && response.data) {
       return response.data;
     }
     throw new Error(response.message || 'Mal kabul içerik satırları yüklenemedi');
+  },
+
+  getAssignedHeaders: async (userId: number): Promise<GrHeadersResponse> => {
+    return await api.get<GrHeadersResponse>(`/api/GrHeader/assigned/${userId}`);
+  },
+
+  getAssignedOrderLines: async (headerId: number): Promise<AssignedGrOrderLinesResponse> => {
+    return await api.get<AssignedGrOrderLinesResponse>(`/api/GrHeader/assigned-lines/${headerId}`);
+  },
+
+  getStokBarcode: async (barcode: string, barcodeGroup: string = '1'): Promise<StokBarcodeResponse> => {
+    return await api.get<StokBarcodeResponse>('/api/Erp/getStokBarcode', {
+      params: { bar: barcode, barkodGrubu: barcodeGroup }
+    });
+  },
+
+  addBarcodeToOrder: async (request: AddBarcodeRequest): Promise<AddBarcodeResponse> => {
+    return await api.post<AddBarcodeResponse>('/api/GrImportLine/addBarcodeBasedonAssignedOrder', request);
+  },
+
+  getCollectedBarcodes: async (headerId: number): Promise<CollectedBarcodesResponse> => {
+    return await api.get<CollectedBarcodesResponse>(`/api/GrImportLine/warehouseGoodsReceiptOrderCollectedBarcodes/${headerId}`);
+  },
+
+  completeGoodsReceipt: async (headerId: number): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/GrHeader/complete/${headerId}`);
   },
 };

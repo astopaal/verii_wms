@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { WarehouseDetailDialog } from './WarehouseDetailDialog';
 import { Eye, Search } from 'lucide-react';
 import { VoiceSearchButton } from '@/components/ui/voice-search-button';
-import { DocumentType } from '@/types/document-type';
 import type { WarehouseHeader } from '../types/warehouse';
 
 export function WarehouseInboundListPage(): ReactElement {

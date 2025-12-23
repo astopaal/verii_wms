@@ -18,7 +18,6 @@ export function AisleFloor3D({ row, position, width, length, selected, onSelect 
   const z = position.z;
 
   const floorColor = selected ? '#1a3a6e' : hovered ? '#15304d' : '#1a2636';
-  const labelColor = selected ? '#246BFD' : '#3d5a80';
 
   return (
     <group>

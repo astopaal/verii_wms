@@ -59,7 +59,7 @@ export function SubcontractingIssueCreatePage(): ReactElement {
       queryClient.invalidateQueries({ queryKey: ['subcontracting-issue-order-items'] });
       queryClient.invalidateQueries({ queryKey: ['subcontracting-issue-headers'] });
       toast.success(t('subcontracting.issue.create.success', 'Fason çıkış emri başarıyla oluşturuldu'));
-      navigate('/subcontracting/issue/create');
+      navigate('/subcontracting/issue/list');
     },
     onError: (error: Error) => {
       toast.error(

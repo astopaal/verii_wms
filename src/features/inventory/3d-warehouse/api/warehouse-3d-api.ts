@@ -6,9 +6,9 @@ export const warehouse3dApi = {
   getWarehouseShelvesWithStockInformation: async (
     depoKodu: string
   ): Promise<WarehouseShelvesWithStockInformationDto[]> => {
-    const response = await api.get(
+    const response = await api.get<ApiResponse<WarehouseShelvesWithStockInformationDto[]>>(
       `/api/Erp/getWarehouseShelvesWithStockInformation?depoKodu=${depoKodu}`
-    ) as ApiResponse<WarehouseShelvesWithStockInformationDto[]>;
+    );
     
     if (response.success && response.data) {
       return response.data;

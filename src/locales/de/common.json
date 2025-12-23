@@ -26,7 +26,8 @@
     "over": "Überschuss",
     "yes": "Ja",
     "no": "Nein",
-    "add": "Hinzufügen"
+    "add": "Hinzufügen",
+    "start": "Starten"
   },
   "auth": {
     "login": {
@@ -43,6 +44,7 @@
       "loggingIn": "Wird angemeldet...",
       "wrongPassword": "E-Mail oder Passwort ist falsch",
       "loginError": "Beim Anmelden ist ein Fehler aufgetreten",
+      "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
       "copyright": "© 2025 VERII. Alle Rechte vorbehalten."
     },
     "logout": "Abmelden"
@@ -55,16 +57,22 @@
     "goodsReceipt": "Wareneingang",
     "goodsReceiptCreate": "Wareneingang erfassen",
     "goodsReceiptList": "Wareneingangsliste",
+    "goodsReceiptAssigned": "Zugewiesene Wareneingangsaufträge",
     "inventory": "Inventar",
     "warehouse3d": "3D-Lager",
     "reports": "Berichte",
     "shipment": "Versand",
     "shipmentCreate": "Versandauftrag",
     "shipmentList": "Versandauftragsliste",
+    "shipmentAssigned": "Zugewiesene Versandaufträge",
     "transfer": "Transfer",
     "transferCreate": "Transferauftrag erstellen",
     "transferList": "Transferauftragsliste",
     "transferAssigned": "Zugewiesene Transferaufträge",
+    "subcontractingIssueAssigned": "Zugewiesene SIT-Aufträge",
+    "subcontractingReceiptAssigned": "Zugewiesene SRT-Aufträge",
+    "warehouseInboundAssigned": "Zugewiesene Lagereingangsaufträge",
+    "warehouseOutboundAssigned": "Zugewiesene Lagerausgangsaufträge",
     "search": "Suchen..."
   },
   "dashboard": {
@@ -229,6 +237,38 @@
       "createdBy": "Erstellt von",
       "updatedBy": "Aktualisiert von",
       "updatedDate": "Aktualisierungsdatum"
+    },
+    "assignedList": {
+      "title": "Zugewiesene Wareneingangsaufträge",
+      "searchPlaceholder": "Bestellnummer, Kundencode...",
+      "noData": "Keine zugewiesenen Wareneingangsaufträge gefunden",
+      "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
+    },
+    "collection": {
+      "title": "Wareneingangssammlung",
+      "stockNotFound": "Lagerbestand nicht gefunden",
+      "enterBarcode": "Bitte Barcode eingeben",
+      "noStockSelected": "Bitte zuerst Lagerbestandsinformationen abrufen",
+      "invalidQuantity": "Ungültige Menge",
+      "stockNotInOrder": "Dieser Lagerbestand ist nicht im Wareneingangsauftrag",
+      "collected": "Produkt gesammelt",
+      "collectError": "Sammelfehler",
+      "invalidHeaderId": "Ungültiger Wareneingangsauftrag",
+      "completed": "Wareneingangsauftrag erfolgreich abgeschlossen",
+      "completeError": "Abschlussfehler",
+      "barcodeScanned": "Barcode gescannt",
+      "cameraError": "Kamera konnte nicht geöffnet werden",
+      "viewCollected": "Gesammelt",
+      "barcodePlaceholder": "Barcode scannen oder eingeben",
+      "quantity": "Menge",
+      "collect": "Sammeln",
+      "total": "Gesamt",
+      "remaining": "Verbleibend",
+      "noOrderLines": "Wareneingangsauftragspositionen nicht gefunden",
+      "complete": "Abschließen",
+      "scanBarcode": "Barcode scannen",
+      "scanBarcodeDescription": "Barcode zur Kamera ausrichten",
+      "yapKod": "Struktur"
     }
   },
   "shipment": {
@@ -319,6 +359,38 @@
       "documentNoRequired": "Belegnummer ist erforderlich",
       "customerRequired": "Kundenauswahl ist erforderlich",
       "sourceWarehouseRequired": "Ausgangslager ist erforderlich"
+    },
+    "assignedList": {
+      "title": "Zugewiesene Versandaufträge",
+      "searchPlaceholder": "Belegnummer, Kundencode, Lager...",
+      "noData": "Keine zugewiesenen Versandaufträge gefunden",
+      "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
+    },
+    "collection": {
+      "title": "Versandsammlung",
+      "stockNotFound": "Lagerbestand nicht gefunden",
+      "enterBarcode": "Bitte Barcode eingeben",
+      "noStockSelected": "Bitte zuerst Lagerbestandsinformationen abrufen",
+      "invalidQuantity": "Ungültige Menge",
+      "stockNotInOrder": "Dieser Lagerbestand ist nicht im Versandauftrag",
+      "collected": "Produkt gesammelt",
+      "collectError": "Sammelfehler",
+      "invalidHeaderId": "Ungültiger Versandauftrag",
+      "completed": "Versandauftrag erfolgreich abgeschlossen",
+      "completeError": "Abschlussfehler",
+      "barcodeScanned": "Barcode gescannt",
+      "cameraError": "Kamera konnte nicht geöffnet werden",
+      "viewCollected": "Gesammelt",
+      "barcodePlaceholder": "Barcode scannen oder eingeben",
+      "quantity": "Menge",
+      "collect": "Sammeln",
+      "total": "Gesamt",
+      "remaining": "Verbleibend",
+      "noOrderLines": "Versandauftragspositionen nicht gefunden",
+      "complete": "Abschließen",
+      "scanBarcode": "Barcode scannen",
+      "scanBarcodeDescription": "Barcode zur Kamera ausrichten",
+      "yapKod": "Struktur"
     }
   },
   "transfer": {
@@ -471,6 +543,98 @@
       "rightClickDrag": "🖱️ Rechtsklick + Ziehen",
       "scroll": "🖱️ Scrollen",
       "clickShelf": "🖱️ Regal anklicken"
+    }
+  },
+  "subcontracting": {
+    "sit": {
+      "assignedList": {
+        "title": "Zugewiesene SIT-Aufträge",
+        "searchPlaceholder": "Belegnummer, Kundencode, Lager...",
+        "id": "ID",
+        "documentNo": "Belegnummer",
+        "documentDate": "Belegdatum",
+        "customerCode": "Kundencode",
+        "customerName": "Kundenname",
+        "sourceWarehouse": "Ausgangslager",
+        "targetWarehouse": "Ziellager",
+        "documentType": "Belegtyp",
+        "createdDate": "Erstellungsdatum",
+        "actions": "Aktionen",
+        "viewDetails": "Details",
+        "noData": "Keine zugewiesenen SIT-Aufträge gefunden",
+        "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
+      },
+      "collection": {
+        "title": "SIT-Sammlung",
+        "stockNotFound": "Lagerbestand nicht gefunden",
+        "enterBarcode": "Bitte Barcode eingeben",
+        "noStockSelected": "Bitte zuerst Lagerbestandsinformationen abrufen",
+        "invalidQuantity": "Ungültige Menge",
+        "stockNotInOrder": "Dieser Lagerbestand ist nicht im SIT-Auftrag",
+        "collected": "Produkt gesammelt",
+        "collectError": "Sammelfehler",
+        "invalidHeaderId": "Ungültiger SIT-Auftrag",
+        "completed": "SIT-Auftrag erfolgreich abgeschlossen",
+        "completeError": "Abschlussfehler",
+        "barcodeScanned": "Barcode gescannt",
+        "cameraError": "Kamera konnte nicht geöffnet werden",
+        "viewCollected": "Gesammelt",
+        "barcodePlaceholder": "Barcode scannen oder eingeben",
+        "quantity": "Menge",
+        "collect": "Sammeln",
+        "total": "Gesamt",
+        "remaining": "Verbleibend",
+        "noOrderLines": "SIT-Auftragspositionen nicht gefunden",
+        "complete": "Abschließen",
+        "scanBarcode": "Barcode scannen",
+        "scanBarcodeDescription": "Barcode zur Kamera ausrichten",
+        "yapKod": "Struktur"
+      }
+    },
+    "srt": {
+      "assignedList": {
+        "title": "Zugewiesene SRT-Aufträge",
+        "searchPlaceholder": "Belegnummer, Kundencode, Lager...",
+        "id": "ID",
+        "documentNo": "Belegnummer",
+        "documentDate": "Belegdatum",
+        "customerCode": "Kundencode",
+        "customerName": "Kundenname",
+        "sourceWarehouse": "Ausgangslager",
+        "targetWarehouse": "Ziellager",
+        "documentType": "Belegtyp",
+        "createdDate": "Erstellungsdatum",
+        "actions": "Aktionen",
+        "viewDetails": "Details",
+        "noData": "Keine zugewiesenen SRT-Aufträge gefunden",
+        "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
+      },
+      "collection": {
+        "title": "SRT-Sammlung",
+        "stockNotFound": "Lagerbestand nicht gefunden",
+        "enterBarcode": "Bitte Barcode eingeben",
+        "noStockSelected": "Bitte zuerst Lagerbestandsinformationen abrufen",
+        "invalidQuantity": "Ungültige Menge",
+        "stockNotInOrder": "Dieser Lagerbestand ist nicht im SRT-Auftrag",
+        "collected": "Produkt gesammelt",
+        "collectError": "Sammelfehler",
+        "invalidHeaderId": "Ungültiger SRT-Auftrag",
+        "completed": "SRT-Auftrag erfolgreich abgeschlossen",
+        "completeError": "Abschlussfehler",
+        "barcodeScanned": "Barcode gescannt",
+        "cameraError": "Kamera konnte nicht geöffnet werden",
+        "viewCollected": "Gesammelt",
+        "barcodePlaceholder": "Barcode scannen oder eingeben",
+        "quantity": "Menge",
+        "collect": "Sammeln",
+        "total": "Gesamt",
+        "remaining": "Verbleibend",
+        "noOrderLines": "SRT-Auftragspositionen nicht gefunden",
+        "complete": "Abschließen",
+        "scanBarcode": "Barcode scannen",
+        "scanBarcodeDescription": "Barcode zur Kamera ausrichten",
+        "yapKod": "Struktur"
+      }
     }
   },
   "footer": {

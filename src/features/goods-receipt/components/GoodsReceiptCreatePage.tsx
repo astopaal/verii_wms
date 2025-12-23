@@ -16,7 +16,7 @@ import {
 } from '../types/goods-receipt';
 import { goodsReceiptApi } from '../api/goods-receipt-api';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';

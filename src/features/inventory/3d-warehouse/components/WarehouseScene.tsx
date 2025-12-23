@@ -30,7 +30,7 @@ interface AisleData {
   length: number;
 }
 
-const { AISLE_SPACING, BAY_SPACING, AISLE_WIDTH, SHELF_DEPTH } = LAYOUT_CONSTANTS;
+const { AISLE_SPACING, BAY_SPACING, AISLE_WIDTH } = LAYOUT_CONSTANTS;
 
 export function WarehouseScene({ data, onSlotHover, onSlotClick }: WarehouseSceneProps): ReactElement {
   const controlsRef = useRef<OrbitControlsType>(null);

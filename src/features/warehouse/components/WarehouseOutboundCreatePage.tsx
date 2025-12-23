@@ -59,7 +59,7 @@ export function WarehouseOutboundCreatePage(): ReactElement {
       queryClient.invalidateQueries({ queryKey: ['warehouse-outbound-orders'] });
       queryClient.invalidateQueries({ queryKey: ['warehouse-outbound-order-items'] });
       toast.success(t('warehouse.outbound.create.success', 'Ambar çıkış emri başarıyla oluşturuldu'));
-      navigate('/warehouse/outbound/create');
+      navigate('/warehouse/outbound/list');
     },
     onError: (error: Error) => {
       toast.error(

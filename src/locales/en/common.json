@@ -26,7 +26,8 @@
     "over": "Over",
     "yes": "Yes",
     "no": "No",
-    "add": "Add"
+    "add": "Add",
+    "start": "Start"
   },
   "auth": {
     "login": {
@@ -43,6 +44,7 @@
       "loggingIn": "Signing in...",
       "wrongPassword": "Email or password is incorrect",
       "loginError": "An error occurred while signing in",
+      "sessionExpired": "Your session has expired. Please sign in again.",
       "copyright": "© 2025 VERII. All rights reserved."
     },
     "logout": "Logout"
@@ -55,16 +57,22 @@
     "goodsReceipt": "Goods Receipt",
     "goodsReceiptCreate": "Goods Receipt Entry",
     "goodsReceiptList": "Goods Receipt List",
+    "goodsReceiptAssigned": "Assigned Goods Receipt Orders",
     "inventory": "Inventory",
     "warehouse3d": "3D Warehouse",
     "reports": "Reports",
     "shipment": "Shipment",
     "shipmentCreate": "Shipment Order",
     "shipmentList": "Shipment Order List",
+    "shipmentAssigned": "Assigned Shipment Orders",
     "transfer": "Transfer",
     "transferCreate": "Create Transfer Order",
     "transferList": "Transfer Order List",
     "transferAssigned": "Assigned Transfer Orders",
+    "subcontractingIssueAssigned": "Assigned SIT Orders",
+    "subcontractingReceiptAssigned": "Assigned SRT Orders",
+    "warehouseInboundAssigned": "Assigned Warehouse Inbound Orders",
+    "warehouseOutboundAssigned": "Assigned Warehouse Outbound Orders",
     "search": "Search..."
   },
   "dashboard": {
@@ -229,6 +237,38 @@
       "createdBy": "Created By",
       "updatedBy": "Updated By",
       "updatedDate": "Updated Date"
+    },
+    "assignedList": {
+      "title": "Assigned Goods Receipt Orders",
+      "searchPlaceholder": "Order No, Customer Code...",
+      "noData": "No assigned goods receipt orders found",
+      "error": "An error occurred while loading data"
+    },
+    "collection": {
+      "title": "Goods Receipt Collection",
+      "stockNotFound": "Stock not found",
+      "enterBarcode": "Please enter barcode",
+      "noStockSelected": "Please get stock information first",
+      "invalidQuantity": "Invalid quantity",
+      "stockNotInOrder": "This stock is not in the goods receipt order",
+      "collected": "Product collected",
+      "collectError": "Collection error",
+      "invalidHeaderId": "Invalid goods receipt order",
+      "completed": "Goods receipt order completed successfully",
+      "completeError": "Completion error",
+      "barcodeScanned": "Barcode scanned",
+      "cameraError": "Camera could not be opened",
+      "viewCollected": "Collected",
+      "barcodePlaceholder": "Scan or enter barcode",
+      "quantity": "Quantity",
+      "collect": "Collect",
+      "total": "Total",
+      "remaining": "Remaining",
+      "noOrderLines": "Goods receipt order lines not found",
+      "complete": "Complete",
+      "scanBarcode": "Scan Barcode",
+      "scanBarcodeDescription": "Align barcode to camera",
+      "yapKod": "Structure"
     }
   },
   "shipment": {
@@ -319,6 +359,38 @@
       "documentNoRequired": "Document number is required",
       "customerRequired": "Customer selection is required",
       "sourceWarehouseRequired": "Source warehouse is required"
+    },
+    "assignedList": {
+      "title": "Assigned Shipment Orders",
+      "searchPlaceholder": "Document No, Customer Code, Warehouse...",
+      "noData": "No assigned shipment orders found",
+      "error": "An error occurred while loading data"
+    },
+    "collection": {
+      "title": "Shipment Collection",
+      "stockNotFound": "Stock not found",
+      "enterBarcode": "Please enter barcode",
+      "noStockSelected": "Please get stock information first",
+      "invalidQuantity": "Invalid quantity",
+      "stockNotInOrder": "This stock is not in the shipment order",
+      "collected": "Product collected",
+      "collectError": "Collection error",
+      "invalidHeaderId": "Invalid shipment order",
+      "completed": "Shipment order completed successfully",
+      "completeError": "Completion error",
+      "barcodeScanned": "Barcode scanned",
+      "cameraError": "Camera could not be opened",
+      "viewCollected": "Collected",
+      "barcodePlaceholder": "Scan or enter barcode",
+      "quantity": "Quantity",
+      "collect": "Collect",
+      "total": "Total",
+      "remaining": "Remaining",
+      "noOrderLines": "Shipment order lines not found",
+      "complete": "Complete",
+      "scanBarcode": "Scan Barcode",
+      "scanBarcodeDescription": "Align barcode to camera",
+      "yapKod": "Structure"
     }
   },
   "transfer": {
@@ -471,6 +543,98 @@
       "rightClickDrag": "🖱️ Right Click + Drag",
       "scroll": "🖱️ Scroll",
       "clickShelf": "🖱️ Click Shelf"
+    }
+  },
+  "subcontracting": {
+    "sit": {
+      "assignedList": {
+        "title": "Assigned SIT Orders",
+        "searchPlaceholder": "Document No, Customer Code, Warehouse...",
+        "id": "ID",
+        "documentNo": "Document No",
+        "documentDate": "Document Date",
+        "customerCode": "Customer Code",
+        "customerName": "Customer Name",
+        "sourceWarehouse": "Source Warehouse",
+        "targetWarehouse": "Target Warehouse",
+        "documentType": "Document Type",
+        "createdDate": "Created Date",
+        "actions": "Actions",
+        "viewDetails": "Details",
+        "noData": "No assigned SIT orders found",
+        "error": "An error occurred while loading data"
+      },
+      "collection": {
+        "title": "SIT Collection",
+        "stockNotFound": "Stock not found",
+        "enterBarcode": "Please enter barcode",
+        "noStockSelected": "Please get stock information first",
+        "invalidQuantity": "Invalid quantity",
+        "stockNotInOrder": "This stock is not in the SIT order",
+        "collected": "Product collected",
+        "collectError": "Collection error",
+        "invalidHeaderId": "Invalid SIT order",
+        "completed": "SIT order completed successfully",
+        "completeError": "Completion error",
+        "barcodeScanned": "Barcode scanned",
+        "cameraError": "Camera could not be opened",
+        "viewCollected": "Collected",
+        "barcodePlaceholder": "Scan or enter barcode",
+        "quantity": "Quantity",
+        "collect": "Collect",
+        "total": "Total",
+        "remaining": "Remaining",
+        "noOrderLines": "SIT order lines not found",
+        "complete": "Complete",
+        "scanBarcode": "Scan Barcode",
+        "scanBarcodeDescription": "Align barcode to camera",
+        "yapKod": "Structure"
+      }
+    },
+    "srt": {
+      "assignedList": {
+        "title": "Assigned SRT Orders",
+        "searchPlaceholder": "Document No, Customer Code, Warehouse...",
+        "id": "ID",
+        "documentNo": "Document No",
+        "documentDate": "Document Date",
+        "customerCode": "Customer Code",
+        "customerName": "Customer Name",
+        "sourceWarehouse": "Source Warehouse",
+        "targetWarehouse": "Target Warehouse",
+        "documentType": "Document Type",
+        "createdDate": "Created Date",
+        "actions": "Actions",
+        "viewDetails": "Details",
+        "noData": "No assigned SRT orders found",
+        "error": "An error occurred while loading data"
+      },
+      "collection": {
+        "title": "SRT Collection",
+        "stockNotFound": "Stock not found",
+        "enterBarcode": "Please enter barcode",
+        "noStockSelected": "Please get stock information first",
+        "invalidQuantity": "Invalid quantity",
+        "stockNotInOrder": "This stock is not in the SRT order",
+        "collected": "Product collected",
+        "collectError": "Collection error",
+        "invalidHeaderId": "Invalid SRT order",
+        "completed": "SRT order completed successfully",
+        "completeError": "Completion error",
+        "barcodeScanned": "Barcode scanned",
+        "cameraError": "Camera could not be opened",
+        "viewCollected": "Collected",
+        "barcodePlaceholder": "Scan or enter barcode",
+        "quantity": "Quantity",
+        "collect": "Collect",
+        "total": "Total",
+        "remaining": "Remaining",
+        "noOrderLines": "SRT order lines not found",
+        "complete": "Complete",
+        "scanBarcode": "Scan Barcode",
+        "scanBarcodeDescription": "Align barcode to camera",
+        "yapKod": "Structure"
+      }
     }
   },
   "footer": {

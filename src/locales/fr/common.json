@@ -26,7 +26,8 @@
     "over": "Excédent",
     "yes": "Oui",
     "no": "Non",
-    "add": "Ajouter"
+    "add": "Ajouter",
+    "start": "Démarrer"
   },
   "auth": {
     "login": {
@@ -43,6 +44,7 @@
       "loggingIn": "Connexion en cours...",
       "wrongPassword": "L'e-mail ou le mot de passe est incorrect",
       "loginError": "Une erreur s'est produite lors de la connexion",
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
       "copyright": "© 2025 VERII. Tous droits réservés."
     },
     "logout": "Déconnexion"
@@ -55,16 +57,22 @@
     "goodsReceipt": "Réception de marchandises",
     "goodsReceiptCreate": "Saisie de réception",
     "goodsReceiptList": "Liste des réceptions",
+    "goodsReceiptAssigned": "Ordres de réception assignés",
     "inventory": "Inventaire",
     "warehouse3d": "Entrepôt 3D",
     "reports": "Rapports",
     "shipment": "Expédition",
     "shipmentCreate": "Ordre d'expédition",
     "shipmentList": "Liste des expéditions",
+    "shipmentAssigned": "Ordres d'expédition assignés",
     "transfer": "Transfert",
     "transferCreate": "Créer un ordre de transfert",
     "transferList": "Liste des transferts",
     "transferAssigned": "Transferts assignés",
+    "subcontractingIssueAssigned": "Ordres SIT assignés",
+    "subcontractingReceiptAssigned": "Ordres SRT assignés",
+    "warehouseInboundAssigned": "Ordres d'entrée de stock assignés",
+    "warehouseOutboundAssigned": "Ordres de sortie de stock assignés",
     "search": "Rechercher..."
   },
   "dashboard": {
@@ -229,6 +237,38 @@
       "createdBy": "Créé par",
       "updatedBy": "Mis à jour par",
       "updatedDate": "Date de mise à jour"
+    },
+    "assignedList": {
+      "title": "Ordres de réception assignés",
+      "searchPlaceholder": "N° de commande, Code client...",
+      "noData": "Aucun ordre de réception assigné trouvé",
+      "error": "Une erreur s'est produite lors du chargement des données"
+    },
+    "collection": {
+      "title": "Collecte de réception",
+      "stockNotFound": "Stock introuvable",
+      "enterBarcode": "Veuillez entrer le code-barres",
+      "noStockSelected": "Veuillez d'abord obtenir les informations sur le stock",
+      "invalidQuantity": "Quantité invalide",
+      "stockNotInOrder": "Ce stock n'est pas dans l'ordre de réception",
+      "collected": "Produit collecté",
+      "collectError": "Erreur de collecte",
+      "invalidHeaderId": "Ordre de réception invalide",
+      "completed": "Ordre de réception complété avec succès",
+      "completeError": "Erreur de complétion",
+      "barcodeScanned": "Code-barres scanné",
+      "cameraError": "La caméra n'a pas pu être ouverte",
+      "viewCollected": "Collectés",
+      "barcodePlaceholder": "Scanner ou entrer le code-barres",
+      "quantity": "Quantité",
+      "collect": "Collecter",
+      "total": "Total",
+      "remaining": "Restant",
+      "noOrderLines": "Lignes d'ordre de réception introuvables",
+      "complete": "Compléter",
+      "scanBarcode": "Scanner le code-barres",
+      "scanBarcodeDescription": "Aligner le code-barres à la caméra",
+      "yapKod": "Structure"
     }
   },
   "shipment": {
@@ -319,6 +359,38 @@
       "documentNoRequired": "Le numéro de document est requis",
       "customerRequired": "La sélection du client est requise",
       "sourceWarehouseRequired": "L'entrepôt source est requis"
+    },
+    "assignedList": {
+      "title": "Ordres d'expédition assignés",
+      "searchPlaceholder": "N° de document, Code client, Entrepôt...",
+      "noData": "Aucun ordre d'expédition assigné trouvé",
+      "error": "Une erreur s'est produite lors du chargement des données"
+    },
+    "collection": {
+      "title": "Collecte d'expédition",
+      "stockNotFound": "Stock introuvable",
+      "enterBarcode": "Veuillez entrer le code-barres",
+      "noStockSelected": "Veuillez d'abord obtenir les informations sur le stock",
+      "invalidQuantity": "Quantité invalide",
+      "stockNotInOrder": "Ce stock n'est pas dans l'ordre d'expédition",
+      "collected": "Produit collecté",
+      "collectError": "Erreur de collecte",
+      "invalidHeaderId": "Ordre d'expédition invalide",
+      "completed": "Ordre d'expédition complété avec succès",
+      "completeError": "Erreur de complétion",
+      "barcodeScanned": "Code-barres scanné",
+      "cameraError": "La caméra n'a pas pu être ouverte",
+      "viewCollected": "Collectés",
+      "barcodePlaceholder": "Scanner ou entrer le code-barres",
+      "quantity": "Quantité",
+      "collect": "Collecter",
+      "total": "Total",
+      "remaining": "Restant",
+      "noOrderLines": "Lignes d'ordre d'expédition introuvables",
+      "complete": "Compléter",
+      "scanBarcode": "Scanner le code-barres",
+      "scanBarcodeDescription": "Aligner le code-barres à la caméra",
+      "yapKod": "Structure"
     }
   },
   "transfer": {
@@ -471,6 +543,98 @@
       "rightClickDrag": "🖱️ Clic droit + Glisser",
       "scroll": "🖱️ Défiler",
       "clickShelf": "🖱️ Cliquer sur l'étagère"
+    }
+  },
+  "subcontracting": {
+    "sit": {
+      "assignedList": {
+        "title": "Ordres SIT assignés",
+        "searchPlaceholder": "N° de document, Code client, Entrepôt...",
+        "id": "ID",
+        "documentNo": "N° de document",
+        "documentDate": "Date du document",
+        "customerCode": "Code client",
+        "customerName": "Nom du client",
+        "sourceWarehouse": "Entrepôt source",
+        "targetWarehouse": "Entrepôt cible",
+        "documentType": "Type de document",
+        "createdDate": "Date de création",
+        "actions": "Actions",
+        "viewDetails": "Détails",
+        "noData": "Aucun ordre SIT assigné trouvé",
+        "error": "Une erreur s'est produite lors du chargement des données"
+      },
+      "collection": {
+        "title": "Collecte SIT",
+        "stockNotFound": "Stock introuvable",
+        "enterBarcode": "Veuillez entrer le code-barres",
+        "noStockSelected": "Veuillez d'abord obtenir les informations sur le stock",
+        "invalidQuantity": "Quantité invalide",
+        "stockNotInOrder": "Ce stock n'est pas dans l'ordre SIT",
+        "collected": "Produit collecté",
+        "collectError": "Erreur de collecte",
+        "invalidHeaderId": "Ordre SIT invalide",
+        "completed": "Ordre SIT complété avec succès",
+        "completeError": "Erreur de complétion",
+        "barcodeScanned": "Code-barres scanné",
+        "cameraError": "La caméra n'a pas pu être ouverte",
+        "viewCollected": "Collectés",
+        "barcodePlaceholder": "Scanner ou entrer le code-barres",
+        "quantity": "Quantité",
+        "collect": "Collecter",
+        "total": "Total",
+        "remaining": "Restant",
+        "noOrderLines": "Lignes d'ordre SIT introuvables",
+        "complete": "Compléter",
+        "scanBarcode": "Scanner le code-barres",
+        "scanBarcodeDescription": "Aligner le code-barres à la caméra",
+        "yapKod": "Structure"
+      }
+    },
+    "srt": {
+      "assignedList": {
+        "title": "Ordres SRT assignés",
+        "searchPlaceholder": "N° de document, Code client, Entrepôt...",
+        "id": "ID",
+        "documentNo": "N° de document",
+        "documentDate": "Date du document",
+        "customerCode": "Code client",
+        "customerName": "Nom du client",
+        "sourceWarehouse": "Entrepôt source",
+        "targetWarehouse": "Entrepôt cible",
+        "documentType": "Type de document",
+        "createdDate": "Date de création",
+        "actions": "Actions",
+        "viewDetails": "Détails",
+        "noData": "Aucun ordre SRT assigné trouvé",
+        "error": "Une erreur s'est produite lors du chargement des données"
+      },
+      "collection": {
+        "title": "Collecte SRT",
+        "stockNotFound": "Stock introuvable",
+        "enterBarcode": "Veuillez entrer le code-barres",
+        "noStockSelected": "Veuillez d'abord obtenir les informations sur le stock",
+        "invalidQuantity": "Quantité invalide",
+        "stockNotInOrder": "Ce stock n'est pas dans l'ordre SRT",
+        "collected": "Produit collecté",
+        "collectError": "Erreur de collecte",
+        "invalidHeaderId": "Ordre SRT invalide",
+        "completed": "Ordre SRT complété avec succès",
+        "completeError": "Erreur de complétion",
+        "barcodeScanned": "Code-barres scanné",
+        "cameraError": "La caméra n'a pas pu être ouverte",
+        "viewCollected": "Collectés",
+        "barcodePlaceholder": "Scanner ou entrer le code-barres",
+        "quantity": "Quantité",
+        "collect": "Collecter",
+        "total": "Total",
+        "remaining": "Restant",
+        "noOrderLines": "Lignes d'ordre SRT introuvables",
+        "complete": "Compléter",
+        "scanBarcode": "Scanner le code-barres",
+        "scanBarcodeDescription": "Aligner le code-barres à la caméra",
+        "yapKod": "Structure"
+      }
     }
   },
   "footer": {

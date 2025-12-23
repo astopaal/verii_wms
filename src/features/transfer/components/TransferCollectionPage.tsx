@@ -2,11 +2,10 @@ import { type ReactElement, useState, useEffect, useMemo, useRef, useCallback } 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/stores/ui-store';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useStokBarcode } from '../hooks/useStokBarcode';
 import { useAddBarcode } from '../hooks/useAddBarcode';
@@ -35,7 +34,7 @@ export function TransferCollectionPage(): ReactElement {
   const headerIdNum = headerId ? parseInt(headerId, 10) : 0;
 
   const { data: orderLinesData, isLoading: isLoadingOrderLines } = useAssignedTransferOrderLines(headerIdNum);
-  const { data: collectedData, isLoading: isLoadingCollected } = useCollectedBarcodes(headerIdNum);
+  const { data: collectedData } = useCollectedBarcodes(headerIdNum);
   const { data: barcodeData, isLoading: isSearching } = useStokBarcode(searchBarcode, '1', enableSearch);
   const addBarcodeMutation = useAddBarcode();
   const completeTransferMutation = useCompleteTransfer();
