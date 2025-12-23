@@ -1,19 +1,38 @@
 import axios from 'axios';
 import i18n from './i18n';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://92.205.188.223:5000';
-console.log("API_URL", API_URL);
+const DEFAULT_API_URL = 'https://api.v3rii.com';
 
-if (!import.meta.env.VITE_API_URL) {
-  console.warn('VITE_API_URL environment variable not found, using default:', API_URL);
-}
+let apiUrl = DEFAULT_API_URL;
+
+const loadConfig = async (): Promise<string> => {
+  try {
+    const response = await fetch('/config.json');
+    if (response.ok) {
+      const config = await response.json();
+      if (config.apiUrl) {
+        return config.apiUrl;
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to load config.json, using default API URL:', error);
+  }
+  return DEFAULT_API_URL;
+};
+
+const initApi = async (): Promise<void> => {
+  apiUrl = await loadConfig();
+  api.defaults.baseURL = apiUrl;
+};
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+initApi();
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
