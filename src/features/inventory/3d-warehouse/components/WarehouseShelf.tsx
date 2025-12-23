@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import type { WarehouseSlot as WarehouseSlotType, ParsedLocation } from '../types/warehouse-3d';
+import type { WarehouseSlot as WarehouseSlotType } from '../types/warehouse-3d';
 import { parseLocation } from '../utils/location-parser';
 import { 
   SLOT_WIDTH, 
@@ -72,7 +72,7 @@ export function WarehouseShelf({
       const parsed = parseLocation(slot.hucreKodu);
       if (!parsed) return null;
 
-      const x = parsed.bay * (SLOT_WIDTH + SLOT_GAP) - contentWidth / 2 + SLOT_WIDTH / 2;
+      const x = parsed.column * (SLOT_WIDTH + SLOT_GAP) - contentWidth / 2 + SLOT_WIDTH / 2;
       const y = parsed.level * (SLOT_HEIGHT + LEVEL_GAP) + BASE_HEIGHT + VERTICAL_PADDING / 2 + SLOT_HEIGHT / 2;
       return { ...slot, x, y, bay: parsed.column || 0, level: parsed.level };
     }).filter((bin): bin is WarehouseSlotType & { x: number; y: number; bay: number; level: number } => bin !== null);

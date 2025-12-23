@@ -51,6 +51,7 @@ export interface TransferOrderItem {
   remainingHamax: number;
   plannedQtyAllocated: number;
   remainingForImport: number;
+  unit?: string;
 }
 
 export interface SelectedTransferOrderItem extends TransferOrderItem {

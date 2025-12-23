@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/c
 import { Input } from '@/components/ui/input';
 import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { useProducts } from '../../hooks/useProducts';
 import { useOrdersByCustomer } from '../../hooks/useOrdersByCustomer';
 import { goodsReceiptApi } from '../../api/goods-receipt-api';
@@ -217,10 +216,24 @@ export function Step2StockSelection({
                     .map((item) => {
                       const product = products?.find((p) => p.stokKodu === item.stockCode);
                       const orderQuantity = stockOrderQuantities.get(item.stockCode) || 0;
-                      const orderItem = product ? {
+                      const orderItem: OrderItem | null = product ? {
                         id: item.stockCode,
+                        mode: 'STOCK',
+                        siparisNo: '',
+                        orderID: 0,
                         stockCode: item.stockCode,
                         stockName: item.stockName,
+                        customerCode: customerCode || '',
+                        customerName: '',
+                        branchCode: 0,
+                        targetWh: 0,
+                        projectCode: '',
+                        orderDate: new Date().toISOString(),
+                        orderedQty: orderQuantity,
+                        deliveredQty: 0,
+                        remainingHamax: orderQuantity,
+                        plannedQtyAllocated: 0,
+                        remainingForImport: orderQuantity,
                         productCode: item.stockCode,
                         productName: item.stockName,
                         quantity: orderQuantity,
@@ -235,9 +248,9 @@ export function Step2StockSelection({
                           item={orderItem}
                           selectedItem={item}
                           warehouses={warehouses}
-                          onUpdateItem={(itemId, updates) => onUpdateItem(item.stockCode, updates)}
+                          onUpdateItem={(_itemId, updates) => onUpdateItem(item.stockCode, updates)}
                           onToggleItem={() => {}}
-                          onRemoveItem={(itemId) => onRemoveItem(item.stockCode)}
+                          onRemoveItem={(_itemId) => onRemoveItem(item.stockCode)}
                         />
                       );
                     })
