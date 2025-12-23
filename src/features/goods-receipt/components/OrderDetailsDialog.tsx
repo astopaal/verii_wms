@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import type { OrderItem, SelectedOrderItem } from '../types/goods-receipt';
 
 interface OrderDetailsDialogProps {
+  customerCode: string | null;
   orderId: string | null;
   isOpen: boolean;
   onClose: () => void;
@@ -22,6 +23,7 @@ interface OrderDetailsDialogProps {
 }
 
 export function OrderDetailsDialog({
+  customerCode,
   orderId,
   isOpen,
   onClose,
@@ -31,9 +33,9 @@ export function OrderDetailsDialog({
 }: OrderDetailsDialogProps): ReactElement {
   const { t } = useTranslation();
   const { data: orderItems, isLoading } = useQuery({
-    queryKey: ['orderItems', orderId],
-    queryFn: () => goodsReceiptApi.getOrderItems(orderId!),
-    enabled: !!orderId && isOpen,
+    queryKey: ['orderItems', customerCode, orderId],
+    queryFn: () => goodsReceiptApi.getOrderItems(customerCode!, orderId!),
+    enabled: !!customerCode && !!orderId && isOpen,
   });
 
   const handleToggleItem = (item: OrderItem): void => {
@@ -96,13 +98,13 @@ export function OrderDetailsDialog({
                         <div>
                           <p className="text-muted-foreground">{t('goodsReceipt.orderDetails.unitPrice')}</p>
                           <p className="font-medium">
-                            {item.unitPrice.toLocaleString('tr-TR')} ₺
+                            {(item.unitPrice || 0).toLocaleString('tr-TR')} ₺
                           </p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">{t('goodsReceipt.orderDetails.total')}</p>
                           <p className="font-medium">
-                            {item.totalPrice.toLocaleString('tr-TR')} ₺
+                            {(item.totalPrice || 0).toLocaleString('tr-TR')} ₺
                           </p>
                         </div>
                       </div>
@@ -116,7 +118,7 @@ export function OrderDetailsDialog({
                           max={item.quantity}
                           value={selectedItem?.receiptQuantity || 0}
                           onChange={(e) =>
-                            handleQuantityChange(item.id, e.target.value)
+                            handleQuantityChange(item.id || '', e.target.value)
                           }
                           className="w-20 px-2 py-1 border rounded text-sm"
                         />

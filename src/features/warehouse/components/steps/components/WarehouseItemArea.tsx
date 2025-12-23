@@ -32,10 +32,10 @@ export function WarehouseItemArea({
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: inboundOrderItemsData, isLoading: inboundOrderItemsLoading } = useWarehouseInboundOrderItems(
-    type === 'inbound' ? siparisNo : undefined
+    type === 'inbound' ? siparisNo ?? undefined : undefined
   );
   const { data: outboundOrderItemsData, isLoading: outboundOrderItemsLoading } = useWarehouseOutboundOrderItems(
-    type === 'outbound' ? siparisNo : undefined
+    type === 'outbound' ? siparisNo ?? undefined : undefined
   );
 
   const orderItemsData = type === 'inbound' ? inboundOrderItemsData : outboundOrderItemsData;

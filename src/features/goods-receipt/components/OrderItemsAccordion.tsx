@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import type { OrderItem, SelectedOrderItem } from '../types/goods-receipt';
 
 interface OrderItemsAccordionProps {
+  customerCode: string;
   orderId: string;
   selectedItems: SelectedOrderItem[];
   onToggleItem: (item: OrderItem) => void;
@@ -14,6 +15,7 @@ interface OrderItemsAccordionProps {
 }
 
 export function OrderItemsAccordion({
+  customerCode,
   orderId,
   selectedItems,
   onToggleItem,
@@ -21,9 +23,9 @@ export function OrderItemsAccordion({
 }: OrderItemsAccordionProps): ReactElement {
   const { t } = useTranslation();
   const { data: orderItems, isLoading } = useQuery({
-    queryKey: ['orderItems', orderId],
-    queryFn: () => goodsReceiptApi.getOrderItems(orderId),
-    enabled: !!orderId,
+    queryKey: ['orderItems', customerCode, orderId],
+    queryFn: () => goodsReceiptApi.getOrderItems(customerCode, orderId),
+    enabled: !!customerCode && !!orderId,
   });
 
   const handleQuantityChange = (itemId: string, value: string): void => {
@@ -79,7 +81,7 @@ export function OrderItemsAccordion({
                       min="0"
                       max={item.quantity}
                       value={selectedItem?.receiptQuantity || 0}
-                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                      onChange={(e) => handleQuantityChange(item.id || '', e.target.value)}
                       className="w-20 h-7 text-xs"
                     />
                     <span className="text-xs text-muted-foreground">{item.unit}</span>
