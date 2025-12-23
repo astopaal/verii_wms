@@ -3,7 +3,7 @@ import { router } from './routes';
 import { Toaster } from './components/ui/sonner';
 import './App.css';
 
-function App(): JSX.Element {
+function App() {
   return (
     <>
       <RouterProvider router={router} />

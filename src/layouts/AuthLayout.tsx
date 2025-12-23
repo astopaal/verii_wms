@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-export default function AuthLayout(): JSX.Element {
+export default function AuthLayout() {
   return <Outlet />;
 }
 
