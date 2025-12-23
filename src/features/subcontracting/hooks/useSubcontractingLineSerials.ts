@@ -1,11 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import { subcontractingApi } from '../api/subcontracting-api';
+import type { SubcontractingLineSerialsResponse } from '../types/subcontracting';
 
 export function useSubcontractingLineSerials(lineId: number | null, documentType: string | null) {
-  return useQuery({
+  return useQuery<SubcontractingLineSerialsResponse>({
     queryKey: ['subcontracting-line-serials', lineId, documentType],
-    queryFn: () => {
-      if (!lineId || !documentType) return Promise.resolve({ success: true, data: [] });
+    queryFn: (): Promise<SubcontractingLineSerialsResponse> => {
+      if (!lineId || !documentType) {
+        return Promise.resolve({
+          success: true,
+          data: [],
+          message: '',
+          exceptionMessage: '',
+          errors: [],
+          timestamp: new Date().toISOString(),
+          statusCode: 200,
+          className: '',
+        } as SubcontractingLineSerialsResponse);
+      }
       if (documentType === 'SRT') {
         return subcontractingApi.getReceiptLineSerials(lineId);
       }
