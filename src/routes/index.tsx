@@ -37,6 +37,7 @@ import {
 } from '@/features/warehouse';
 import { ShipmentCreatePage, ShipmentListPage, AssignedShipmentListPage, ShipmentCollectionPage } from '@/features/shipment';
 import { Warehouse3dPage } from '@/features/inventory/3d-warehouse';
+import { ParameterFormPage } from '@/features/parameters';
 
 export const router = createBrowserRouter([
   {
@@ -210,6 +211,15 @@ export const router = createBrowserRouter([
           {
             path: '3d-warehouse',
             element: <Warehouse3dPage />,
+          },
+        ],
+      },
+      {
+        path: 'parameters',
+        children: [
+          {
+            path: ':type',
+            element: <ParameterFormPage />,
           },
         ],
       },

@@ -285,6 +285,70 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         },
       ],
     },
+    {
+      title: t('sidebar.parameters', 'Parametre'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+      ),
+      children: [
+        {
+          title: t('sidebar.parametersGr', 'Mal Kabul Parametreleri'),
+          href: '/parameters/gr',
+        },
+        {
+          title: t('sidebar.parametersWt', 'Depo Transfer Parametreleri'),
+          href: '/parameters/wt',
+        },
+        {
+          title: t('sidebar.parametersWo', 'Depo Çıkış Parametreleri'),
+          href: '/parameters/wo',
+        },
+        {
+          title: t('sidebar.parametersWi', 'Depo Giriş Parametreleri'),
+          href: '/parameters/wi',
+        },
+        {
+          title: t('sidebar.parametersSh', 'Sevkiyat Parametreleri'),
+          href: '/parameters/sh',
+        },
+        {
+          title: t('sidebar.parametersSrt', 'Taşeron Alış Transfer Parametreleri'),
+          href: '/parameters/srt',
+        },
+        {
+          title: t('sidebar.parametersSit', 'Taşeron Çıkış Transfer Parametreleri'),
+          href: '/parameters/sit',
+        },
+        {
+          title: t('sidebar.parametersPt', 'Üretim Transfer Parametreleri'),
+          href: '/parameters/pt',
+        },
+        {
+          title: t('sidebar.parametersPr', 'Üretim Parametreleri'),
+          href: '/parameters/pr',
+        },
+        {
+          title: t('sidebar.parametersIc', 'Sayım Parametreleri'),
+          href: '/parameters/ic',
+        },
+        {
+          title: t('sidebar.parametersP', 'Paket Parametreleri'),
+          href: '/parameters/p',
+        },
+      ],
+    },
   ];
 
   const items = navItems || defaultNavItems;
