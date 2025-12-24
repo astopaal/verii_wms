@@ -161,7 +161,32 @@ export function GoodsReceiptCollectionPage(): ReactElement {
   };
 
   useEffect(() => {
-    if (isCameraOpen && scannerContainerRef.current) {
+    if (!isCameraOpen) return;
+
+    const initCamera = async (): Promise<void> => {
+      await new Promise<void>((resolve) => {
+        if (scannerContainerRef.current && document.getElementById('barcode-scanner')) {
+          resolve();
+        } else {
+          const checkElement = setInterval(() => {
+            if (scannerContainerRef.current && document.getElementById('barcode-scanner')) {
+              clearInterval(checkElement);
+              resolve();
+            }
+          }, 50);
+          setTimeout(() => {
+            clearInterval(checkElement);
+            resolve();
+          }, 1000);
+        }
+      });
+
+      if (!scannerContainerRef.current || !document.getElementById('barcode-scanner')) {
+        toast.error(t('goodsReceipt.collection.cameraError', 'Kamera açılamadı'));
+        setIsCameraOpen(false);
+        return;
+      }
+
       const scannerId = 'barcode-scanner';
       const config = {
         fps: 10,
@@ -184,9 +209,22 @@ export function GoodsReceiptCollectionPage(): ReactElement {
       const html5QrCode = new Html5Qrcode(scannerId);
       qrCodeScannerRef.current = html5QrCode;
 
-      html5QrCode
-        .start(
-          { facingMode: 'environment' },
+      try {
+        const devices = await Html5Qrcode.getCameras();
+        let cameraId: string | { facingMode: string } = { facingMode: 'environment' };
+        
+        const backCamera = devices.find((device) => 
+          device.label.toLowerCase().includes('back') || 
+          device.label.toLowerCase().includes('rear') ||
+          device.label.toLowerCase().includes('environment')
+        );
+        
+        if (backCamera) {
+          cameraId = backCamera.id;
+        }
+
+        await html5QrCode.start(
+          cameraId,
           config,
           (decodedText) => {
             setBarcodeInput(decodedText);
@@ -196,18 +234,31 @@ export function GoodsReceiptCollectionPage(): ReactElement {
               handleBarcodeSearch();
             }, 100);
           },
-          () => {}
-        )
-        .catch((err) => {
-          toast.error(t('goodsReceipt.collection.cameraError', 'Kamera açılamadı'));
-          console.error('Camera error:', err);
-          handleCloseCamera();
-        });
-
-      return () => {
+          () => {
+            // Error callback - ignore
+          }
+        );
+      } catch (err) {
+        toast.error(t('goodsReceipt.collection.cameraError', 'Kamera açılamadı'));
+        console.error('Camera error:', err);
         handleCloseCamera();
-      };
-    }
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      initCamera();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (qrCodeScannerRef.current) {
+        qrCodeScannerRef.current.stop().catch(() => {
+          // Ignore errors when stopping
+        });
+        qrCodeScannerRef.current.clear();
+        qrCodeScannerRef.current = null;
+      }
+    };
   }, [isCameraOpen, t, handleBarcodeSearch]);
 
   const totalCollectedCount = useMemo(() => {
