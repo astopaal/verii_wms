@@ -2,11 +2,14 @@ import { z } from 'zod';
 import type { ApiResponse } from '@/types/api';
 import type { TFunction } from 'i18next';
 
-export const parameterFormSchema = (t: TFunction) => z.object({
-  allowLessQuantityBasedOnOrder: z.boolean(),
-  allowMoreQuantityBasedOnOrder: z.boolean(),
-  requireApprovalBeforeErp: z.boolean(),
-});
+export const parameterFormSchema = (t: TFunction) => {
+  void t;
+  return z.object({
+    allowLessQuantityBasedOnOrder: z.boolean(),
+    allowMoreQuantityBasedOnOrder: z.boolean(),
+    requireApprovalBeforeErp: z.boolean(),
+  });
+};
 
 export type ParameterFormData = z.infer<ReturnType<typeof parameterFormSchema>>;
 

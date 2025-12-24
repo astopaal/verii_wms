@@ -74,15 +74,6 @@ export function ParameterListPage(): ReactElement {
     }
   };
 
-  const formatDate = (dateString: string | null): string => {
-    if (!dateString) return '-';
-    return new Date(dateString).toLocaleDateString('tr-TR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-  };
-
   const formatDateTime = (dateString: string | null): string => {
     if (!dateString) return '-';
     return new Date(dateString).toLocaleString('tr-TR', {

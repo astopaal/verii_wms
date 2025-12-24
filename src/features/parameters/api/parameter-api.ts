@@ -72,7 +72,6 @@ export const parameterApi = {
   },
 
   upsert: async (type: ParameterType, data: CreateParameterRequest | UpdateParameterRequest): Promise<void> => {
-    const endpoint = getEndpoint(type);
     const existing = await parameterApi.getFirst(type);
     
     if (existing) {
