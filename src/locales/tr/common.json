@@ -73,7 +73,19 @@
     "subcontractingReceiptAssigned": "Atanmış Fason Giriş Emirleri",
     "warehouseInboundAssigned": "Atanmış Ambar Giriş Emirleri",
     "warehouseOutboundAssigned": "Atanmış Ambar Çıkış Emirleri",
-    "search": "Ara..."
+    "search": "Ara...",
+    "parameters": "Parametre",
+    "parametersGr": "Mal Kabul Parametreleri",
+    "parametersWt": "Depo Transfer Parametreleri",
+    "parametersWo": "Depo Çıkış Parametreleri",
+    "parametersWi": "Depo Giriş Parametreleri",
+    "parametersSh": "Sevkiyat Parametreleri",
+    "parametersSrt": "Taşeron Alış Transfer Parametreleri",
+    "parametersSit": "Taşeron Çıkış Transfer Parametreleri",
+    "parametersPt": "Üretim Transfer Parametreleri",
+    "parametersPr": "Üretim Parametreleri",
+    "parametersIc": "Sayım Parametreleri",
+    "parametersP": "Paket Parametreleri"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -645,6 +657,103 @@
     "light": "Açık",
     "dark": "Koyu",
     "system": "Sistem"
+  },
+  "parameters": {
+    "list": {
+      "title": "Parametre Listesi",
+      "searchPlaceholder": "Ara...",
+      "id": "ID",
+      "allowLessQuantity": "Emre İstinaden Az Miktar",
+      "allowMoreQuantity": "Emre İstinaden Fazla Miktar",
+      "requireApproval": "ERP Öncesi Onay",
+      "createdDate": "Oluşturulma Tarihi",
+      "updatedDate": "Güncelleme Tarihi",
+      "actions": "İşlemler",
+      "noData": "Veri bulunamadı",
+      "error": "Veri yüklenirken bir hata oluştu",
+      "addNew": "Yeni Ekle"
+    },
+    "form": {
+      "allowLessQuantity": "Emre İstinaden Az Miktar",
+      "allowLessQuantityDescription": "Siparişe göre daha az miktar girilmesine izin verir. Bu seçenek aktif olduğunda, sipariş miktarından daha az miktar girişi yapılabilir.",
+      "allowMoreQuantity": "Emre İstinaden Fazla Miktar",
+      "allowMoreQuantityDescription": "Siparişe göre daha fazla miktar girilmesine izin verir. Bu seçenek aktif olduğunda, sipariş miktarından daha fazla miktar girişi yapılabilir.",
+      "requireApproval": "ERP Öncesi Onay",
+      "requireApprovalDescription": "ERP sistemine gönderilmeden önce onay gerektirir. Bu seçenek aktif olduğunda, işlemler ERP'ye gönderilmeden önce onay sürecinden geçer.",
+      "editDescription": "Mevcut parametre ayarlarını düzenleyebilirsiniz",
+      "createDescription": "Yeni parametre ayarlarını oluşturabilirsiniz",
+      "updateButton": "Güncelle",
+      "createButton": "Kaydet"
+    },
+    "create": {
+      "success": "Parametre başarıyla oluşturuldu",
+      "error": "Parametre oluşturulurken bir hata oluştu"
+    },
+    "update": {
+      "success": "Parametre başarıyla güncellendi",
+      "error": "Parametre güncellenirken bir hata oluştu"
+    },
+    "delete": {
+      "title": "Parametre Sil",
+      "description": "Bu parametreyi silmek istediğinizden emin misiniz?",
+      "success": "Parametre başarıyla silindi",
+      "error": "Parametre silinirken bir hata oluştu"
+    },
+    "gr": {
+      "title": "Mal Kabul Parametreleri",
+      "createTitle": "Mal Kabul Parametreleri - Yeni Ekle",
+      "editTitle": "Mal Kabul Parametreleri - Düzenle"
+    },
+    "wt": {
+      "title": "Depo Transfer Parametreleri",
+      "createTitle": "Depo Transfer Parametreleri - Yeni Ekle",
+      "editTitle": "Depo Transfer Parametreleri - Düzenle"
+    },
+    "wo": {
+      "title": "Depo Çıkış Parametreleri",
+      "createTitle": "Depo Çıkış Parametreleri - Yeni Ekle",
+      "editTitle": "Depo Çıkış Parametreleri - Düzenle"
+    },
+    "wi": {
+      "title": "Depo Giriş Parametreleri",
+      "createTitle": "Depo Giriş Parametreleri - Yeni Ekle",
+      "editTitle": "Depo Giriş Parametreleri - Düzenle"
+    },
+    "sh": {
+      "title": "Sevkiyat Parametreleri",
+      "createTitle": "Sevkiyat Parametreleri - Yeni Ekle",
+      "editTitle": "Sevkiyat Parametreleri - Düzenle"
+    },
+    "srt": {
+      "title": "Taşeron Alış Transfer Parametreleri",
+      "createTitle": "Taşeron Alış Transfer Parametreleri - Yeni Ekle",
+      "editTitle": "Taşeron Alış Transfer Parametreleri - Düzenle"
+    },
+    "sit": {
+      "title": "Taşeron Çıkış Transfer Parametreleri",
+      "createTitle": "Taşeron Çıkış Transfer Parametreleri - Yeni Ekle",
+      "editTitle": "Taşeron Çıkış Transfer Parametreleri - Düzenle"
+    },
+    "pt": {
+      "title": "Üretim Transfer Parametreleri",
+      "createTitle": "Üretim Transfer Parametreleri - Yeni Ekle",
+      "editTitle": "Üretim Transfer Parametreleri - Düzenle"
+    },
+    "pr": {
+      "title": "Üretim Parametreleri",
+      "createTitle": "Üretim Parametreleri - Yeni Ekle",
+      "editTitle": "Üretim Parametreleri - Düzenle"
+    },
+    "ic": {
+      "title": "Sayım Parametreleri",
+      "createTitle": "Sayım Parametreleri - Yeni Ekle",
+      "editTitle": "Sayım Parametreleri - Düzenle"
+    },
+    "p": {
+      "title": "Paket Parametreleri",
+      "createTitle": "Paket Parametreleri - Yeni Ekle",
+      "editTitle": "Paket Parametreleri - Düzenle"
+    }
   }
 }
 

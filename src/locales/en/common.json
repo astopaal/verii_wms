@@ -73,7 +73,19 @@
     "subcontractingReceiptAssigned": "Assigned SRT Orders",
     "warehouseInboundAssigned": "Assigned Warehouse Inbound Orders",
     "warehouseOutboundAssigned": "Assigned Warehouse Outbound Orders",
-    "search": "Search..."
+    "search": "Search...",
+    "parameters": "Parameters",
+    "parametersGr": "Goods Receipt Parameters",
+    "parametersWt": "Warehouse Transfer Parameters",
+    "parametersWo": "Warehouse Outbound Parameters",
+    "parametersWi": "Warehouse Inbound Parameters",
+    "parametersSh": "Shipment Parameters",
+    "parametersSrt": "Subcontracting Receipt Transfer Parameters",
+    "parametersSit": "Subcontracting Issue Transfer Parameters",
+    "parametersPt": "Production Transfer Parameters",
+    "parametersPr": "Production Parameters",
+    "parametersIc": "Inventory Count Parameters",
+    "parametersP": "Package Parameters"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -645,6 +657,103 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System"
+  },
+  "parameters": {
+    "list": {
+      "title": "Parameter List",
+      "searchPlaceholder": "Search...",
+      "id": "ID",
+      "allowLessQuantity": "Allow Less Quantity Based On Order",
+      "allowMoreQuantity": "Allow More Quantity Based On Order",
+      "requireApproval": "Require Approval Before ERP",
+      "createdDate": "Created Date",
+      "updatedDate": "Updated Date",
+      "actions": "Actions",
+      "noData": "No data found",
+      "error": "An error occurred while loading data",
+      "addNew": "Add New"
+    },
+    "form": {
+      "allowLessQuantity": "Allow Less Quantity Based On Order",
+      "allowLessQuantityDescription": "Allows entering less quantity than the order. When this option is active, quantities less than the order quantity can be entered.",
+      "allowMoreQuantity": "Allow More Quantity Based On Order",
+      "allowMoreQuantityDescription": "Allows entering more quantity than the order. When this option is active, quantities more than the order quantity can be entered.",
+      "requireApproval": "Require Approval Before ERP",
+      "requireApprovalDescription": "Requires approval before sending to ERP system. When this option is active, transactions go through an approval process before being sent to ERP.",
+      "editDescription": "You can edit existing parameter settings",
+      "createDescription": "You can create new parameter settings",
+      "updateButton": "Update",
+      "createButton": "Save"
+    },
+    "create": {
+      "success": "Parameter created successfully",
+      "error": "An error occurred while creating parameter"
+    },
+    "update": {
+      "success": "Parameter updated successfully",
+      "error": "An error occurred while updating parameter"
+    },
+    "delete": {
+      "title": "Delete Parameter",
+      "description": "Are you sure you want to delete this parameter?",
+      "success": "Parameter deleted successfully",
+      "error": "An error occurred while deleting parameter"
+    },
+    "gr": {
+      "title": "Goods Receipt Parameters",
+      "createTitle": "Goods Receipt Parameters - Add New",
+      "editTitle": "Goods Receipt Parameters - Edit"
+    },
+    "wt": {
+      "title": "Warehouse Transfer Parameters",
+      "createTitle": "Warehouse Transfer Parameters - Add New",
+      "editTitle": "Warehouse Transfer Parameters - Edit"
+    },
+    "wo": {
+      "title": "Warehouse Outbound Parameters",
+      "createTitle": "Warehouse Outbound Parameters - Add New",
+      "editTitle": "Warehouse Outbound Parameters - Edit"
+    },
+    "wi": {
+      "title": "Warehouse Inbound Parameters",
+      "createTitle": "Warehouse Inbound Parameters - Add New",
+      "editTitle": "Warehouse Inbound Parameters - Edit"
+    },
+    "sh": {
+      "title": "Shipment Parameters",
+      "createTitle": "Shipment Parameters - Add New",
+      "editTitle": "Shipment Parameters - Edit"
+    },
+    "srt": {
+      "title": "Subcontracting Receipt Transfer Parameters",
+      "createTitle": "Subcontracting Receipt Transfer Parameters - Add New",
+      "editTitle": "Subcontracting Receipt Transfer Parameters - Edit"
+    },
+    "sit": {
+      "title": "Subcontracting Issue Transfer Parameters",
+      "createTitle": "Subcontracting Issue Transfer Parameters - Add New",
+      "editTitle": "Subcontracting Issue Transfer Parameters - Edit"
+    },
+    "pt": {
+      "title": "Production Transfer Parameters",
+      "createTitle": "Production Transfer Parameters - Add New",
+      "editTitle": "Production Transfer Parameters - Edit"
+    },
+    "pr": {
+      "title": "Production Parameters",
+      "createTitle": "Production Parameters - Add New",
+      "editTitle": "Production Parameters - Edit"
+    },
+    "ic": {
+      "title": "Inventory Count Parameters",
+      "createTitle": "Inventory Count Parameters - Add New",
+      "editTitle": "Inventory Count Parameters - Edit"
+    },
+    "p": {
+      "title": "Package Parameters",
+      "createTitle": "Package Parameters - Add New",
+      "editTitle": "Package Parameters - Edit"
+    }
   }
 }
 

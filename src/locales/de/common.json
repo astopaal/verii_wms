@@ -73,7 +73,19 @@
     "subcontractingReceiptAssigned": "Zugewiesene SRT-Aufträge",
     "warehouseInboundAssigned": "Zugewiesene Lagereingangsaufträge",
     "warehouseOutboundAssigned": "Zugewiesene Lagerausgangsaufträge",
-    "search": "Suchen..."
+    "search": "Suchen...",
+    "parameters": "Parameter",
+    "parametersGr": "Wareneingangsparameter",
+    "parametersWt": "Lagerübertragungsparameter",
+    "parametersWo": "Lagerausgangsparameter",
+    "parametersWi": "Lagereingangsparameter",
+    "parametersSh": "Versandparameter",
+    "parametersSrt": "Subunternehmer-Eingangsparameter",
+    "parametersSit": "Subunternehmer-Ausgangsparameter",
+    "parametersPt": "Produktionsübertragungsparameter",
+    "parametersPr": "Produktionsparameter",
+    "parametersIc": "Inventurparameter",
+    "parametersP": "Paketparameter"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -645,6 +657,99 @@
     "light": "Hell",
     "dark": "Dunkel",
     "system": "System"
+  },
+  "parameters": {
+    "list": {
+      "title": "Parameterliste",
+      "searchPlaceholder": "Suchen...",
+      "id": "ID",
+      "allowLessQuantity": "Weniger Menge basierend auf Bestellung erlauben",
+      "allowMoreQuantity": "Mehr Menge basierend auf Bestellung erlauben",
+      "requireApproval": "Genehmigung vor ERP erforderlich",
+      "createdDate": "Erstellungsdatum",
+      "updatedDate": "Aktualisierungsdatum",
+      "actions": "Aktionen",
+      "noData": "Keine Daten gefunden",
+      "error": "Fehler beim Laden der Daten",
+      "addNew": "Neu hinzufügen"
+    },
+    "form": {
+      "allowLessQuantity": "Weniger Menge basierend auf Bestellung erlauben",
+      "allowLessQuantityDescription": "Eingabe einer geringeren Menge als die Bestellung erlauben",
+      "allowMoreQuantity": "Mehr Menge basierend auf Bestellung erlauben",
+      "allowMoreQuantityDescription": "Eingabe einer höheren Menge als die Bestellung erlauben",
+      "requireApproval": "Genehmigung vor ERP erforderlich",
+      "requireApprovalDescription": "Genehmigung vor dem Senden an ERP erforderlich"
+    },
+    "create": {
+      "success": "Parameter erfolgreich erstellt",
+      "error": "Fehler beim Erstellen des Parameters"
+    },
+    "update": {
+      "success": "Parameter erfolgreich aktualisiert",
+      "error": "Fehler beim Aktualisieren des Parameters"
+    },
+    "delete": {
+      "title": "Parameter löschen",
+      "description": "Möchten Sie diesen Parameter wirklich löschen?",
+      "success": "Parameter erfolgreich gelöscht",
+      "error": "Fehler beim Löschen des Parameters"
+    },
+    "gr": {
+      "title": "Wareneingangsparameter",
+      "createTitle": "Wareneingangsparameter - Neu hinzufügen",
+      "editTitle": "Wareneingangsparameter - Bearbeiten"
+    },
+    "wt": {
+      "title": "Lagerübertragungsparameter",
+      "createTitle": "Lagerübertragungsparameter - Neu hinzufügen",
+      "editTitle": "Lagerübertragungsparameter - Bearbeiten"
+    },
+    "wo": {
+      "title": "Lagerausgangsparameter",
+      "createTitle": "Lagerausgangsparameter - Neu hinzufügen",
+      "editTitle": "Lagerausgangsparameter - Bearbeiten"
+    },
+    "wi": {
+      "title": "Lagereingangsparameter",
+      "createTitle": "Lagereingangsparameter - Neu hinzufügen",
+      "editTitle": "Lagereingangsparameter - Bearbeiten"
+    },
+    "sh": {
+      "title": "Versandparameter",
+      "createTitle": "Versandparameter - Neu hinzufügen",
+      "editTitle": "Versandparameter - Bearbeiten"
+    },
+    "srt": {
+      "title": "Subunternehmer-Eingangsparameter",
+      "createTitle": "Subunternehmer-Eingangsparameter - Neu hinzufügen",
+      "editTitle": "Subunternehmer-Eingangsparameter - Bearbeiten"
+    },
+    "sit": {
+      "title": "Subunternehmer-Ausgangsparameter",
+      "createTitle": "Subunternehmer-Ausgangsparameter - Neu hinzufügen",
+      "editTitle": "Subunternehmer-Ausgangsparameter - Bearbeiten"
+    },
+    "pt": {
+      "title": "Produktionsübertragungsparameter",
+      "createTitle": "Produktionsübertragungsparameter - Neu hinzufügen",
+      "editTitle": "Produktionsübertragungsparameter - Bearbeiten"
+    },
+    "pr": {
+      "title": "Produktionsparameter",
+      "createTitle": "Produktionsparameter - Neu hinzufügen",
+      "editTitle": "Produktionsparameter - Bearbeiten"
+    },
+    "ic": {
+      "title": "Inventurparameter",
+      "createTitle": "Inventurparameter - Neu hinzufügen",
+      "editTitle": "Inventurparameter - Bearbeiten"
+    },
+    "p": {
+      "title": "Paketparameter",
+      "createTitle": "Paketparameter - Neu hinzufügen",
+      "editTitle": "Paketparameter - Bearbeiten"
+    }
   }
 }
 

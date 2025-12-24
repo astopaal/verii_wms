@@ -73,7 +73,19 @@
     "subcontractingReceiptAssigned": "Ordres SRT assignés",
     "warehouseInboundAssigned": "Ordres d'entrée de stock assignés",
     "warehouseOutboundAssigned": "Ordres de sortie de stock assignés",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "parameters": "Paramètres",
+    "parametersGr": "Paramètres de réception de marchandises",
+    "parametersWt": "Paramètres de transfert d'entrepôt",
+    "parametersWo": "Paramètres de sortie d'entrepôt",
+    "parametersWi": "Paramètres d'entrée d'entrepôt",
+    "parametersSh": "Paramètres d'expédition",
+    "parametersSrt": "Paramètres de transfert de sous-traitance (réception)",
+    "parametersSit": "Paramètres de transfert de sous-traitance (émission)",
+    "parametersPt": "Paramètres de transfert de production",
+    "parametersPr": "Paramètres de production",
+    "parametersIc": "Paramètres d'inventaire",
+    "parametersP": "Paramètres d'emballage"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -645,6 +657,99 @@
     "light": "Clair",
     "dark": "Sombre",
     "system": "Système"
+  },
+  "parameters": {
+    "list": {
+      "title": "Liste des paramètres",
+      "searchPlaceholder": "Rechercher...",
+      "id": "ID",
+      "allowLessQuantity": "Autoriser une quantité inférieure basée sur la commande",
+      "allowMoreQuantity": "Autoriser une quantité supérieure basée sur la commande",
+      "requireApproval": "Exiger une approbation avant l'ERP",
+      "createdDate": "Date de création",
+      "updatedDate": "Date de mise à jour",
+      "actions": "Actions",
+      "noData": "Aucune donnée trouvée",
+      "error": "Une erreur s'est produite lors du chargement des données",
+      "addNew": "Ajouter nouveau"
+    },
+    "form": {
+      "allowLessQuantity": "Autoriser une quantité inférieure basée sur la commande",
+      "allowLessQuantityDescription": "Autoriser la saisie d'une quantité inférieure à la commande",
+      "allowMoreQuantity": "Autoriser une quantité supérieure basée sur la commande",
+      "allowMoreQuantityDescription": "Autoriser la saisie d'une quantité supérieure à la commande",
+      "requireApproval": "Exiger une approbation avant l'ERP",
+      "requireApprovalDescription": "Exiger une approbation avant l'envoi à l'ERP"
+    },
+    "create": {
+      "success": "Paramètre créé avec succès",
+      "error": "Une erreur s'est produite lors de la création du paramètre"
+    },
+    "update": {
+      "success": "Paramètre mis à jour avec succès",
+      "error": "Une erreur s'est produite lors de la mise à jour du paramètre"
+    },
+    "delete": {
+      "title": "Supprimer le paramètre",
+      "description": "Êtes-vous sûr de vouloir supprimer ce paramètre ?",
+      "success": "Paramètre supprimé avec succès",
+      "error": "Une erreur s'est produite lors de la suppression du paramètre"
+    },
+    "gr": {
+      "title": "Paramètres de réception de marchandises",
+      "createTitle": "Paramètres de réception de marchandises - Ajouter nouveau",
+      "editTitle": "Paramètres de réception de marchandises - Modifier"
+    },
+    "wt": {
+      "title": "Paramètres de transfert d'entrepôt",
+      "createTitle": "Paramètres de transfert d'entrepôt - Ajouter nouveau",
+      "editTitle": "Paramètres de transfert d'entrepôt - Modifier"
+    },
+    "wo": {
+      "title": "Paramètres de sortie d'entrepôt",
+      "createTitle": "Paramètres de sortie d'entrepôt - Ajouter nouveau",
+      "editTitle": "Paramètres de sortie d'entrepôt - Modifier"
+    },
+    "wi": {
+      "title": "Paramètres d'entrée d'entrepôt",
+      "createTitle": "Paramètres d'entrée d'entrepôt - Ajouter nouveau",
+      "editTitle": "Paramètres d'entrée d'entrepôt - Modifier"
+    },
+    "sh": {
+      "title": "Paramètres d'expédition",
+      "createTitle": "Paramètres d'expédition - Ajouter nouveau",
+      "editTitle": "Paramètres d'expédition - Modifier"
+    },
+    "srt": {
+      "title": "Paramètres de transfert de sous-traitance (réception)",
+      "createTitle": "Paramètres de transfert de sous-traitance (réception) - Ajouter nouveau",
+      "editTitle": "Paramètres de transfert de sous-traitance (réception) - Modifier"
+    },
+    "sit": {
+      "title": "Paramètres de transfert de sous-traitance (émission)",
+      "createTitle": "Paramètres de transfert de sous-traitance (émission) - Ajouter nouveau",
+      "editTitle": "Paramètres de transfert de sous-traitance (émission) - Modifier"
+    },
+    "pt": {
+      "title": "Paramètres de transfert de production",
+      "createTitle": "Paramètres de transfert de production - Ajouter nouveau",
+      "editTitle": "Paramètres de transfert de production - Modifier"
+    },
+    "pr": {
+      "title": "Paramètres de production",
+      "createTitle": "Paramètres de production - Ajouter nouveau",
+      "editTitle": "Paramètres de production - Modifier"
+    },
+    "ic": {
+      "title": "Paramètres d'inventaire",
+      "createTitle": "Paramètres d'inventaire - Ajouter nouveau",
+      "editTitle": "Paramètres d'inventaire - Modifier"
+    },
+    "p": {
+      "title": "Paramètres d'emballage",
+      "createTitle": "Paramètres d'emballage - Ajouter nouveau",
+      "editTitle": "Paramètres d'emballage - Modifier"
+    }
   }
 }
 
