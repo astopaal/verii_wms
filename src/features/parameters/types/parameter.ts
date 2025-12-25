@@ -8,6 +8,7 @@ export const parameterFormSchema = (t: TFunction) => {
     allowLessQuantityBasedOnOrder: z.boolean(),
     allowMoreQuantityBasedOnOrder: z.boolean(),
     requireApprovalBeforeErp: z.boolean(),
+    requireAllOrderItemsCollected: z.boolean(),
   });
 };
 
@@ -18,6 +19,7 @@ export interface Parameter {
   allowLessQuantityBasedOnOrder: boolean;
   allowMoreQuantityBasedOnOrder: boolean;
   requireApprovalBeforeErp: boolean;
+  requireAllOrderItemsCollected: boolean;
   createdDate: string;
   updatedDate: string | null;
   deletedDate: string | null;
@@ -37,12 +39,14 @@ export interface CreateParameterRequest {
   allowLessQuantityBasedOnOrder: boolean;
   allowMoreQuantityBasedOnOrder: boolean;
   requireApprovalBeforeErp: boolean;
+  requireAllOrderItemsCollected: boolean;
 }
 
 export interface UpdateParameterRequest {
   allowLessQuantityBasedOnOrder: boolean;
   allowMoreQuantityBasedOnOrder: boolean;
   requireApprovalBeforeErp: boolean;
+  requireAllOrderItemsCollected: boolean;
 }
 
 export type ParameterType =
