@@ -33,6 +33,7 @@ export function ParameterFormPage(): ReactElement {
       allowLessQuantityBasedOnOrder: false,
       allowMoreQuantityBasedOnOrder: false,
       requireApprovalBeforeErp: false,
+      requireAllOrderItemsCollected: false,
     },
   });
 
@@ -46,12 +47,14 @@ export function ParameterFormPage(): ReactElement {
         allowLessQuantityBasedOnOrder: parameter.allowLessQuantityBasedOnOrder,
         allowMoreQuantityBasedOnOrder: parameter.allowMoreQuantityBasedOnOrder,
         requireApprovalBeforeErp: parameter.requireApprovalBeforeErp,
+        requireAllOrderItemsCollected: parameter.requireAllOrderItemsCollected ?? false,
       });
     } else {
       form.reset({
         allowLessQuantityBasedOnOrder: false,
         allowMoreQuantityBasedOnOrder: false,
         requireApprovalBeforeErp: false,
+        requireAllOrderItemsCollected: false,
       });
     }
   }, [parameter, form, parameterType, isLoadingParameter]);
@@ -196,6 +199,44 @@ export function ParameterFormPage(): ReactElement {
                             {t(
                               'parameters.form.requireApprovalDescription',
                               "ERP sistemine gönderilmeden önce onay gerektirir. Bu seçenek aktif olduğunda, işlemler ERP'ye gönderilmeden önce onay sürecinden geçer."
+                            )}
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <div className="flex items-center space-x-2">
+                            {field.value ? (
+                              <CheckCircle2 className="h-5 w-5 text-green-600" />
+                            ) : (
+                              <XCircle className="h-5 w-5 text-gray-400" />
+                            )}
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                              className="data-[state=checked]:bg-green-600"
+                            />
+                          </div>
+                        </FormControl>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                <Separator />
+
+                <FormField
+                  control={form.control}
+                  name="requireAllOrderItemsCollected"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-start space-x-4 rounded-lg border p-4 hover:bg-accent/50 transition-colors">
+                        <div className="flex-1 space-y-1">
+                          <FormLabel className="text-base font-semibold">
+                            {t('parameters.form.requireAllOrderItemsCollected', 'Emirdeki Tüm Kalemlere Toplama Yapılmış Olmalı')}
+                          </FormLabel>
+                          <FormDescription className="text-sm">
+                            {t(
+                              'parameters.form.requireAllOrderItemsCollectedDescription',
+                              'Bu parametre aktif olduğunda, emirdeki tüm kalemlere toplama yapılmış olması zorunludur.'
                             )}
                           </FormDescription>
                         </div>
