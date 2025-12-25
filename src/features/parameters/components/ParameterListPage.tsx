@@ -146,6 +146,9 @@ export function ParameterListPage(): ReactElement {
                   <TableHead>
                     {t('parameters.list.requireApproval', 'ERP Öncesi Onay')}
                   </TableHead>
+                  <TableHead>
+                    {t('parameters.list.requireAllOrderItemsCollected', 'Emirdeki Tüm Kalemlere Toplama Yapılmış Olmalı')}
+                  </TableHead>
                   <TableHead>{t('parameters.list.createdDate', 'Oluşturulma Tarihi')}</TableHead>
                   <TableHead>{t('parameters.list.updatedDate', 'Güncelleme Tarihi')}</TableHead>
                   <TableHead>{t('parameters.list.actions', 'İşlemler')}</TableHead>
@@ -159,6 +162,7 @@ export function ParameterListPage(): ReactElement {
                       <TableCell>{item.allowLessQuantityBasedOnOrder ? t('common.yes') : t('common.no')}</TableCell>
                       <TableCell>{item.allowMoreQuantityBasedOnOrder ? t('common.yes') : t('common.no')}</TableCell>
                       <TableCell>{item.requireApprovalBeforeErp ? t('common.yes') : t('common.no')}</TableCell>
+                      <TableCell>{item.requireAllOrderItemsCollected ? t('common.yes') : t('common.no')}</TableCell>
                       <TableCell>{formatDateTime(item.createdDate)}</TableCell>
                       <TableCell>{formatDateTime(item.updatedDate)}</TableCell>
                       <TableCell>
@@ -186,7 +190,7 @@ export function ParameterListPage(): ReactElement {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8">
+                    <TableCell colSpan={8} className="text-center py-8">
                       <p className="text-muted-foreground">
                         {t('parameters.list.noData', 'Veri bulunamadı')}
                       </p>
@@ -251,6 +255,14 @@ export function ParameterListPage(): ReactElement {
                         </p>
                         <p className="text-base">
                           {item.requireApprovalBeforeErp ? t('common.yes') : t('common.no')}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('parameters.list.requireAllOrderItemsCollected', 'Emirdeki Tüm Kalemlere Toplama Yapılmış Olmalı')}
+                        </p>
+                        <p className="text-base">
+                          {item.requireAllOrderItemsCollected ? t('common.yes') : t('common.no')}
                         </p>
                       </div>
                       <div>
