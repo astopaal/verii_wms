@@ -666,6 +666,7 @@
       "allowLessQuantity": "Weniger Menge basierend auf Bestellung erlauben",
       "allowMoreQuantity": "Mehr Menge basierend auf Bestellung erlauben",
       "requireApproval": "Genehmigung vor ERP erforderlich",
+      "requireAllOrderItemsCollected": "Alle Bestellpositionen müssen gesammelt werden",
       "createdDate": "Erstellungsdatum",
       "updatedDate": "Aktualisierungsdatum",
       "actions": "Aktionen",
@@ -679,7 +680,9 @@
       "allowMoreQuantity": "Mehr Menge basierend auf Bestellung erlauben",
       "allowMoreQuantityDescription": "Eingabe einer höheren Menge als die Bestellung erlauben",
       "requireApproval": "Genehmigung vor ERP erforderlich",
-      "requireApprovalDescription": "Genehmigung vor dem Senden an ERP erforderlich"
+      "requireApprovalDescription": "Genehmigung vor dem Senden an ERP erforderlich",
+      "requireAllOrderItemsCollected": "Alle Bestellpositionen müssen gesammelt werden",
+      "requireAllOrderItemsCollectedDescription": "Wenn dieser Parameter aktiv ist, müssen alle Positionen in der Bestellung gesammelt werden."
     },
     "create": {
       "success": "Parameter erfolgreich erstellt",

@@ -666,6 +666,7 @@
       "allowLessQuantity": "Autoriser une quantité inférieure basée sur la commande",
       "allowMoreQuantity": "Autoriser une quantité supérieure basée sur la commande",
       "requireApproval": "Exiger une approbation avant l'ERP",
+      "requireAllOrderItemsCollected": "Tous les articles de la commande doivent être collectés",
       "createdDate": "Date de création",
       "updatedDate": "Date de mise à jour",
       "actions": "Actions",
@@ -679,7 +680,9 @@
       "allowMoreQuantity": "Autoriser une quantité supérieure basée sur la commande",
       "allowMoreQuantityDescription": "Autoriser la saisie d'une quantité supérieure à la commande",
       "requireApproval": "Exiger une approbation avant l'ERP",
-      "requireApprovalDescription": "Exiger une approbation avant l'envoi à l'ERP"
+      "requireApprovalDescription": "Exiger une approbation avant l'envoi à l'ERP",
+      "requireAllOrderItemsCollected": "Tous les articles de la commande doivent être collectés",
+      "requireAllOrderItemsCollectedDescription": "Lorsque ce paramètre est actif, tous les articles de la commande doivent être collectés."
     },
     "create": {
       "success": "Paramètre créé avec succès",
