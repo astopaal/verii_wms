@@ -194,34 +194,36 @@ export const pHeaderFormSchema = (t: TFunction) => {
     packingDate: z.string().optional(),
     customerCode: z.string().optional(),
     customerAddress: z.string().optional(),
-    status: z.enum(['Draft', 'Packing', 'Packed', 'Shipped', 'Cancelled']).default('Draft'),
+    status: z.enum(['Draft', 'Packing', 'Packed', 'Shipped', 'Cancelled']).optional(),
     carrierId: z.number().optional(),
     carrierServiceType: z.string().optional(),
     trackingNo: z.string().optional(),
   });
 };
 
-export enum CargoCompany {
-  None = 0,
-  YurtiçiKargo = 1,
-  ArasKargo = 2,
-  MNGKargo = 3,
-  PTTKargo = 4,
-  SüratKargo = 5,
-  UPS = 6,
-  DHL = 7,
-  FedEx = 8,
-  TNT = 9,
-  HorozLojistik = 10,
-  CEVA = 11,
-  KargoTurk = 12,
-  HepsiJET = 13,
-  TrendyolExpress = 14,
-  AmazonLogistics = 15,
-  Scotty = 16,
-  KolayGelsin = 17,
-  BirGundeKargo = 18,
-}
+export const CargoCompany = {
+  None: 0,
+  YurtiçiKargo: 1,
+  ArasKargo: 2,
+  MNGKargo: 3,
+  PTTKargo: 4,
+  SüratKargo: 5,
+  UPS: 6,
+  DHL: 7,
+  FedEx: 8,
+  TNT: 9,
+  HorozLojistik: 10,
+  CEVA: 11,
+  KargoTurk: 12,
+  HepsiJET: 13,
+  TrendyolExpress: 14,
+  AmazonLogistics: 15,
+  Scotty: 16,
+  KolayGelsin: 17,
+  BirGundeKargo: 18,
+} as const;
+
+export type CargoCompany = (typeof CargoCompany)[keyof typeof CargoCompany];
 
 export type PHeaderFormData = z.infer<ReturnType<typeof pHeaderFormSchema>>;
 
@@ -230,7 +232,7 @@ export const pPackageFormSchema = (t: TFunction) => {
   return z.object({
     packingHeaderId: z.number().min(1, t('package.form.packingHeaderIdRequired', 'Paketleme Başlık ID zorunludur')),
     packageNo: z.string().min(1, t('package.form.packageNoRequired', 'Paket No zorunludur')),
-    packageType: z.enum(['Box', 'Pallet', 'Bag', 'Custom']).default('Box'),
+    packageType: z.enum(['Box', 'Pallet', 'Bag', 'Custom']).optional(),
     barcode: z.string().optional(),
     length: z.number().optional(),
     width: z.number().optional(),
@@ -239,8 +241,8 @@ export const pPackageFormSchema = (t: TFunction) => {
     netWeight: z.number().optional(),
     tareWeight: z.number().optional(),
     grossWeight: z.number().optional(),
-    isMixed: z.boolean().default(false),
-    status: z.enum(['Open', 'Closed', 'Loaded']).default('Open'),
+    isMixed: z.boolean().optional(),
+    status: z.enum(['Open', 'Closed', 'Loaded']).optional(),
   });
 };
 
