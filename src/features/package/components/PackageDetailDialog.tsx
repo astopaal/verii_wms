@@ -1,4 +1,4 @@
-import { type ReactElement, useState, useMemo } from 'react';
+import { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePHeader } from '../hooks/usePHeader';
 import { usePPackagesByHeader } from '../hooks/usePPackagesByHeader';
@@ -210,10 +210,10 @@ export function PackageDetailDialog({
           <Tabs defaultValue="packages" className="flex-1 overflow-hidden flex flex-col">
             <TabsList className="shrink-0">
               <TabsTrigger value="packages">
-                {t('package.detail.packages', 'Paketler')} ({packages?.data?.length || 0})
+                {t('package.detail.packages', 'Paketler')} ({packages?.length || 0})
               </TabsTrigger>
               <TabsTrigger value="lines">
-                {t('package.detail.lines', 'Satırlar')} ({lines?.data?.length || 0})
+                {t('package.detail.lines', 'Satırlar')} ({lines?.length || 0})
               </TabsTrigger>
             </TabsList>
 
@@ -222,7 +222,7 @@ export function PackageDetailDialog({
                 <div className="text-center py-8">
                   <p className="text-muted-foreground">{t('common.loading', 'Yükleniyor...')}</p>
                 </div>
-              ) : packages?.data && packages.data.length > 0 ? (
+              ) : packages && packages.length > 0 ? (
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -237,7 +237,7 @@ export function PackageDetailDialog({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {packages.data.map((pkg) => (
+                    {packages.map((pkg) => (
                       <TableRow key={pkg.id}>
                         <TableCell>{pkg.packageNo}</TableCell>
                         <TableCell>
@@ -246,7 +246,7 @@ export function PackageDetailDialog({
                         <TableCell>{pkg.barcode || '-'}</TableCell>
                         <TableCell>
                           <Badge className={getStatusBadgeColor(pkg.status)}>
-                            {t(`package.packageStatus.${pkg.status.toLowerCase()}`, pkg.status)}
+                            {String(t(`package.packageStatus.${pkg.status.toLowerCase()}`, pkg.status))}
                           </Badge>
                         </TableCell>
                         <TableCell>{pkg.netWeight || '-'}</TableCell>
@@ -271,7 +271,7 @@ export function PackageDetailDialog({
                 <div className="text-center py-8">
                   <p className="text-muted-foreground">{t('common.loading', 'Yükleniyor...')}</p>
                 </div>
-              ) : lines?.data && lines.data.length > 0 ? (
+              ) : lines && lines.length > 0 ? (
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -285,8 +285,8 @@ export function PackageDetailDialog({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {lines.data.map((line) => {
-                      const packageBarcode = packages?.data?.find((p) => p.id === line.packageId)?.barcode || '-';
+                    {lines.map((line) => {
+                      const packageBarcode = packages?.find((p) => p.id === line.packageId)?.barcode || '-';
                       return (
                         <TableRow key={line.id}>
                           <TableCell>{packageBarcode}</TableCell>
