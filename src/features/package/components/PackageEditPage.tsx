@@ -1,0 +1,331 @@
+import { type ReactElement, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useUIStore } from '@/stores/ui-store';
+import { usePHeader } from '../hooks/usePHeader';
+import { useUpdatePHeader } from '../hooks/useUpdatePHeader';
+import { useCustomers } from '@/features/goods-receipt/hooks/useCustomers';
+import { useWarehouses } from '@/features/goods-receipt/hooks/useWarehouses';
+import { SearchableSelect } from '@/features/goods-receipt/components/steps/components/SearchableSelect';
+import { pHeaderFormSchema, CargoCompany, type PHeaderFormData } from '../types/package';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
+import type { Customer, Warehouse } from '@/features/goods-receipt/types/goods-receipt';
+
+export function PackageEditPage(): ReactElement {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const { setPageTitle } = useUIStore();
+  const headerId = id ? parseInt(id, 10) : undefined;
+  const { data: header, isLoading } = usePHeader(headerId);
+  const updateMutation = useUpdatePHeader();
+  const { data: customers, isLoading: isLoadingCustomers } = useCustomers();
+  const { data: warehouses, isLoading: isLoadingWarehouses } = useWarehouses();
+
+  const cargoCompanyOptions = useMemo(() => {
+    return Object.entries(CargoCompany)
+      .filter(([key]) => isNaN(Number(key)))
+      .map(([key, value]) => ({
+        value: value as number,
+        label: t(`package.cargoCompany.${key}`, key),
+      }));
+  }, [t]);
+
+  const schema = useMemo(() => pHeaderFormSchema(t), [t]);
+
+  const form = useForm<PHeaderFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      packingNo: '',
+      packingDate: new Date().toISOString().split('T')[0],
+      warehouseCode: '',
+      customerCode: '',
+      customerAddress: '',
+      status: 'Draft',
+      carrierId: undefined,
+      carrierServiceType: '',
+      trackingNo: '',
+    },
+  });
+
+  useEffect(() => {
+    if (header) {
+      form.reset({
+        packingNo: header.packingNo,
+        packingDate: header.packingDate ? header.packingDate.split('T')[0] : new Date().toISOString().split('T')[0],
+        warehouseCode: header.warehouseCode || '',
+        customerCode: header.customerCode || '',
+        customerAddress: header.customerAddress || '',
+        status: header.status,
+        carrierId: header.carrierId,
+        carrierServiceType: header.carrierServiceType || '',
+        trackingNo: header.trackingNo || '',
+      });
+    }
+  }, [header, form]);
+
+  useEffect(() => {
+    setPageTitle(t('package.edit.title', 'Paketleme Düzenle'));
+    return () => {
+      setPageTitle(null);
+    };
+  }, [t, setPageTitle]);
+
+  const onSubmit = async (data: PHeaderFormData): Promise<void> => {
+    if (!headerId) return;
+
+    try {
+      await updateMutation.mutateAsync({
+        id: headerId,
+        data: {
+          packingNo: data.packingNo,
+        packingDate: data.packingDate || undefined,
+        warehouseCode: data.warehouseCode || undefined,
+        customerCode: data.customerCode || undefined,
+          customerAddress: data.customerAddress || undefined,
+          status: data.status,
+          carrierId: data.carrierId,
+          carrierServiceType: data.carrierServiceType || undefined,
+          trackingNo: data.trackingNo || undefined,
+        },
+      });
+      toast.success(t('package.edit.success', 'Paketleme başarıyla güncellendi'));
+      navigate(`/package/detail/${headerId}`);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t('package.edit.error', 'Paketleme güncellenirken bir hata oluştu')
+      );
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-muted-foreground">{t('common.loading')}</p>
+      </div>
+    );
+  }
+
+  if (!header) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-destructive">{t('package.edit.notFound', 'Paketleme bulunamadı')}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('package.edit.title', 'Paketleme Düzenle')}</CardTitle>
+          <CardDescription>
+            {t('package.edit.description', 'Paketleme bilgilerini düzenleyin')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="packingNo"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t('package.form.packingNo', 'Paketleme No')} <span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="packingDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.packingDate', 'Paketleme Tarihi')}</FormLabel>
+                      <FormControl>
+                        <Input type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="warehouseCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.warehouseCode', 'Depo')}</FormLabel>
+                      <FormControl>
+                        <SearchableSelect<Warehouse>
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          options={warehouses || []}
+                          getOptionValue={(opt) => opt.depoKodu.toString()}
+                          getOptionLabel={(opt) => `${opt.depoIsmi} (${opt.depoKodu})`}
+                          placeholder={t('package.form.selectWarehouse', 'Depo seçiniz')}
+                          searchPlaceholder={t('common.search', 'Ara...')}
+                          emptyText={t('common.notFound', 'Bulunamadı')}
+                          isLoading={isLoadingWarehouses}
+                          itemLimit={100}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="customerCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.customerCode', 'Cari')}</FormLabel>
+                      <FormControl>
+                        <SearchableSelect<Customer>
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          options={customers || []}
+                          getOptionValue={(opt) => opt.cariKod}
+                          getOptionLabel={(opt) => `${opt.cariIsim} (${opt.cariKod})`}
+                          placeholder={t('package.form.selectCustomer', 'Cari seçiniz')}
+                          searchPlaceholder={t('common.search', 'Ara...')}
+                          emptyText={t('common.notFound', 'Bulunamadı')}
+                          isLoading={isLoadingCustomers}
+                          itemLimit={100}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.status', 'Durum')}</FormLabel>
+                      <Select value={field.value} onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Draft">{t('package.status.draft', 'Taslak')}</SelectItem>
+                          <SelectItem value="Packing">{t('package.status.packing', 'Paketleniyor')}</SelectItem>
+                          <SelectItem value="Packed">{t('package.status.packed', 'Paketlendi')}</SelectItem>
+                          <SelectItem value="Shipped">{t('package.status.shipped', 'Gönderildi')}</SelectItem>
+                          <SelectItem value="Cancelled">{t('package.status.cancelled', 'İptal Edildi')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="carrierId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.carrierId', 'Kargo Firması')}</FormLabel>
+                      <Select
+                        value={field.value?.toString() || ''}
+                        onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={t('package.form.selectCarrier', 'Kargo Firması Seçin')} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {cargoCompanyOptions.map((option) => (
+                            <SelectItem key={option.value} value={option.value.toString()}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="carrierServiceType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.carrierServiceType', 'Kargo Servis Tipi')}</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="trackingNo"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.trackingNo', 'Takip No')}</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="customerAddress"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('package.form.customerAddress', 'Cari Adresi')}</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} rows={3} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="outline" onClick={() => navigate(`/package/detail/${headerId}`)}>
+                  {t('common.cancel')}
+                </Button>
+                <Button type="submit" disabled={updateMutation.isPending}>
+                  {updateMutation.isPending ? t('common.saving') : t('common.save')}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
