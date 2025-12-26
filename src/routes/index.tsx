@@ -38,6 +38,13 @@ import {
 import { ShipmentCreatePage, ShipmentListPage, AssignedShipmentListPage, ShipmentCollectionPage } from '@/features/shipment';
 import { Warehouse3dPage } from '@/features/inventory/3d-warehouse';
 import { ParameterFormPage } from '@/features/parameters';
+import {
+  PackageListPage,
+  PackageCreatePage,
+  PackageEditPage,
+  PackageDetailPage,
+  PackagePackageDetailPage,
+} from '@/features/package';
 
 export const router = createBrowserRouter([
   {
@@ -220,6 +227,31 @@ export const router = createBrowserRouter([
           {
             path: ':type',
             element: <ParameterFormPage />,
+          },
+        ],
+      },
+      {
+        path: 'package',
+        children: [
+          {
+            path: 'list',
+            element: <PackageListPage />,
+          },
+          {
+            path: 'create',
+            element: <PackageCreatePage />,
+          },
+          {
+            path: 'edit/:id',
+            element: <PackageEditPage />,
+          },
+          {
+            path: 'detail/:id',
+            element: <PackageDetailPage />,
+          },
+          {
+            path: 'package-detail/:id',
+            element: <PackagePackageDetailPage />,
           },
         ],
       },
