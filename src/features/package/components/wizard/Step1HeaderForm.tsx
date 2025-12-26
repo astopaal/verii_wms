@@ -41,7 +41,7 @@ export function Step1HeaderForm({
       }));
   }, [t]);
 
-  const form = useForm<PHeaderFormData>({
+  const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: initialData
       ? {

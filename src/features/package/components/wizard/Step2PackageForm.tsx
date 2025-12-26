@@ -21,7 +21,6 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -63,7 +62,7 @@ export function Step2PackageForm({
 
   const schema = useMemo(() => pPackageFormSchema(t), [t]);
 
-  const form = useForm<PPackageFormData>({
+  const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       packingHeaderId,
@@ -131,7 +130,7 @@ export function Step2PackageForm({
         form.reset();
       } else {
         const packageNoValue = data.packageNo || '';
-        const result = await createMutation.mutateAsync({
+        await createMutation.mutateAsync({
           packingHeaderId: data.packingHeaderId,
           packageNo: packageNoValue,
           packageType: data.packageType || 'Box',

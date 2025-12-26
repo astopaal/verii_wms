@@ -12,7 +12,7 @@ import { SearchableSelect } from '@/features/goods-receipt/components/steps/comp
 import { pHeaderFormSchema, CargoCompany, type PHeaderFormData } from '../types/package';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -41,19 +41,19 @@ export function PackageEditPage(): ReactElement {
 
   const schema = useMemo(() => pHeaderFormSchema(t), [t]);
 
-  const form = useForm<PHeaderFormData>({
+  const form = useForm({
     resolver: zodResolver(schema),
-    defaultValues: {
-      packingNo: '',
-      packingDate: new Date().toISOString().split('T')[0],
-      warehouseCode: '',
-      customerCode: '',
-      customerAddress: '',
-      status: 'Draft',
-      carrierId: undefined,
-      carrierServiceType: '',
-      trackingNo: '',
-    },
+      defaultValues: {
+        packingNo: '',
+        packingDate: new Date().toISOString().split('T')[0],
+        warehouseCode: '',
+        customerCode: '',
+        customerAddress: '',
+        status: 'Draft' as const,
+        carrierId: undefined,
+        carrierServiceType: '',
+        trackingNo: '',
+      },
   });
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export function PackageEditPage(): ReactElement {
         warehouseCode: data.warehouseCode || undefined,
         customerCode: data.customerCode || undefined,
           customerAddress: data.customerAddress || undefined,
-          status: data.status,
+          status: data.status || 'Draft',
           carrierId: data.carrierId,
           carrierServiceType: data.carrierServiceType || undefined,
           trackingNo: data.trackingNo || undefined,
