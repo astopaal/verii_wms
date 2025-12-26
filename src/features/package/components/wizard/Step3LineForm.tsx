@@ -7,7 +7,7 @@ import { usePLinesByHeader } from '../../hooks/usePLinesByHeader';
 import { useCreatePLine } from '../../hooks/useCreatePLine';
 import { useDeletePLine } from '../../hooks/useDeletePLine';
 import { useStokBarcode } from '../../hooks/useStokBarcode';
-import { pLineFormSchema, type PLineFormData, type PLineDto, type StokBarcodeDto } from '../../types/package';
+import { pLineFormSchema, type PLineFormData, type StokBarcodeDto } from '../../types/package';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';

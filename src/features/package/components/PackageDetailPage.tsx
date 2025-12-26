@@ -26,7 +26,6 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 import { Plus, Eye, ArrowLeft, Edit } from 'lucide-react';
 import { toast } from 'sonner';
 import type { PPackageDto, PLineDto } from '../types/package';

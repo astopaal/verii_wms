@@ -17,29 +17,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Trash2, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { toast } from 'sonner';
 import type { PHeaderDto } from '../types/package';
 import type { PagedFilter } from '@/types/api';
 
-const getStatusBadgeVariant = (status: string): 'default' | 'secondary' | 'outline' | 'destructive' => {
-  switch (status) {
-    case 'Draft':
-      return 'outline';
-    case 'Packing':
-      return 'secondary';
-    case 'Packed':
-      return 'default';
-    case 'Shipped':
-      return 'secondary';
-    case 'Cancelled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-};
 
 const getStatusBadgeColor = (status: string): string => {
   switch (status) {
@@ -142,16 +125,6 @@ export function PackageListPage(): ReactElement {
     });
   };
 
-  const formatDateTime = (dateString: string | null | undefined): string => {
-    if (!dateString) return '-';
-    return new Date(dateString).toLocaleString('tr-TR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
 
   if (isLoading) {
     return (
