@@ -27,7 +27,8 @@
     "yes": "Ja",
     "no": "Nein",
     "add": "Hinzufügen",
-    "start": "Starten"
+    "start": "Starten",
+    "actions": "Aktionen"
   },
   "auth": {
     "login": {
@@ -531,6 +532,48 @@
       "customerRequired": "Kundenauswahl ist erforderlich",
       "sourceWarehouseRequired": "Ausgangslager ist erforderlich",
       "targetWarehouseRequired": "Ziellager ist erforderlich"
+    },
+    "collection": {
+      "title": "Transfer-Sammlung",
+      "stockNotFound": "Lagerbestand nicht gefunden",
+      "enterBarcode": "Bitte Barcode eingeben",
+      "noStockSelected": "Bitte zuerst Lagerbestandsinformationen abrufen",
+      "invalidQuantity": "Ungültige Menge",
+      "stockNotInOrder": "Dieser Lagerbestand ist nicht im Transferauftrag",
+      "collected": "Produkt gesammelt",
+      "collectError": "Sammlungsfehler",
+      "invalidHeaderId": "Ungültiger Transferauftrag",
+      "completed": "Transferauftrag erfolgreich abgeschlossen",
+      "completeError": "Abschlussfehler",
+      "barcodeScanned": "Barcode gescannt",
+      "cameraError": "Kamera konnte nicht geöffnet werden",
+      "viewCollected": "Gesammelt",
+      "barcodePlaceholder": "Barcode scannen oder eingeben",
+      "quantity": "Menge",
+      "collect": "Sammeln",
+      "total": "Gesamt",
+      "remaining": "Verbleibend",
+      "noOrderLines": "Transferauftragszeilen nicht gefunden",
+      "complete": "Abschließen",
+      "scanBarcode": "Barcode scannen",
+      "scanBarcodeDescription": "Barcode zur Kamera ausrichten",
+      "yapKod": "Strukturcode",
+      "yapAcik": "Strukturbeschreibung",
+      "serialNo": "Seriennummer",
+      "barcode": "Barcode",
+      "stockCode": "Lagerbestandscode",
+      "stockName": "Lagerbestandsname",
+      "packageNo": "Paketnummer",
+      "packageHeaderId": "Paketdatensatznummer",
+      "viewPackage": "Paketdetails anzeigen",
+      "totalCollected": "Gesamt",
+      "itemsCollected": "Artikel gesammelt",
+      "noCollectedBarcodes": "Noch keine gesammelten Barcodes",
+      "deleteSuccess": "Barcode erfolgreich gelöscht",
+      "deleteError": "Barcode konnte nicht gelöscht werden",
+      "deleteConfirmTitle": "Produkt löschen",
+      "deleteConfirmWithPackage": "Das ausgewählte Produkt wird sowohl aus dem Paket als auch aus dem Prozess entfernt. Sind Sie sicher, dass Sie fortfahren möchten?",
+      "deleteConfirmWithoutPackage": "Das Produkt wird aus der Sammlung entfernt. Sind Sie sicher, dass Sie fortfahren möchten?"
     }
   },
   "inventory": {

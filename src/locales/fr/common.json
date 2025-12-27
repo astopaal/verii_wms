@@ -27,7 +27,8 @@
     "yes": "Oui",
     "no": "Non",
     "add": "Ajouter",
-    "start": "Démarrer"
+    "start": "Démarrer",
+    "actions": "Actions"
   },
   "auth": {
     "login": {
@@ -531,6 +532,48 @@
       "customerRequired": "La sélection du client est requise",
       "sourceWarehouseRequired": "L'entrepôt source est requis",
       "targetWarehouseRequired": "L'entrepôt cible est requis"
+    },
+    "collection": {
+      "title": "Collecte de transfert",
+      "stockNotFound": "Stock introuvable",
+      "enterBarcode": "Veuillez entrer le code-barres",
+      "noStockSelected": "Veuillez d'abord obtenir les informations de stock",
+      "invalidQuantity": "Quantité invalide",
+      "stockNotInOrder": "Ce stock n'est pas dans l'ordre de transfert",
+      "collected": "Produit collecté",
+      "collectError": "Erreur de collecte",
+      "invalidHeaderId": "Ordre de transfert invalide",
+      "completed": "Ordre de transfert complété avec succès",
+      "completeError": "Erreur de complétion",
+      "barcodeScanned": "Code-barres scanné",
+      "cameraError": "La caméra n'a pas pu être ouverte",
+      "viewCollected": "Collecté",
+      "barcodePlaceholder": "Scanner ou entrer le code-barres",
+      "quantity": "Quantité",
+      "collect": "Collecter",
+      "total": "Total",
+      "remaining": "Restant",
+      "noOrderLines": "Lignes d'ordre de transfert introuvables",
+      "complete": "Compléter",
+      "scanBarcode": "Scanner le code-barres",
+      "scanBarcodeDescription": "Aligner le code-barres à la caméra",
+      "yapKod": "Code structure",
+      "yapAcik": "Description de la structure",
+      "serialNo": "N° de série",
+      "barcode": "Code-barres",
+      "stockCode": "Code stock",
+      "stockName": "Nom du stock",
+      "packageNo": "N° de colis",
+      "packageHeaderId": "N° d'enregistrement de colis",
+      "viewPackage": "Voir les détails du colis",
+      "totalCollected": "Total",
+      "itemsCollected": "articles collectés",
+      "noCollectedBarcodes": "Aucun code-barres collecté pour le moment",
+      "deleteSuccess": "Code-barres supprimé avec succès",
+      "deleteError": "Le code-barres n'a pas pu être supprimé",
+      "deleteConfirmTitle": "Supprimer le produit",
+      "deleteConfirmWithPackage": "Le produit sélectionné sera retiré à la fois du colis et du processus. Êtes-vous sûr de vouloir continuer?",
+      "deleteConfirmWithoutPackage": "Le produit sera retiré de la collecte. Êtes-vous sûr de vouloir continuer?"
     }
   },
   "inventory": {

@@ -327,6 +327,9 @@ export interface AssignedTransferRoute {
   stockCode: string;
   yapKod: string;
   description: string;
+  packageLineId: number | null;
+  packageNo: string | null;
+  packageHeaderId: number | null;
 }
 
 export interface AssignedTransferOrderLinesData {

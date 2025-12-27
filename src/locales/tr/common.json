@@ -27,7 +27,8 @@
     "yes": "Evet",
     "no": "Hayır",
     "add": "Ekle",
-    "start": "Başla"
+    "start": "Başla",
+    "actions": "İşlemler"
   },
   "auth": {
     "login": {
@@ -531,6 +532,48 @@
       "customerRequired": "Cari seçimi zorunludur",
       "sourceWarehouseRequired": "Çıkış deposu zorunludur",
       "targetWarehouseRequired": "Varış deposu zorunludur"
+    },
+    "collection": {
+      "title": "Transfer Toplama",
+      "stockNotFound": "Stok bulunamadı",
+      "enterBarcode": "Lütfen barkod giriniz",
+      "noStockSelected": "Lütfen önce stok bilgisi getirin",
+      "invalidQuantity": "Geçersiz miktar",
+      "stockNotInOrder": "Bu stok transfer emrinde bulunmuyor",
+      "collected": "Ürün toplandı",
+      "collectError": "Toplama hatası",
+      "invalidHeaderId": "Geçersiz transfer emri",
+      "completed": "Transfer emri başarıyla tamamlandı",
+      "completeError": "Tamamlama hatası",
+      "barcodeScanned": "Barkod okundu",
+      "cameraError": "Kamera açılamadı",
+      "viewCollected": "Toplananlar",
+      "barcodePlaceholder": "Barkod okutun veya yazın",
+      "quantity": "Miktar",
+      "collect": "Topla",
+      "total": "Toplam",
+      "remaining": "Kalan",
+      "noOrderLines": "Transfer emri kalemleri bulunamadı",
+      "complete": "Tamamla",
+      "scanBarcode": "Barkod Okut",
+      "scanBarcodeDescription": "Barkodu kameraya hizalayın",
+      "yapKod": "Yapı Kodu",
+      "yapAcik": "Yapı Açıklaması",
+      "serialNo": "Seri No",
+      "barcode": "Barkod",
+      "stockCode": "Stok Kodu",
+      "stockName": "Stok Adı",
+      "packageNo": "Paket No",
+      "packageHeaderId": "Paket Kayıt No",
+      "viewPackage": "Paket detayını görüntüle",
+      "totalCollected": "Toplam",
+      "itemsCollected": "adet ürün toplandı",
+      "noCollectedBarcodes": "Henüz toplanan barkod bulunmuyor",
+      "deleteSuccess": "Barkod başarıyla silindi",
+      "deleteError": "Barkod silinemedi",
+      "deleteConfirmTitle": "Ürünü Sil",
+      "deleteConfirmWithPackage": "Seçili ürün paketten de işlemden de kaldırılacaktır. Bu işlemi yapmak istediğinizden emin misiniz?",
+      "deleteConfirmWithoutPackage": "Ürün toplamadan kaldırılacaktır. Bu işlemi yapmak istediğinizden emin misiniz?"
     }
   },
   "inventory": {

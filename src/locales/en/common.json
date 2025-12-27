@@ -27,7 +27,8 @@
     "yes": "Yes",
     "no": "No",
     "add": "Add",
-    "start": "Start"
+    "start": "Start",
+    "actions": "Actions"
   },
   "auth": {
     "login": {
@@ -531,6 +532,48 @@
       "customerRequired": "Customer selection is required",
       "sourceWarehouseRequired": "Source warehouse is required",
       "targetWarehouseRequired": "Target warehouse is required"
+    },
+    "collection": {
+      "title": "Transfer Collection",
+      "stockNotFound": "Stock not found",
+      "enterBarcode": "Please enter barcode",
+      "noStockSelected": "Please get stock information first",
+      "invalidQuantity": "Invalid quantity",
+      "stockNotInOrder": "This stock is not in the transfer order",
+      "collected": "Product collected",
+      "collectError": "Collection error",
+      "invalidHeaderId": "Invalid transfer order",
+      "completed": "Transfer order completed successfully",
+      "completeError": "Completion error",
+      "barcodeScanned": "Barcode scanned",
+      "cameraError": "Camera could not be opened",
+      "viewCollected": "Collected",
+      "barcodePlaceholder": "Scan or enter barcode",
+      "quantity": "Quantity",
+      "collect": "Collect",
+      "total": "Total",
+      "remaining": "Remaining",
+      "noOrderLines": "Transfer order lines not found",
+      "complete": "Complete",
+      "scanBarcode": "Scan Barcode",
+      "scanBarcodeDescription": "Align barcode to camera",
+      "yapKod": "Structure Code",
+      "yapAcik": "Structure Description",
+      "serialNo": "Serial No",
+      "barcode": "Barcode",
+      "stockCode": "Stock Code",
+      "stockName": "Stock Name",
+      "packageNo": "Package No",
+      "packageHeaderId": "Package Record No",
+      "viewPackage": "View package details",
+      "totalCollected": "Total",
+      "itemsCollected": "items collected",
+      "noCollectedBarcodes": "No collected barcodes yet",
+      "deleteSuccess": "Barcode deleted successfully",
+      "deleteError": "Barcode could not be deleted",
+      "deleteConfirmTitle": "Delete Product",
+      "deleteConfirmWithPackage": "The selected product will be removed from both the package and the process. Are you sure you want to proceed?",
+      "deleteConfirmWithoutPackage": "The product will be removed from the collection. Are you sure you want to proceed?"
     }
   },
   "inventory": {
