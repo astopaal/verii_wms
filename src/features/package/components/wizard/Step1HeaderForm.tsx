@@ -1,16 +1,18 @@
-import { type ReactElement, useMemo } from 'react';
+import { type ReactElement, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCustomers } from '@/features/goods-receipt/hooks/useCustomers';
 import { useWarehouses } from '@/features/goods-receipt/hooks/useWarehouses';
 import { SearchableSelect } from '@/features/goods-receipt/components/steps/components/SearchableSelect';
-import { pHeaderFormSchema, CargoCompany, type PHeaderFormData, type PHeaderDto } from '../../types/package';
+import { useAvailableHeaders } from '../../hooks/useAvailableHeaders';
+import { pHeaderFormSchema, CargoCompany, type PHeaderFormData, type PHeaderDto, type AvailableHeaderDto } from '../../types/package';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import type { Customer, Warehouse } from '@/features/goods-receipt/types/goods-receipt';
 
 interface Step1HeaderFormProps {
@@ -41,13 +43,15 @@ export function Step1HeaderForm({
       }));
   }, [t]);
 
-  const form = useForm({
+  const form = useForm<PHeaderFormData>({
     resolver: zodResolver(schema),
     defaultValues: initialData
       ? {
           packingNo: initialData.packingNo,
           packingDate: initialData.packingDate ? initialData.packingDate.split('T')[0] : new Date().toISOString().split('T')[0],
           warehouseCode: initialData.warehouseCode || '',
+          sourceType: initialData.sourceType,
+          sourceHeaderId: initialData.sourceHeaderId,
           customerCode: initialData.customerCode || '',
           customerAddress: initialData.customerAddress || '',
           status: initialData.status || 'Draft',
@@ -59,6 +63,8 @@ export function Step1HeaderForm({
           packingNo: '',
           packingDate: new Date().toISOString().split('T')[0],
           warehouseCode: '',
+          sourceType: undefined,
+          sourceHeaderId: undefined,
           customerCode: '',
           customerAddress: '',
           status: 'Draft',
@@ -67,6 +73,41 @@ export function Step1HeaderForm({
           trackingNo: '',
         },
   });
+
+  const sourceType = form.watch('sourceType');
+  const { data: availableHeaders, isLoading: isLoadingHeaders } = useAvailableHeaders(sourceType);
+
+  useEffect(() => {
+    if (!sourceType) {
+      form.setValue('sourceHeaderId', undefined);
+    }
+  }, [sourceType, form]);
+
+  const sourceTypeOptions = useMemo(
+    () => [
+      { value: 'GR', label: t('package.sourceType.GR', 'Mal Kabul') },
+      { value: 'WT', label: t('package.sourceType.WT', 'Depo Transferi') },
+      { value: 'SH', label: t('package.sourceType.SH', 'Sevkiyat') },
+      { value: 'PR', label: t('package.sourceType.PR', 'Üretim') },
+      { value: 'PT', label: t('package.sourceType.PT', 'Üretim Transferi') },
+      { value: 'SIT', label: t('package.sourceType.SIT', 'Yarı Mamul Çıkış Transferi') },
+      { value: 'SRT', label: t('package.sourceType.SRT', 'Yarı Mamul Giriş Transferi') },
+      { value: 'WI', label: t('package.sourceType.WI', 'Ambar Girişi') },
+      { value: 'WO', label: t('package.sourceType.WO', 'Ambar Çıkışı') },
+    ],
+    [t]
+  );
+
+  const getHeaderDisplayLabel = (header: AvailableHeaderDto): string => {
+    const parts = [`#${header.id}`];
+    if (header.documentNo) {
+      parts.push(header.documentNo);
+    }
+    if (header.customerName) {
+      parts.push(header.customerName);
+    }
+    return parts.join(' - ');
+  };
 
   const handleSubmit = async (data: PHeaderFormData): Promise<void> => {
     await onSubmit(data);
@@ -108,6 +149,63 @@ export function Step1HeaderForm({
                     <FormLabel>{t('package.form.packingDate', 'Paketleme Tarihi')}</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="sourceType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('package.form.sourceType', 'Kaynak Tipi')}</FormLabel>
+                    <FormControl>
+                      <SearchableSelect<{ value: string; label: string }>
+                        value={field.value || ''}
+                        onValueChange={(value) => {
+                          field.onChange(value || undefined);
+                          form.setValue('sourceHeaderId', undefined);
+                        }}
+                        options={sourceTypeOptions}
+                        getOptionValue={(opt) => opt.value}
+                        getOptionLabel={(opt) => opt.label}
+                        placeholder={t('package.form.selectSourceType', 'Kaynak Tipi Seçin')}
+                        searchPlaceholder={t('common.search', 'Ara...')}
+                        emptyText={t('package.form.noSourceType', 'Kaynak tipi bulunamadı')}
+                        itemLimit={100}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="sourceHeaderId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('package.form.sourceHeaderId', 'Eşlenecek Header')}</FormLabel>
+                    <FormControl>
+                      <SearchableSelect<AvailableHeaderDto>
+                        value={field.value?.toString() || ''}
+                        onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
+                        options={availableHeaders || []}
+                        getOptionValue={(opt) => opt.id.toString()}
+                        getOptionLabel={getHeaderDisplayLabel}
+                        placeholder={t('package.form.selectSourceHeader', 'Eşlenecek Header Seçin')}
+                        searchPlaceholder={t('common.search', 'Ara...')}
+                        emptyText={
+                          sourceType
+                            ? t('package.form.noAvailableHeaders', 'Eşlenecek header bulunamadı')
+                            : t('package.form.selectSourceTypeFirst', 'Önce kaynak tipi seçiniz')
+                        }
+                        isLoading={isLoadingHeaders}
+                        disabled={!sourceType}
+                        itemLimit={100}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -170,23 +268,19 @@ export function Step1HeaderForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('package.form.carrierId', 'Kargo Firması')}</FormLabel>
-                    <Select
-                      value={field.value?.toString() || ''}
-                      onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('package.form.selectCarrier', 'Kargo Firması Seçin')} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {cargoCompanyOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value.toString()}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <SearchableSelect<{ value: number; label: string }>
+                        value={field.value?.toString() || ''}
+                        onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
+                        options={cargoCompanyOptions}
+                        getOptionValue={(opt) => opt.value.toString()}
+                        getOptionLabel={(opt) => opt.label}
+                        placeholder={t('package.form.selectCarrier', 'Kargo Firması Seçin')}
+                        searchPlaceholder={t('common.search', 'Ara...')}
+                        emptyText={t('package.form.noCarrier', 'Kargo firması bulunamadı')}
+                        itemLimit={100}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -261,20 +355,19 @@ export function Step1HeaderForm({
             />
 
             <div className="flex justify-end gap-2">
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={onCancel}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
               >
                 {t('common.cancel')}
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
                 disabled={isLoading}
-                className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 disabled:opacity-50"
               >
-                {isLoading ? t('common.saving') : t('package.wizard.nextStep', 'Sonraki Adım')}
-              </button>
+                {isLoading ? t('common.saving') : t('package.wizard.saveAndContinue', 'Kaydet ve İlerle')}
+              </Button>
             </div>
           </form>
         </Form>
