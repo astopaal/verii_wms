@@ -903,7 +903,12 @@
       "description": "Modifier les informations d'emballage",
       "success": "Emballage mis à jour avec succès",
       "error": "Une erreur s'est produite lors de la mise à jour de l'emballage",
-      "notFound": "Emballage non trouvé"
+      "notFound": "Emballage non trouvé",
+      "match": "Correspondre",
+      "unmatch": "Déconnecter",
+      "matchSuccess": "Correspondance effectuée avec succès",
+      "unmatchSuccess": "Déconnexion effectuée avec succès",
+      "matchError": "Une erreur s'est produite lors de la correspondance"
     },
     "detail": {
       "title": "Détails de l'emballage",
@@ -944,7 +949,12 @@
       "packageAddSuccess": "Colis ajouté avec succès",
       "packageAddError": "Une erreur s'est produite lors de l'ajout du colis",
       "lineAddSuccess": "Ligne ajoutée avec succès",
-      "lineAddError": "Une erreur s'est produite lors de l'ajout de la ligne"
+      "lineAddError": "Une erreur s'est produite lors de l'ajout de la ligne",
+      "match": "Correspondre",
+      "unmatch": "Déconnecter",
+      "matchSuccess": "Correspondance effectuée avec succès",
+      "unmatchSuccess": "Déconnexion effectuée avec succès",
+      "matchError": "Une erreur s'est produite lors de la correspondance"
     },
     "packageDetail": {
       "title": "Détails du colis",

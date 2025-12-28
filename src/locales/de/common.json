@@ -903,7 +903,12 @@
       "description": "Verpackungsinformationen bearbeiten",
       "success": "Verpackung erfolgreich aktualisiert",
       "error": "Fehler beim Aktualisieren der Verpackung",
-      "notFound": "Verpackung nicht gefunden"
+      "notFound": "Verpackung nicht gefunden",
+      "match": "Abgleichen",
+      "unmatch": "Verbindung trennen",
+      "matchSuccess": "Abgleich erfolgreich durchgeführt",
+      "unmatchSuccess": "Verbindung erfolgreich getrennt",
+      "matchError": "Fehler beim Abgleichen"
     },
     "detail": {
       "title": "Verpackungsdetails",
@@ -944,7 +949,12 @@
       "packageAddSuccess": "Paket erfolgreich hinzugefügt",
       "packageAddError": "Fehler beim Hinzufügen des Pakets",
       "lineAddSuccess": "Zeile erfolgreich hinzugefügt",
-      "lineAddError": "Fehler beim Hinzufügen der Zeile"
+      "lineAddError": "Fehler beim Hinzufügen der Zeile",
+      "match": "Abgleichen",
+      "unmatch": "Verbindung trennen",
+      "matchSuccess": "Abgleich erfolgreich durchgeführt",
+      "unmatchSuccess": "Verbindung erfolgreich getrennt",
+      "matchError": "Fehler beim Abgleichen"
     },
     "packageDetail": {
       "title": "Paketdetails",

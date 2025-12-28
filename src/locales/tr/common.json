@@ -910,7 +910,12 @@
       "description": "Paketleme bilgilerini düzenleyin",
       "success": "Paketleme başarıyla güncellendi",
       "error": "Paketleme güncellenirken bir hata oluştu",
-      "notFound": "Paketleme bulunamadı"
+      "notFound": "Paketleme bulunamadı",
+      "match": "Eşle",
+      "unmatch": "Bağlantıyı Kes",
+      "matchSuccess": "Eşleme başarıyla yapıldı",
+      "unmatchSuccess": "Bağlantı başarıyla kesildi",
+      "matchError": "Eşleme işlemi sırasında bir hata oluştu"
     },
     "detail": {
       "title": "Paketleme Detayı",
@@ -951,7 +956,12 @@
       "packageAddSuccess": "Paket başarıyla eklendi",
       "packageAddError": "Paket eklenirken bir hata oluştu",
       "lineAddSuccess": "Satır başarıyla eklendi",
-      "lineAddError": "Satır eklenirken bir hata oluştu"
+      "lineAddError": "Satır eklenirken bir hata oluştu",
+      "match": "Eşle",
+      "unmatch": "Bağlantıyı Kes",
+      "matchSuccess": "Eşleme başarıyla yapıldı",
+      "unmatchSuccess": "Bağlantı başarıyla kesildi",
+      "matchError": "Eşleme işlemi sırasında bir hata oluştu"
     },
     "packageDetail": {
       "title": "Paket Detayı",

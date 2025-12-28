@@ -910,7 +910,12 @@
       "description": "Edit packaging information",
       "success": "Packaging updated successfully",
       "error": "An error occurred while updating packaging",
-      "notFound": "Packaging not found"
+      "notFound": "Packaging not found",
+      "match": "Match",
+      "unmatch": "Unmatch",
+      "matchSuccess": "Matching completed successfully",
+      "unmatchSuccess": "Unmatching completed successfully",
+      "matchError": "An error occurred during matching"
     },
     "detail": {
       "title": "Packaging Detail",
@@ -951,7 +956,12 @@
       "packageAddSuccess": "Package added successfully",
       "packageAddError": "An error occurred while adding package",
       "lineAddSuccess": "Line added successfully",
-      "lineAddError": "An error occurred while adding line"
+      "lineAddError": "An error occurred while adding line",
+      "match": "Match",
+      "unmatch": "Unmatch",
+      "matchSuccess": "Matching completed successfully",
+      "unmatchSuccess": "Unmatching completed successfully",
+      "matchError": "An error occurred during matching"
     },
     "packageDetail": {
       "title": "Package Detail",
