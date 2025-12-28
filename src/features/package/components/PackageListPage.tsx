@@ -186,6 +186,13 @@ export function PackageListPage(): ReactElement {
                 <TableRow>
                   <TableHead
                     className="cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleSort('Id')}
+                  >
+                    {t('package.list.id', 'Kayıt No')}
+                    {sortBy === 'Id' && (sortDirection === 'asc' ? ' ↑' : ' ↓')}
+                  </TableHead>
+                  <TableHead
+                    className="cursor-pointer hover:bg-muted/50"
                     onClick={() => handleSort('packingNo')}
                   >
                     {t('package.list.packingNo', 'Paketleme No')}
@@ -199,6 +206,8 @@ export function PackageListPage(): ReactElement {
                     {sortBy === 'packingDate' && (sortDirection === 'asc' ? ' ↑' : ' ↓')}
                   </TableHead>
                   <TableHead>{t('package.list.warehouseCode', 'Depo Kodu')}</TableHead>
+                  <TableHead>{t('package.list.sourceType', 'Kaynak Tipi')}</TableHead>
+                  <TableHead>{t('package.list.matchedSource', 'Eşleşen Kaynak')}</TableHead>
                   <TableHead>{t('package.list.customerCode', 'Cari Kodu')}</TableHead>
                   <TableHead>{t('package.list.customerName', 'Cari Adı')}</TableHead>
                   <TableHead>{t('package.list.status', 'Durum')}</TableHead>
@@ -213,9 +222,26 @@ export function PackageListPage(): ReactElement {
                 {data?.data && data.data.length > 0 ? (
                   data.data.map((item: PHeaderDto) => (
                     <TableRow key={item.id} className="cursor-pointer" onClick={() => navigate(`/package/detail/${item.id}`)}>
+                      <TableCell className="font-medium">#{item.id}</TableCell>
                       <TableCell className="font-medium">{item.packingNo || '-'}</TableCell>
                       <TableCell>{formatDate(item.packingDate)}</TableCell>
                       <TableCell>{item.warehouseCode || '-'}</TableCell>
+                      <TableCell>
+                        {item.sourceType ? (
+                          <Badge variant="outline">
+                            {t(`package.sourceType.${item.sourceType.toUpperCase()}`, item.sourceType.toUpperCase())}
+                          </Badge>
+                        ) : (
+                          '-'
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {item.sourceHeaderId ? (
+                          <span className="font-medium">#{item.sourceHeaderId}</span>
+                        ) : (
+                          '-'
+                        )}
+                      </TableCell>
                       <TableCell>{item.customerCode || '-'}</TableCell>
                       <TableCell>{item.customerName || '-'}</TableCell>
                       <TableCell>
@@ -253,7 +279,7 @@ export function PackageListPage(): ReactElement {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={10} className="text-center py-8">
+                    <TableCell colSpan={13} className="text-center py-8">
                       <p className="text-muted-foreground">
                         {t('package.list.noData', 'Veri bulunamadı')}
                       </p>
@@ -271,7 +297,7 @@ export function PackageListPage(): ReactElement {
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-start justify-between">
                       <div className="flex flex-col gap-1">
-                        <p className="font-medium">{item.packingNo || '-'}</p>
+                        <p className="font-medium">#{item.id} - {item.packingNo || '-'}</p>
                         <Badge className={getStatusBadgeColor(item.status)}>
                           {t(`package.status.${item.status.toLowerCase()}`, item.status)}
                         </Badge>
@@ -289,6 +315,28 @@ export function PackageListPage(): ReactElement {
                           {t('package.list.warehouseCode', 'Depo Kodu')}
                         </p>
                         <p className="text-base">{item.warehouseCode || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('package.list.sourceType', 'Kaynak Tipi')}
+                        </p>
+                        <p className="text-base">
+                          {item.sourceType ? (
+                            <Badge variant="outline" className="text-xs">
+                              {t(`package.sourceType.${item.sourceType.toUpperCase()}`, item.sourceType)}
+                            </Badge>
+                          ) : (
+                            '-'
+                          )}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {t('package.list.matchedSource', 'Eşleşen Kaynak')}
+                        </p>
+                        <p className="text-base">
+                          {item.sourceHeaderId ? `#${item.sourceHeaderId}` : '-'}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">
