@@ -1,5 +1,6 @@
 export const TRANSFER_QUERY_KEYS = {
   HEADERS: 'transfer.headers',
+  HEADERS_PAGED: 'transfer.headersPaged',
   ASSIGNED_HEADERS: 'transfer.assignedHeaders',
   LINES: 'transfer.lines',
   LINE_SERIALS: 'transfer.lineSerials',
