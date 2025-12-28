@@ -238,7 +238,7 @@ export const router = createBrowserRouter([
             element: <PackageListPage />,
           },
           {
-            path: 'create',
+            path: 'create/:headerId?',
             element: <PackageCreatePage />,
           },
           {

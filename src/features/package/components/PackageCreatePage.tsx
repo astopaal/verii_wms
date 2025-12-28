@@ -1,6 +1,6 @@
 import { type ReactElement, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUIStore } from '@/stores/ui-store';
 import { useCreatePHeader } from '../hooks/useCreatePHeader';
 import { useUpdatePHeader } from '../hooks/useUpdatePHeader';
@@ -30,9 +30,16 @@ export function PackageCreatePage(): ReactElement {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setPageTitle } = useUIStore();
+  const params = useParams<{ headerId?: string }>();
 
-  const [currentStep, setCurrentStep] = useState(1);
-  const [headerId, setHeaderId] = useState<number | undefined>(undefined);
+  const urlHeaderId = useMemo(() => {
+    if (!params.headerId) return undefined;
+    const parsed = parseInt(params.headerId, 10);
+    return isNaN(parsed) ? undefined : parsed;
+  }, [params.headerId]);
+
+  const [currentStep, setCurrentStep] = useState(urlHeaderId ? 2 : 1);
+  const [headerId, setHeaderId] = useState<number | undefined>(urlHeaderId);
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
 
   const createHeaderMutation = useCreatePHeader();
@@ -43,6 +50,13 @@ export function PackageCreatePage(): ReactElement {
 
   const packages = packagesData || [];
   const lines = linesData || [];
+
+  useEffect(() => {
+    if (urlHeaderId && urlHeaderId !== headerId) {
+      setHeaderId(urlHeaderId);
+      setCurrentStep(2);
+    }
+  }, [urlHeaderId, headerId]);
 
   useEffect(() => {
     setPageTitle(t('package.create.title', 'Yeni Paketleme Oluştur'));
@@ -67,6 +81,8 @@ export function PackageCreatePage(): ReactElement {
         packingNo: data.packingNo,
         packingDate: data.packingDate || undefined,
         warehouseCode: data.warehouseCode || undefined,
+        sourceType: data.sourceType,
+        sourceHeaderId: data.sourceHeaderId,
         customerCode: data.customerCode || undefined,
         customerAddress: data.customerAddress || undefined,
         status: data.status || 'Draft',
@@ -74,9 +90,13 @@ export function PackageCreatePage(): ReactElement {
         carrierServiceType: data.carrierServiceType || undefined,
         trackingNo: data.trackingNo || undefined,
       });
-      setHeaderId(id);
-      setCurrentStep(2);
-      toast.success(t('package.wizard.headerCreated', 'Paketleme başlığı oluşturuldu'));
+      
+      if (id) {
+        setHeaderId(id);
+        navigate(`/package/create/${id}`, { replace: true });
+        setCurrentStep(2);
+        toast.success(t('package.wizard.headerCreated', 'Paketleme başlığı oluşturuldu'));
+      }
     } catch (error) {
       toast.error(
         error instanceof Error
