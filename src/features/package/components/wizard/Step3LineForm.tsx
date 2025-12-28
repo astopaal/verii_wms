@@ -243,7 +243,7 @@ export function Step3LineForm({
         packageId: data.packageId,
         barcode: data.barcode || undefined,
         stockCode: data.stockCode,
-        yapKod: data.yapKod,
+        yapKod: data.yapKod || undefined,
         quantity: data.quantity,
         serialNo: data.serialNo || undefined,
         serialNo2: data.serialNo2 || undefined,
@@ -504,11 +504,9 @@ export function Step3LineForm({
                   name="yapKod"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        {t('package.form.yapKod', 'Yap Kodu')} <span className="text-destructive">*</span>
-                      </FormLabel>
+                      <FormLabel>{t('package.form.yapKod', 'Yap Kodu')}</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} value={field.value || ''} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
