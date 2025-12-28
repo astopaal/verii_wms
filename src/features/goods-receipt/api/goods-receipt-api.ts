@@ -51,7 +51,7 @@ export const goodsReceiptApi = {
   },
 
   getGrHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<GrHeader>> => {
-    const { pageNumber = 1, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+    const { pageNumber = 1, pageSize = 10, sortBy = 'createdDate', sortDirection = 'desc', filters = [] } = params;
 
     const requestBody = {
       pageNumber,
@@ -85,7 +85,7 @@ export const goodsReceiptApi = {
   },
 
   getGrImportLinesWithRoutes: async (headerId: number): Promise<GrImportLine[]> => {
-    const response = await api.get<ApiResponse<GrImportLine[]>>(`/api/GrImportL/by-header-with-routes/${headerId}`);
+    const response = await api.get<ApiResponse<GrImportLine[]>>(`/api/GrImportLine/by-header-with-routes/${headerId}`);
     if (response.success && response.data) {
       return response.data;
     }
