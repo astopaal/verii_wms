@@ -16,6 +16,8 @@ import type {
   PLinesPagedResponse,
   PLinesResponse,
   StokBarcodeResponse,
+  AvailableHeaderDto,
+  AvailableHeadersResponse,
 } from '../types/package';
 
 export const packageApi = {
@@ -46,9 +48,15 @@ export const packageApi = {
   },
 
   createPHeader: async (data: CreatePHeaderDto): Promise<number> => {
-    const response = await api.post<ApiResponse<number>>('/api/PHeader', data);
-    if (response.success) {
-      return response.data || 0;
+    const response = await api.post<ApiResponse<PHeaderDto | number>>('/api/PHeader', data);
+    if (response.success && response.data) {
+      if (typeof response.data === 'number') {
+        return response.data;
+      }
+      if (typeof response.data === 'object' && 'id' in response.data) {
+        return (response.data as PHeaderDto).id;
+      }
+      return 0;
     }
     throw new Error(response.message || 'Paketleme oluşturulamadı');
   },
@@ -194,6 +202,14 @@ export const packageApi = {
     return await api.get<StokBarcodeResponse>('/api/Erp/getStokBarcode', {
       params: { bar: barcode, barkodGrubu: barcodeGroup }
     });
+  },
+
+  getAvailableHeadersForMapping: async (sourceType: string): Promise<AvailableHeaderDto[]> => {
+    const response = await api.get<AvailableHeadersResponse>(`/api/PHeader/available-for-mapping/${sourceType}`);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Eşlenebilir header\'lar yüklenemedi');
   },
 };
 

@@ -64,6 +64,8 @@ export interface UpdatePHeaderDto {
   warehouseCode?: string;
   packingNo?: string;
   packingDate?: string;
+  sourceType?: 'GR' | 'WT' | 'PR' | 'PT' | 'SIT' | 'SRT' | 'WI' | 'WO' | 'SH';
+  sourceHeaderId?: number;
   customerCode?: string;
   customerAddress?: string;
   status?: 'Draft' | 'Packing' | 'Packed' | 'Shipped' | 'Cancelled';
@@ -186,12 +188,42 @@ export type PLineResponse = ApiResponse<PLineDto>;
 export type PLinesPagedResponse = ApiResponse<PagedResponse<PLineDto>>;
 export type PLinesResponse = ApiResponse<PLineDto[]>;
 
+export interface AvailableHeaderDto {
+  id: number;
+  documentNo?: string;
+  documentDate?: string;
+  customerCode?: string;
+  customerName?: string;
+  documentType?: string;
+  branchCode?: string;
+  projectCode?: string;
+  yearCode?: string;
+  sourceWarehouse?: string;
+  sourceWarehouseName?: string;
+  targetWarehouse?: string;
+  targetWarehouseName?: string;
+  priority?: string;
+  type?: number;
+  description1?: string;
+  description2?: string;
+  description3?: string;
+  description4?: string;
+  description5?: string;
+  createdDate?: string;
+  updatedDate?: string;
+  isDeleted?: boolean;
+}
+
+export type AvailableHeadersResponse = ApiResponse<AvailableHeaderDto[]>;
+
 export const pHeaderFormSchema = (t: TFunction) => {
   void t;
   return z.object({
     warehouseCode: z.string().optional(),
     packingNo: z.string().min(1, t('package.form.packingNoRequired', 'Paketleme No zorunludur')),
     packingDate: z.string().optional(),
+    sourceType: z.enum(['GR', 'WT', 'PR', 'PT', 'SIT', 'SRT', 'WI', 'WO', 'SH']).optional(),
+    sourceHeaderId: z.number().optional(),
     customerCode: z.string().optional(),
     customerAddress: z.string().optional(),
     status: z.enum(['Draft', 'Packing', 'Packed', 'Shipped', 'Cancelled']).optional(),

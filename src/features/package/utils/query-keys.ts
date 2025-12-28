@@ -5,5 +5,6 @@ export const PACKAGE_QUERY_KEYS = {
   PACKAGE: 'package-package',
   LINES: 'package-lines',
   LINE: 'package-line',
+  AVAILABLE_HEADERS: 'package-available-headers',
 } as const;
 
