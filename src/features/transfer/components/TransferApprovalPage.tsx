@@ -6,7 +6,6 @@ import { useApproveTransfer } from '../hooks/useApproveTransfer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { TransferDetailDialog } from './TransferDetailDialog';
 import { Eye, Search, Check, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -21,8 +20,8 @@ export function TransferApprovalPage(): ReactElement {
   const [selectedHeaderId, setSelectedHeaderId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize] = useState(10);
-  const [sortBy, setSortBy] = useState<string>('Id');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [sortBy] = useState<string>('Id');
+  const [sortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filters: PagedFilter[] = useMemo(() => {
@@ -92,15 +91,6 @@ export function TransferApprovalPage(): ReactElement {
           ? error.message
           : t('transfer.approval.rejectError', 'Red işlemi sırasında bir hata oluştu')
       );
-    }
-  };
-
-  const handleSort = (column: string): void => {
-    if (sortBy === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(column);
-      setSortDirection('asc');
     }
   };
 

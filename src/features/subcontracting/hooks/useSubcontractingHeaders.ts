@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { subcontractingApi } from '../api/subcontracting-api';
 import { useAuthStore } from '@/stores/auth-store';
-import type { SubcontractingHeader } from '../types/subcontracting';
-import type { PagedParams, PagedResponse } from '@/types/api';
+import type { PagedParams } from '@/types/api';
 
 export function useSubcontractingReceiptHeaders() {
   return useQuery({

@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { shipmentApi } from '../api/shipment-api';
 import { SHIPMENT_QUERY_KEYS } from '../utils/query-keys';
-import type { ShipmentHeader } from '../types/shipment';
-import type { PagedParams, PagedResponse } from '@/types/api';
+import type { PagedParams } from '@/types/api';
 
 export function useShipmentHeaders() {
   return useQuery({

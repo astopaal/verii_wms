@@ -20,8 +20,8 @@ export function ShipmentApprovalPage(): ReactElement {
   const [selectedHeaderId, setSelectedHeaderId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize] = useState(10);
-  const [sortBy, setSortBy] = useState<string>('Id');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [sortBy] = useState<string>('Id');
+  const [sortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filters: PagedFilter[] = useMemo(() => {

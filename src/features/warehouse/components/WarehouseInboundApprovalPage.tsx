@@ -13,7 +13,6 @@ import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import { toast } from 'sonner';
 import type { WarehouseHeader } from '../types/warehouse';
 import type { PagedFilter } from '@/types/api';
-import { DocumentType } from '@/types/document-type';
 
 export function WarehouseInboundApprovalPage(): ReactElement {
   const { t } = useTranslation();
@@ -22,8 +21,8 @@ export function WarehouseInboundApprovalPage(): ReactElement {
   const [selectedDocumentType, setSelectedDocumentType] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize] = useState(10);
-  const [sortBy, setSortBy] = useState<string>('Id');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [sortBy] = useState<string>('Id');
+  const [sortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filters: PagedFilter[] = useMemo(() => {

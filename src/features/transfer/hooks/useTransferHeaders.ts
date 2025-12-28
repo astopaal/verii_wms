@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { transferApi } from '../api/transfer-api';
 import { TRANSFER_QUERY_KEYS } from '../utils/query-keys';
-import type { TransferHeader } from '../types/transfer';
-import type { PagedParams, PagedResponse } from '@/types/api';
+import type { PagedParams } from '@/types/api';
 
 export function useTransferHeaders() {
   return useQuery({

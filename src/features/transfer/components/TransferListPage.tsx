@@ -19,8 +19,8 @@ export function TransferListPage(): ReactElement {
   const [selectedHeaderId, setSelectedHeaderId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize] = useState(10);
-  const [sortBy, setSortBy] = useState<string>('Id');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [sortBy] = useState<string>('Id');
+  const [sortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filters: PagedFilter[] = useMemo(() => {
@@ -64,15 +64,6 @@ export function TransferListPage(): ReactElement {
       hour: '2-digit',
       minute: '2-digit',
     });
-  };
-
-  const handleSort = (column: string): void => {
-    if (sortBy === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(column);
-      setSortDirection('asc');
-    }
   };
 
   const handlePreviousPage = (): void => {
