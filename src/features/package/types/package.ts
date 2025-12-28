@@ -36,6 +36,7 @@ export interface PHeaderDto {
   carrierId?: number;
   carrierServiceType?: string;
   trackingNo?: string;
+  isMatched: boolean;
   createdDate?: string;
   updatedDate?: string;
   isDeleted: boolean;
@@ -77,6 +78,7 @@ export interface UpdatePHeaderDto {
   carrierId?: number;
   carrierServiceType?: string;
   trackingNo?: string;
+  isMatched?: boolean;
 }
 
 export interface PPackageDto {
@@ -156,7 +158,7 @@ export interface CreatePLineDto {
   packageId: number;
   barcode?: string;
   stockCode: string;
-  yapKod: string;
+  yapKod?: string;
   quantity: number;
   serialNo?: string;
   serialNo2?: string;
@@ -287,7 +289,7 @@ export const pLineFormSchema = (t: TFunction) => {
     packageId: z.number().min(1, t('package.form.packageIdRequired', 'Paket ID zorunludur')),
     barcode: z.string().optional(),
     stockCode: z.string().min(1, t('package.form.stockCodeRequired', 'Stok Kodu zorunludur')),
-    yapKod: z.string().min(1, t('package.form.yapKodRequired', 'Yap Kodu zorunludur')),
+    yapKod: z.string().optional(),
     quantity: z.number().min(0.01, t('package.form.quantityRequired', 'Miktar zorunludur')),
     serialNo: z.string().optional(),
     serialNo2: z.string().optional(),

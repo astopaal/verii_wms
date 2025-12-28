@@ -211,5 +211,15 @@ export const packageApi = {
     }
     throw new Error(response.message || 'Eşlenebilir header\'lar yüklenemedi');
   },
+
+  matchPlines: async (pHeaderId: number, isMatched: boolean): Promise<boolean> => {
+    const response = await api.post<ApiResponse<boolean>>(`/api/PHeader/${pHeaderId}/match-plines`, {
+      isMatched,
+    });
+    if (response.success) {
+      return response.data ?? false;
+    }
+    throw new Error(response.message || 'Eşleme işlemi başarısız oldu');
+  },
 };
 
