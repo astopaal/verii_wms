@@ -12,9 +12,10 @@ import type {
   AddBarcodeRequest,
   AddBarcodeResponse,
   CollectedBarcodesResponse,
+  ShipmentHeader,
 } from '../types/shipment';
 import { buildShipmentGenerateRequest } from '../utils/shipment-generate';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
 
 export const shipmentApi = {
   getOrdersByCustomer: async (customerCode: string): Promise<ShipmentOrdersResponse> => {
@@ -27,6 +28,24 @@ export const shipmentApi = {
 
   getHeaders: async (): Promise<ShipmentHeadersResponse> => {
     return await api.get<ShipmentHeadersResponse>('/api/ShHeader');
+  },
+
+  getHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<ShipmentHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<ShipmentHeader>>>('/api/ShHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Sevkiyat listesi yüklenemedi');
   },
 
   getAssignedHeaders: async (userId: number): Promise<ShipmentHeadersResponse> => {

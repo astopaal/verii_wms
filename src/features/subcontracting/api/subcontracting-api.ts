@@ -12,9 +12,10 @@ import type {
   AddBarcodeRequest,
   AddBarcodeResponse,
   CollectedBarcodesResponse,
+  SubcontractingHeader,
 } from '../types/subcontracting';
 import { buildSubcontractingIssueRequest, buildSubcontractingReceiptRequest } from '../utils/subcontracting-generate';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
 
 export const subcontractingApi = {
   getReceiptOrdersByCustomer: async (customerCode: string): Promise<SubcontractingOrdersResponse> => {
@@ -101,6 +102,42 @@ export const subcontractingApi = {
 
   getIssueHeaders: async (): Promise<SubcontractingHeadersResponse> => {
     return await api.get<SubcontractingHeadersResponse>('/api/SitHeader');
+  },
+
+  getReceiptHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<SubcontractingHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<SubcontractingHeader>>>('/api/SrtHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Taşeron alış listesi yüklenemedi');
+  },
+
+  getIssueHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<SubcontractingHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<SubcontractingHeader>>>('/api/SitHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Taşeron çıkış listesi yüklenemedi');
   },
 
   getReceiptLines: async (headerId: number): Promise<SubcontractingLinesResponse> => {

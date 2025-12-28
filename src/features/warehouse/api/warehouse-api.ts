@@ -7,9 +7,10 @@ import type {
   WarehouseHeadersResponse,
   WarehouseLinesResponse,
   WarehouseLineSerialsResponse,
+  WarehouseHeader,
 } from '../types/warehouse';
 import { buildWarehouseInboundRequest, buildWarehouseOutboundRequest } from '../utils/warehouse-generate';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
 
 export const warehouseApi = {
   getInboundOrdersByCustomer: async (customerCode: string): Promise<WarehouseOrdersResponse> => {
@@ -50,6 +51,42 @@ export const warehouseApi = {
 
   getOutboundHeaders: async (): Promise<WarehouseHeadersResponse> => {
     return await api.get<WarehouseHeadersResponse>('/api/WoHeader');
+  },
+
+  getInboundHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<WarehouseHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<WarehouseHeader>>>('/api/WiHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Depo giriş listesi yüklenemedi');
+  },
+
+  getOutboundHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<WarehouseHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<WarehouseHeader>>>('/api/WoHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Depo çıkış listesi yüklenemedi');
   },
 
   getAssignedInboundHeaders: async (userId: number): Promise<WarehouseHeadersResponse> => {

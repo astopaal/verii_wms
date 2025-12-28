@@ -13,9 +13,10 @@ import type {
   AddBarcodeRequest,
   AddBarcodeResponse,
   CollectedBarcodesResponse,
+  TransferHeader,
 } from '../types/transfer';
 import { buildTransferGenerateRequest } from '../utils/transfer-generate';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
 
 export const transferApi = {
   getOrdersByCustomer: async (customerCode: string): Promise<TransferOrdersResponse> => {
@@ -45,6 +46,24 @@ export const transferApi = {
 
   getHeaders: async (): Promise<TransferHeadersResponse> => {
     return await api.get<TransferHeadersResponse>('/api/WtHeader');
+  },
+
+  getHeadersPaged: async (params: PagedParams = {}): Promise<PagedResponse<TransferHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<TransferHeader>>>('/api/WtHeader/paged', requestBody);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Transfer listesi yüklenemedi');
   },
 
   getLines: async (headerId: number): Promise<TransferLinesResponse> => {
