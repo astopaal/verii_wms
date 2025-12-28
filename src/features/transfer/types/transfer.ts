@@ -411,3 +411,49 @@ export interface CollectedBarcodeItem {
 
 export type CollectedBarcodesResponse = ApiResponse<CollectedBarcodeItem[]>;
 
+export interface AwaitingApprovalHeader {
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  deletedDate: string;
+  isDeleted: boolean;
+  createdBy: number;
+  updatedBy: number;
+  deletedBy: number;
+  createdByFullUser: string;
+  updatedByFullUser: string;
+  deletedByFullUser: string;
+  yearCode: string;
+  branchCode: string;
+  projectCode: string;
+  orderId: string;
+  plannedDate: string;
+  isPlanned: boolean;
+  documentType: string;
+  description1: string;
+  description2: string;
+  priorityLevel: number;
+  completionDate: string;
+  isCompleted: boolean;
+  isPendingApproval: boolean;
+  approvalStatus: boolean;
+  approvedByUserId: number;
+  approvalDate: string;
+  isERPIntegrated: boolean;
+  erpReferenceNumber: string;
+  erpIntegrationDate: string;
+  erpIntegrationStatus: string;
+  erpErrorMessage: string;
+  documentNo: string;
+  documentDate: string;
+  customerCode: string;
+  customerName: string;
+  sourceWarehouse: string;
+  sourceWarehouseName: string;
+  targetWarehouse: string;
+  targetWarehouseName: string;
+  priority: string;
+  type: number;
+}
+
+

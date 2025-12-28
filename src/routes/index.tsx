@@ -16,6 +16,7 @@ import {
   AssignedTransferListPage,
   TransferCollectionPage,
   CollectedBarcodesPage,
+  TransferApprovalPage,
 } from '@/features/transfer';
 import {
   SubcontractingIssueCreatePage,
@@ -26,6 +27,8 @@ import {
   AssignedSrtListPage,
   SitCollectionPage,
   SrtCollectionPage,
+  SubcontractingIssueApprovalPage,
+  SubcontractingReceiptApprovalPage,
 } from '@/features/subcontracting';
 import {
   WarehouseInboundCreatePage,
@@ -34,8 +37,10 @@ import {
   WarehouseOutboundListPage,
   AssignedWarehouseInboundListPage,
   AssignedWarehouseOutboundListPage,
+  WarehouseInboundApprovalPage,
+  WarehouseOutboundApprovalPage,
 } from '@/features/warehouse';
-import { ShipmentCreatePage, ShipmentListPage, AssignedShipmentListPage, ShipmentCollectionPage } from '@/features/shipment';
+import { ShipmentCreatePage, ShipmentListPage, AssignedShipmentListPage, ShipmentCollectionPage, ShipmentApprovalPage } from '@/features/shipment';
 import { Warehouse3dPage } from '@/features/inventory/3d-warehouse';
 import { ParameterFormPage } from '@/features/parameters';
 import {
@@ -103,6 +108,10 @@ export const router = createBrowserRouter([
             path: 'collected/:headerId',
             element: <CollectedBarcodesPage />,
           },
+          {
+            path: 'approval',
+            element: <TransferApprovalPage />,
+          },
         ],
       },
       {
@@ -127,6 +136,10 @@ export const router = createBrowserRouter([
                 path: 'collection/:headerId',
                 element: <SitCollectionPage />,
               },
+              {
+                path: 'approval',
+                element: <SubcontractingIssueApprovalPage />,
+              },
             ],
           },
           {
@@ -147,6 +160,10 @@ export const router = createBrowserRouter([
               {
                 path: 'collection/:headerId',
                 element: <SrtCollectionPage />,
+              },
+              {
+                path: 'approval',
+                element: <SubcontractingReceiptApprovalPage />,
               },
             ],
           },
@@ -170,6 +187,10 @@ export const router = createBrowserRouter([
                 path: 'assigned',
                 element: <AssignedWarehouseInboundListPage />,
               },
+              {
+                path: 'approval',
+                element: <WarehouseInboundApprovalPage />,
+              },
             ],
           },
           {
@@ -186,6 +207,10 @@ export const router = createBrowserRouter([
               {
                 path: 'assigned',
                 element: <AssignedWarehouseOutboundListPage />,
+              },
+              {
+                path: 'approval',
+                element: <WarehouseOutboundApprovalPage />,
               },
             ],
           },
@@ -209,6 +234,10 @@ export const router = createBrowserRouter([
           {
             path: 'collection/:headerId',
             element: <ShipmentCollectionPage />,
+          },
+          {
+            path: 'approval',
+            element: <ShipmentApprovalPage />,
           },
         ],
       },

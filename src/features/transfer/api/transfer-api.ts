@@ -14,6 +14,7 @@ import type {
   AddBarcodeResponse,
   CollectedBarcodesResponse,
   TransferHeader,
+  AwaitingApprovalHeader,
 } from '../types/transfer';
 import { buildTransferGenerateRequest } from '../utils/transfer-generate';
 import type { ApiResponse, PagedParams, PagedResponse } from '@/types/api';
@@ -94,5 +95,32 @@ export const transferApi = {
 
   completeTransfer: async (headerId: number): Promise<ApiResponse<unknown>> => {
     return await api.post<ApiResponse<unknown>>(`/api/WtHeader/complete/${headerId}`);
+  },
+
+  getAwaitingApprovalHeaders: async (params: PagedParams = {}): Promise<PagedResponse<AwaitingApprovalHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<AwaitingApprovalHeader>>>(
+      '/api/WtHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen emirler yüklenemedi');
+  },
+
+  approveTransfer: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/WtHeader/approval/${id}`, null, {
+      params: { approved, id },
+    });
   },
 };

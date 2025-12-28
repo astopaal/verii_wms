@@ -120,5 +120,59 @@ export const warehouseApi = {
   getOutboundLineSerials: async (lineId: number): Promise<WarehouseLineSerialsResponse> => {
     return await api.get<WarehouseLineSerialsResponse>(`/api/WoLineSerial/line/${lineId}`);
   },
+
+  getAwaitingApprovalWiHeaders: async (params: PagedParams = {}): Promise<PagedResponse<WarehouseHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<WarehouseHeader>>>(
+      '/api/WiHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen ambar giriş emirleri yüklenemedi');
+  },
+
+  getAwaitingApprovalWoHeaders: async (params: PagedParams = {}): Promise<PagedResponse<WarehouseHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<WarehouseHeader>>>(
+      '/api/WoHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen ambar çıkış emirleri yüklenemedi');
+  },
+
+  approveWiHeader: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/WiHeader/approval/${id}`, null, {
+      params: { approved },
+    });
+  },
+
+  approveWoHeader: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/WoHeader/approval/${id}`, null, {
+      params: { approved },
+    });
+  },
 };
 

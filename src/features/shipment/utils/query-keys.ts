@@ -7,4 +7,5 @@ export const SHIPMENT_QUERY_KEYS = {
   ASSIGNED_ORDER_LINES: 'shipment.assignedOrderLines',
   LINES: 'shipment.lines',
   LINE_SERIALS: 'shipment.lineSerials',
+  AWAITING_APPROVAL_HEADERS: 'shipment.awaitingApprovalHeaders',
 } as const;

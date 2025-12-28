@@ -155,5 +155,59 @@ export const subcontractingApi = {
   getIssueLineSerials: async (lineId: number): Promise<SubcontractingLineSerialsResponse> => {
     return await api.get<SubcontractingLineSerialsResponse>(`/api/SitLineSerial/line/${lineId}`);
   },
+
+  getAwaitingApprovalSitHeaders: async (params: PagedParams = {}): Promise<PagedResponse<SubcontractingHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<SubcontractingHeader>>>(
+      '/api/SitHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen fason çıkış emirleri yüklenemedi');
+  },
+
+  getAwaitingApprovalSrtHeaders: async (params: PagedParams = {}): Promise<PagedResponse<SubcontractingHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<SubcontractingHeader>>>(
+      '/api/SrtHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen fason giriş emirleri yüklenemedi');
+  },
+
+  approveSitHeader: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/SitHeader/approval/${id}`, null, {
+      params: { approved },
+    });
+  },
+
+  approveSrtHeader: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/SrtHeader/approval/${id}`, null, {
+      params: { approved },
+    });
+  },
 };
 

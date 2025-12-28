@@ -7,4 +7,5 @@ export const TRANSFER_QUERY_KEYS = {
   ORDERS: 'transfer.orders',
   ORDER_ITEMS: 'transfer.orderItems',
   ASSIGNED_ORDER_LINES: 'transfer.assignedOrderLines',
+  AWAITING_APPROVAL_HEADERS: 'transfer.awaitingApprovalHeaders',
 } as const;

@@ -188,6 +188,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.transferAssigned', 'Atanmış Transfer Emirleri'),
           href: '/transfer/assigned',
         },
+        {
+          title: t('sidebar.transferApproval', 'Onay Bekleyen Emirler'),
+          href: '/transfer/approval',
+        },
       ],
     },
     {
@@ -231,6 +235,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         {
           title: t('sidebar.subcontractingReceiptAssigned', 'Atanmış Fason Giriş Emirleri'),
           href: '/subcontracting/receipt/assigned',
+        },
+        {
+          title: t('sidebar.subcontractingIssueApproval', 'Onay Bekleyen Fason Çıkış Emirleri'),
+          href: '/subcontracting/issue/approval',
+        },
+        {
+          title: t('sidebar.subcontractingReceiptApproval', 'Onay Bekleyen Fason Giriş Emirleri'),
+          href: '/subcontracting/receipt/approval',
         },
       ],
     },
@@ -279,6 +291,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.warehouseOutboundAssigned', 'Atanmış Ambar Çıkış Emirleri'),
           href: '/warehouse/outbound/assigned',
         },
+        {
+          title: t('sidebar.warehouseInboundApproval', 'Onay Bekleyen Ambar Giriş Emirleri'),
+          href: '/warehouse/inbound/approval',
+        },
+        {
+          title: t('sidebar.warehouseOutboundApproval', 'Onay Bekleyen Ambar Çıkış Emirleri'),
+          href: '/warehouse/outbound/approval',
+        },
       ],
     },
     {
@@ -312,6 +332,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
         {
           title: t('sidebar.shipmentAssigned', 'Atanmış Sevkiyat Emirleri'),
           href: '/shipment/assigned',
+        },
+        {
+          title: t('sidebar.shipmentApproval', 'Onay Bekleyen Sevkiyat Emirleri'),
+          href: '/shipment/approval',
         },
       ],
     },

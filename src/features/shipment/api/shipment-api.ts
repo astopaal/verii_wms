@@ -89,4 +89,31 @@ export const shipmentApi = {
     const request = buildShipmentGenerateRequest(formData, selectedItems);
     return await api.post<ApiResponse<unknown>>('/api/ShHeader/generate', request);
   },
+
+  getAwaitingApprovalHeaders: async (params: PagedParams = {}): Promise<PagedResponse<ShipmentHeader>> => {
+    const { pageNumber = 0, pageSize = 10, sortBy = 'Id', sortDirection = 'desc', filters = [] } = params;
+
+    const requestBody = {
+      pageNumber,
+      pageSize,
+      sortBy,
+      sortDirection,
+      filters,
+    };
+
+    const response = await api.post<ApiResponse<PagedResponse<ShipmentHeader>>>(
+      '/api/ShHeader/completed-awaiting-erp-approval',
+      requestBody
+    );
+    if (response.success && response.data) {
+      return response.data;
+    }
+    throw new Error(response.message || 'Onay bekleyen sevkiyat emirleri yüklenemedi');
+  },
+
+  approveShipment: async (id: number, approved: boolean): Promise<ApiResponse<unknown>> => {
+    return await api.post<ApiResponse<unknown>>(`/api/ShHeader/approval/${id}`, null, {
+      params: { approved },
+    });
+  },
 };
