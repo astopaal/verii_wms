@@ -257,6 +257,26 @@ export function PackageDetailPage(): ReactElement {
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">
+                {t('package.list.sourceType', 'Kaynak Tipi')}
+              </p>
+              {header.sourceType ? (
+                <Badge variant="outline">
+                  {t(`package.sourceType.${header.sourceType.toUpperCase()}`, header.sourceType.toUpperCase())}
+                </Badge>
+              ) : (
+                <p className="text-base">-</p>
+              )}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
+                {t('package.list.matchedSource', 'Eşleşen Kaynak')}
+              </p>
+              <p className="text-base">
+                {header.sourceHeaderId ? `#${header.sourceHeaderId}` : '-'}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">
                 {t('package.detail.customerCode', 'Cari Kodu')}
               </p>
               <p className="text-base">{header.customerCode || '-'}</p>

@@ -9,7 +9,8 @@ import { useUpdatePHeader } from '../hooks/useUpdatePHeader';
 import { useCustomers } from '@/features/goods-receipt/hooks/useCustomers';
 import { useWarehouses } from '@/features/goods-receipt/hooks/useWarehouses';
 import { SearchableSelect } from '@/features/goods-receipt/components/steps/components/SearchableSelect';
-import { pHeaderFormSchema, CargoCompany, type PHeaderFormData } from '../types/package';
+import { useAvailableHeaders } from '../hooks/useAvailableHeaders';
+import { pHeaderFormSchema, CargoCompany, type PHeaderFormData, type AvailableHeaderDto } from '../types/package';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -41,12 +42,14 @@ export function PackageEditPage(): ReactElement {
 
   const schema = useMemo(() => pHeaderFormSchema(t), [t]);
 
-  const form = useForm({
+  const form = useForm<PHeaderFormData>({
     resolver: zodResolver(schema),
       defaultValues: {
         packingNo: '',
         packingDate: new Date().toISOString().split('T')[0],
         warehouseCode: '',
+        sourceType: undefined,
+        sourceHeaderId: undefined,
         customerCode: '',
         customerAddress: '',
         status: 'Draft' as const,
@@ -56,12 +59,49 @@ export function PackageEditPage(): ReactElement {
       },
   });
 
+  const sourceType = form.watch('sourceType');
+  const { data: availableHeaders, isLoading: isLoadingHeaders } = useAvailableHeaders(sourceType);
+
+  useEffect(() => {
+    if (!sourceType) {
+      form.setValue('sourceHeaderId', undefined);
+    }
+  }, [sourceType, form]);
+
+  const sourceTypeOptions = useMemo(
+    () => [
+      { value: 'GR', label: t('package.sourceType.GR', 'Mal Kabul') },
+      { value: 'WT', label: t('package.sourceType.WT', 'Depo Transferi') },
+      { value: 'SH', label: t('package.sourceType.SH', 'Sevkiyat') },
+      { value: 'PR', label: t('package.sourceType.PR', 'Üretim') },
+      { value: 'PT', label: t('package.sourceType.PT', 'Üretim Transferi') },
+      { value: 'SIT', label: t('package.sourceType.SIT', 'Yarı Mamul Çıkış Transferi') },
+      { value: 'SRT', label: t('package.sourceType.SRT', 'Yarı Mamul Giriş Transferi') },
+      { value: 'WI', label: t('package.sourceType.WI', 'Ambar Girişi') },
+      { value: 'WO', label: t('package.sourceType.WO', 'Ambar Çıkışı') },
+    ],
+    [t]
+  );
+
+  const getHeaderDisplayLabel = (header: AvailableHeaderDto): string => {
+    const parts = [`#${header.id}`];
+    if (header.documentNo) {
+      parts.push(header.documentNo);
+    }
+    if (header.customerName) {
+      parts.push(header.customerName);
+    }
+    return parts.join(' - ');
+  };
+
   useEffect(() => {
     if (header) {
       form.reset({
         packingNo: header.packingNo,
         packingDate: header.packingDate ? header.packingDate.split('T')[0] : new Date().toISOString().split('T')[0],
         warehouseCode: header.warehouseCode || '',
+        sourceType: header.sourceType,
+        sourceHeaderId: header.sourceHeaderId,
         customerCode: header.customerCode || '',
         customerAddress: header.customerAddress || '',
         status: header.status,
@@ -87,9 +127,11 @@ export function PackageEditPage(): ReactElement {
         id: headerId,
         data: {
           packingNo: data.packingNo,
-        packingDate: data.packingDate || undefined,
-        warehouseCode: data.warehouseCode || undefined,
-        customerCode: data.customerCode || undefined,
+          packingDate: data.packingDate || undefined,
+          warehouseCode: data.warehouseCode || undefined,
+          sourceType: data.sourceType,
+          sourceHeaderId: data.sourceHeaderId,
+          customerCode: data.customerCode || undefined,
           customerAddress: data.customerAddress || undefined,
           status: data.status || 'Draft',
           carrierId: data.carrierId,
@@ -161,6 +203,63 @@ export function PackageEditPage(): ReactElement {
                       <FormLabel>{t('package.form.packingDate', 'Paketleme Tarihi')}</FormLabel>
                       <FormControl>
                         <Input type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="sourceType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.sourceType', 'Kaynak Tipi')}</FormLabel>
+                      <FormControl>
+                        <SearchableSelect<{ value: string; label: string }>
+                          value={field.value || ''}
+                          onValueChange={(value) => {
+                            field.onChange(value || undefined);
+                            form.setValue('sourceHeaderId', undefined);
+                          }}
+                          options={sourceTypeOptions}
+                          getOptionValue={(opt) => opt.value}
+                          getOptionLabel={(opt) => opt.label}
+                          placeholder={t('package.form.selectSourceType', 'Kaynak Tipi Seçin')}
+                          searchPlaceholder={t('common.search', 'Ara...')}
+                          emptyText={t('package.form.noSourceType', 'Kaynak tipi bulunamadı')}
+                          itemLimit={100}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="sourceHeaderId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('package.form.sourceHeaderId', 'Eşlenecek Header')}</FormLabel>
+                      <FormControl>
+                        <SearchableSelect<AvailableHeaderDto>
+                          value={field.value?.toString() || ''}
+                          onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
+                          options={availableHeaders || []}
+                          getOptionValue={(opt) => opt.id.toString()}
+                          getOptionLabel={getHeaderDisplayLabel}
+                          placeholder={t('package.form.selectSourceHeader', 'Eşlenecek Header Seçin')}
+                          searchPlaceholder={t('common.search', 'Ara...')}
+                          emptyText={
+                            sourceType
+                              ? t('package.form.noAvailableHeaders', 'Eşlenecek header bulunamadı')
+                              : t('package.form.selectSourceTypeFirst', 'Önce kaynak tipi seçiniz')
+                          }
+                          isLoading={isLoadingHeaders}
+                          disabled={!sourceType}
+                          itemLimit={100}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -248,23 +347,19 @@ export function PackageEditPage(): ReactElement {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{t('package.form.carrierId', 'Kargo Firması')}</FormLabel>
-                      <Select
-                        value={field.value?.toString() || ''}
-                        onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder={t('package.form.selectCarrier', 'Kargo Firması Seçin')} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {cargoCompanyOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value.toString()}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <SearchableSelect<{ value: number; label: string }>
+                          value={field.value?.toString() || ''}
+                          onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
+                          options={cargoCompanyOptions}
+                          getOptionValue={(opt) => opt.value.toString()}
+                          getOptionLabel={(opt) => opt.label}
+                          placeholder={t('package.form.selectCarrier', 'Kargo Firması Seçin')}
+                          searchPlaceholder={t('common.search', 'Ara...')}
+                          emptyText={t('package.form.noCarrier', 'Kargo firması bulunamadı')}
+                          itemLimit={100}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
