@@ -2,7 +2,8 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { warehouseApi } from '../api/warehouse-api';
 import { WAREHOUSE_QUERY_KEYS } from '../utils/query-keys';
 import { useAuthStore } from '@/stores/auth-store';
-import type { WarehouseHeadersResponse } from '../types/warehouse';
+import type { WarehouseHeadersResponse, WarehouseHeader } from '../types/warehouse';
+import type { PagedParams, PagedResponse } from '@/types/api';
 
 export function useWarehouseInboundHeaders(): UseQueryResult<WarehouseHeadersResponse> {
   return useQuery({
@@ -16,6 +17,22 @@ export function useWarehouseOutboundHeaders(): UseQueryResult<WarehouseHeadersRe
   return useQuery({
     queryKey: [WAREHOUSE_QUERY_KEYS.OUTBOUND_HEADERS],
     queryFn: () => warehouseApi.getOutboundHeaders(),
+    staleTime: 2 * 60 * 1000,
+  });
+}
+
+export function useWarehouseInboundHeadersPaged(params: PagedParams = {}): UseQueryResult<PagedResponse<WarehouseHeader>> {
+  return useQuery({
+    queryKey: [WAREHOUSE_QUERY_KEYS.INBOUND_HEADERS_PAGED, params],
+    queryFn: () => warehouseApi.getInboundHeadersPaged(params),
+    staleTime: 2 * 60 * 1000,
+  });
+}
+
+export function useWarehouseOutboundHeadersPaged(params: PagedParams = {}): UseQueryResult<PagedResponse<WarehouseHeader>> {
+  return useQuery({
+    queryKey: [WAREHOUSE_QUERY_KEYS.OUTBOUND_HEADERS_PAGED, params],
+    queryFn: () => warehouseApi.getOutboundHeadersPaged(params),
     staleTime: 2 * 60 * 1000,
   });
 }
