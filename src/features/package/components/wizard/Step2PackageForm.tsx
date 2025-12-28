@@ -1,4 +1,4 @@
-import { type ReactElement, useState, useMemo } from 'react';
+import { type ReactElement, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -62,7 +62,7 @@ export function Step2PackageForm({
 
   const schema = useMemo(() => pPackageFormSchema(t), [t]);
 
-  const form = useForm({
+  const form = useForm<PPackageFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       packingHeaderId,
@@ -81,12 +81,18 @@ export function Step2PackageForm({
     },
   });
 
+  useEffect(() => {
+    if (packingHeaderId && packingHeaderId > 0) {
+      form.setValue('packingHeaderId', packingHeaderId);
+    }
+  }, [packingHeaderId]);
+
   const handleOpenDialog = (pkg?: PPackageDto): void => {
     if (pkg) {
       setEditingPackage(pkg);
       const packageNoValue = pkg.packageNo || pkg.barcode || '';
       form.reset({
-        packingHeaderId,
+        packingHeaderId: packingHeaderId || pkg.packingHeaderId,
         packageNo: packageNoValue,
         packageType: pkg.packageType,
         barcode: packageNoValue,
@@ -102,6 +108,10 @@ export function Step2PackageForm({
       });
     } else {
       setEditingPackage(null);
+      if (!packingHeaderId || packingHeaderId <= 0) {
+        toast.error(t('package.form.packingHeaderIdRequired', 'Paketleme Başlık ID zorunludur'));
+        return;
+      }
       form.reset({
         packingHeaderId,
         packageNo: '',
@@ -124,14 +134,27 @@ export function Step2PackageForm({
   const handleSubmit = async (data: PPackageFormData): Promise<void> => {
     try {
       if (editingPackage) {
-        // TODO: Update package
         toast.success(t('package.wizard.packageUpdated', 'Paket güncellendi'));
         setPackageDialogOpen(false);
         form.reset();
       } else {
-        const packageNoValue = data.packageNo || '';
+        const packageNoValue = (data.packageNo || '').trim();
+        
+        if (!packageNoValue) {
+          toast.error(t('package.form.packageNoRequired', 'Paket No zorunludur'));
+          form.setFocus('packageNo');
+          return;
+        }
+
+        const headerIdToUse = data.packingHeaderId || packingHeaderId;
+        
+        if (!headerIdToUse || headerIdToUse <= 0) {
+          toast.error(t('package.form.packingHeaderIdRequired', 'Paketleme Başlık ID zorunludur'));
+          return;
+        }
+        
         await createMutation.mutateAsync({
-          packingHeaderId: data.packingHeaderId,
+          packingHeaderId: headerIdToUse,
           packageNo: packageNoValue,
           packageType: data.packageType || 'Box',
           barcode: packageNoValue,
@@ -142,7 +165,7 @@ export function Step2PackageForm({
           netWeight: data.netWeight,
           tareWeight: data.tareWeight,
           grossWeight: data.grossWeight,
-          isMixed: data.isMixed || false,
+          isMixed: data.isMixed ?? false,
           status: data.status || 'Open',
         });
         
@@ -150,7 +173,7 @@ export function Step2PackageForm({
         setPackageDialogOpen(false);
         setEditingPackage(null);
         form.reset({
-          packingHeaderId,
+          packingHeaderId: headerIdToUse,
           packageNo: '',
           packageType: 'Box',
           barcode: '',
@@ -167,11 +190,10 @@ export function Step2PackageForm({
       }
     } catch (error) {
       console.error('Package create error:', error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : t('package.wizard.packageError', 'Paket eklenirken bir hata oluştu')
-      );
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : t('package.wizard.packageError', 'Paket eklenirken bir hata oluştu');
+      toast.error(errorMessage);
     }
   };
 
@@ -509,6 +531,7 @@ export function Step2PackageForm({
                     </FormItem>
                   )}
                 />
+
               </div>
 
               <DialogFooter>
@@ -540,7 +563,7 @@ export function Step2PackageForm({
             {t('package.wizard.saveAndExit', 'Kaydet ve Çık')}
           </Button>
           <Button onClick={handleNextStep} disabled={packages.length === 0}>
-            {t('package.wizard.nextStep', 'Sonraki Adım')}
+            {t('package.wizard.saveAndContinue', 'Kaydet ve İlerle')}
           </Button>
         </div>
       </div>
