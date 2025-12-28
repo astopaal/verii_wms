@@ -1,24 +1,43 @@
 import { type ReactElement, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/stores/ui-store';
-import { useTransferHeaders } from '../hooks/useTransferHeaders';
+import { useTransferHeadersPaged } from '../hooks/useTransferHeaders';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { TransferDetailDialog } from './TransferDetailDialog';
-import { Eye, Search } from 'lucide-react';
+import { Eye, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { VoiceSearchButton } from '@/components/ui/voice-search-button';
 import type { TransferHeader } from '../types/transfer';
+import type { PagedFilter } from '@/types/api';
 
 export function TransferListPage(): ReactElement {
   const { t } = useTranslation();
   const { setPageTitle } = useUIStore();
   const [selectedHeaderId, setSelectedHeaderId] = useState<number | null>(null);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize] = useState(10);
+  const [sortBy, setSortBy] = useState<string>('Id');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data, isLoading, error } = useTransferHeaders();
+  const filters: PagedFilter[] = useMemo(() => {
+    const result: PagedFilter[] = [];
+    if (searchTerm) {
+      result.push({ column: 'documentNo', operator: 'contains', value: searchTerm });
+    }
+    return result;
+  }, [searchTerm]);
+
+  const { data, isLoading, error } = useTransferHeadersPaged({
+    pageNumber,
+    pageSize,
+    sortBy,
+    sortDirection,
+    filters,
+  });
 
   useEffect(() => {
     setPageTitle(t('transfer.list.title', 'Transfer Emri Listesi'));
@@ -47,21 +66,26 @@ export function TransferListPage(): ReactElement {
     });
   };
 
-  const filteredData = useMemo(() => {
-    if (!data?.data) return [];
-    if (!searchTerm) return data.data;
-    const searchLower = searchTerm.toLowerCase();
-    return data.data.filter((item) => {
-      return (
-        item.documentNo?.toLowerCase().includes(searchLower) ||
-        item.customerCode?.toLowerCase().includes(searchLower) ||
-        item.customerName?.toLowerCase().includes(searchLower) ||
-        item.sourceWarehouse?.toLowerCase().includes(searchLower) ||
-        item.targetWarehouse?.toLowerCase().includes(searchLower) ||
-        item.description1?.toLowerCase().includes(searchLower)
-      );
-    });
-  }, [data?.data, searchTerm]);
+  const handleSort = (column: string): void => {
+    if (sortBy === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(column);
+      setSortDirection('asc');
+    }
+  };
+
+  const handlePreviousPage = (): void => {
+    if (data?.hasPreviousPage) {
+      setPageNumber((prev) => prev - 1);
+    }
+  };
+
+  const handleNextPage = (): void => {
+    if (data?.hasNextPage) {
+      setPageNumber((prev) => prev + 1);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -91,7 +115,10 @@ export function TransferListPage(): ReactElement {
                 <Input
                   placeholder={t('transfer.list.searchPlaceholder', 'Belge No, Cari Kodu, Depo...')}
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setPageNumber(0);
+                  }}
                   className="pl-8 pr-10 w-full md:w-64"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
@@ -123,8 +150,8 @@ export function TransferListPage(): ReactElement {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData && filteredData.length > 0 ? (
-                  filteredData.map((item: TransferHeader) => (
+                {data?.data && data.data.length > 0 ? (
+                  data.data.map((item: TransferHeader) => (
                     <TableRow key={item.id} className="cursor-pointer" onClick={() => setSelectedHeaderId(item.id)}>
                       <TableCell>{item.id}</TableCell>
                       <TableCell className="font-medium">{item.documentNo || '-'}</TableCell>
@@ -162,8 +189,8 @@ export function TransferListPage(): ReactElement {
             </Table>
           </div>
           <div className="md:hidden space-y-4">
-            {filteredData && filteredData.length > 0 ? (
-              filteredData.map((item: TransferHeader) => (
+            {data?.data && data.data.length > 0 ? (
+              data.data.map((item: TransferHeader) => (
                 <Card key={item.id} className="border">
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-start justify-between">
@@ -234,6 +261,40 @@ export function TransferListPage(): ReactElement {
               </div>
             )}
           </div>
+          {data && (
+            <div className="flex items-center justify-between border-t pt-4">
+              <div className="text-sm text-muted-foreground">
+                {t('common.paginationInfo', '{{current}} - {{total}} of {{totalCount}}', {
+                  current: data.pageNumber * data.pageSize + 1,
+                  total: Math.min((data.pageNumber + 1) * data.pageSize, data.totalCount),
+                  totalCount: data.totalCount,
+                })}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={!data.hasPreviousPage}
+                >
+                  <ChevronLeft className="size-4" />
+                  {t('common.previous', 'Önceki')}
+                </Button>
+                <span className="text-sm">
+                  {t('common.page', 'Sayfa')} {data.pageNumber + 1} / {data.totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={!data.hasNextPage}
+                >
+                  {t('common.next', 'Sonraki')}
+                  <ChevronRight className="size-4" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
