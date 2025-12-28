@@ -40,9 +40,9 @@ export function ReceivingArea({
 
   const mappedOrderItems = useMemo((): OrderItem[] => {
     if (!orderItems) return [];
-    return orderItems.map((item) => ({
+    return orderItems.map((item, index) => ({
       ...item,
-      id: `${item.siparisNo}-${item.stockCode}`,
+      id: item.id || `${item.orderID}-${item.stockCode}-${index}`,
       productCode: item.stockCode,
       productName: item.stockName,
       quantity: item.remainingForImport,

@@ -17,8 +17,8 @@ export function GoodsReceiptReportPage(): ReactElement {
   const { setPageTitle } = useUIStore();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize] = useState(10);
-  const [sortBy, setSortBy] = useState<string | undefined>(undefined);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [sortBy, setSortBy] = useState<string>('createdDate');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [selectedGrHeaderId, setSelectedGrHeaderId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
