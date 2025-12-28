@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useUIStore } from '@/stores/ui-store';
 import { usePHeader } from '../hooks/usePHeader';
 import { useUpdatePHeader } from '../hooks/useUpdatePHeader';
+import { useMatchPlines } from '../hooks/useMatchPlines';
 import { useCustomers } from '@/features/goods-receipt/hooks/useCustomers';
 import { useWarehouses } from '@/features/goods-receipt/hooks/useWarehouses';
 import { SearchableSelect } from '@/features/goods-receipt/components/steps/components/SearchableSelect';
@@ -28,6 +29,7 @@ export function PackageEditPage(): ReactElement {
   const headerId = id ? parseInt(id, 10) : undefined;
   const { data: header, isLoading } = usePHeader(headerId);
   const updateMutation = useUpdatePHeader();
+  const matchPlinesMutation = useMatchPlines();
   const { data: customers, isLoading: isLoadingCustomers } = useCustomers();
   const { data: warehouses, isLoading: isLoadingWarehouses } = useWarehouses();
 
@@ -170,10 +172,46 @@ export function PackageEditPage(): ReactElement {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t('package.edit.title', 'Paketleme Düzenle')}</CardTitle>
-          <CardDescription>
-            {t('package.edit.description', 'Paketleme bilgilerini düzenleyin')}
-          </CardDescription>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <CardTitle>{t('package.edit.title', 'Paketleme Düzenle')}</CardTitle>
+              <CardDescription>
+                {t('package.edit.description', 'Paketleme bilgilerini düzenleyin')}
+              </CardDescription>
+            </div>
+            {header?.sourceType && header?.sourceHeaderId && (
+              <Button
+                variant={header.isMatched ? 'destructive' : 'default'}
+                onClick={async () => {
+                  if (!headerId) return;
+                  try {
+                    await matchPlinesMutation.mutateAsync({
+                      pHeaderId: headerId,
+                      isMatched: !header.isMatched,
+                    });
+                    toast.success(
+                      header.isMatched
+                        ? t('package.edit.unmatchSuccess', 'Bağlantı başarıyla kesildi')
+                        : t('package.edit.matchSuccess', 'Eşleme başarıyla yapıldı')
+                    );
+                  } catch (error) {
+                    toast.error(
+                      error instanceof Error
+                        ? error.message
+                        : t('package.edit.matchError', 'Eşleme işlemi sırasında bir hata oluştu')
+                    );
+                  }
+                }}
+                disabled={matchPlinesMutation.isPending}
+              >
+                {matchPlinesMutation.isPending
+                  ? t('common.saving', 'Kaydediliyor...')
+                  : header.isMatched
+                    ? t('package.edit.unmatch', 'Bağlantıyı Kes')
+                    : t('package.edit.match', 'Eşle')}
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           <Form {...form}>

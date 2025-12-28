@@ -9,6 +9,7 @@ import { usePPackagesByHeader } from '../hooks/usePPackagesByHeader';
 import { usePLinesByHeader } from '../hooks/usePLinesByHeader';
 import { useCreatePPackage } from '../hooks/useCreatePPackage';
 import { useCreatePLine } from '../hooks/useCreatePLine';
+import { useMatchPlines } from '../hooks/useMatchPlines';
 import { pPackageFormSchema, pLineFormSchema, type PPackageFormData, type PLineFormData } from '../types/package';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -72,6 +73,7 @@ export function PackageDetailPage(): ReactElement {
   const { data: lines, isLoading: isLoadingLines } = usePLinesByHeader(headerId);
   const createPackageMutation = useCreatePPackage();
   const createLineMutation = useCreatePLine();
+  const matchPlinesMutation = useMatchPlines();
 
   const packageSchema = useMemo(() => pPackageFormSchema(t), [t]);
   const lineSchema = useMemo(() => pLineFormSchema(t), [t]);
@@ -167,7 +169,7 @@ export function PackageDetailPage(): ReactElement {
         packageId: data.packageId,
         barcode: data.barcode || undefined,
         stockCode: data.stockCode,
-        yapKod: data.yapKod,
+        yapKod: data.yapKod || undefined,
         quantity: data.quantity,
         serialNo: data.serialNo || undefined,
         serialNo2: data.serialNo2 || undefined,
@@ -222,6 +224,38 @@ export function PackageDetailPage(): ReactElement {
               <p className="text-sm text-muted-foreground mt-1">{header.packingNo}</p>
             </div>
             <div className="flex items-center gap-2">
+              {header?.sourceType && header?.sourceHeaderId && (
+                <Button
+                  variant={header.isMatched ? 'destructive' : 'default'}
+                  onClick={async () => {
+                    if (!headerId) return;
+                    try {
+                      await matchPlinesMutation.mutateAsync({
+                        pHeaderId: headerId,
+                        isMatched: !header.isMatched,
+                      });
+                      toast.success(
+                        header.isMatched
+                          ? t('package.detail.unmatchSuccess', 'Bağlantı başarıyla kesildi')
+                          : t('package.detail.matchSuccess', 'Eşleme başarıyla yapıldı')
+                      );
+                    } catch (error) {
+                      toast.error(
+                        error instanceof Error
+                          ? error.message
+                          : t('package.detail.matchError', 'Eşleme işlemi sırasında bir hata oluştu')
+                      );
+                    }
+                  }}
+                  disabled={matchPlinesMutation.isPending}
+                >
+                  {matchPlinesMutation.isPending
+                    ? t('common.saving', 'Kaydediliyor...')
+                    : header.isMatched
+                      ? t('package.detail.unmatch', 'Bağlantıyı Kes')
+                      : t('package.detail.match', 'Eşle')}
+                </Button>
+              )}
               <Button variant="outline" onClick={() => navigate('/package/list')}>
                 <ArrowLeft className="size-4 mr-2" />
                 {t('common.back', 'Geri')}
@@ -756,11 +790,9 @@ export function PackageDetailPage(): ReactElement {
                   name="yapKod"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        {t('package.form.yapKod', 'Yap Kodu')} <span className="text-destructive">*</span>
-                      </FormLabel>
+                      <FormLabel>{t('package.form.yapKod', 'Yap Kodu')}</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} value={field.value || ''} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
