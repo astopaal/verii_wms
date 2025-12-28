@@ -7,7 +7,7 @@ import { useUpdatePHeader } from '../hooks/useUpdatePHeader';
 import { usePHeader } from '../hooks/usePHeader';
 import { usePPackagesByHeader } from '../hooks/usePPackagesByHeader';
 import { usePLinesByHeader } from '../hooks/usePLinesByHeader';
-import { Stepper } from '@/components/ui/stepper';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { HeaderSummaryCard } from './wizard/HeaderSummaryCard';
 import { Step1HeaderForm } from './wizard/Step1HeaderForm';
 import { Step2PackageForm } from './wizard/Step2PackageForm';
@@ -288,7 +288,13 @@ export function PackageCreatePage(): ReactElement {
 
   return (
     <div className="space-y-6">
-      <Stepper steps={steps} currentStep={currentStep} />
+      <Breadcrumb
+        items={steps.map((step, index) => ({
+          label: step.label,
+          isActive: index + 1 === currentStep,
+        }))}
+        className="mb-4"
+      />
 
       {headerData && currentStep > 1 && (
         <HeaderSummaryCard
