@@ -10,6 +10,7 @@ export const createSubcontractingFormSchema = (t: TFunction) => z.object({
   sourceWarehouse: z.string().min(1, t('subcontracting.validation.sourceWarehouseRequired', 'Çıkış deposu zorunludur')),
   targetWarehouse: z.string().min(1, t('subcontracting.validation.targetWarehouseRequired', 'Varış deposu zorunludur')),
   notes: z.string().optional(),
+  userIds: z.array(z.string()).optional(),
 });
 
 export type SubcontractingFormData = z.infer<ReturnType<typeof createSubcontractingFormSchema>>;
@@ -118,6 +119,7 @@ export interface SubcontractingGenerateRequest {
   terminalLines: {
     terminalUserId: number;
   }[];
+  userIds?: number[];
 }
 
 export type SubcontractingOrdersResponse = ApiResponse<SubcontractingOrder[]>;

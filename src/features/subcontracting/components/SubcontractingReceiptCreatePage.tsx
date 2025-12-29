@@ -47,6 +47,7 @@ export function SubcontractingReceiptCreatePage(): ReactElement {
       sourceWarehouse: '',
       targetWarehouse: '',
       notes: '',
+      userIds: [],
     },
   });
 

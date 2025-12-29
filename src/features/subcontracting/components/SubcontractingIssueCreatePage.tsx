@@ -47,6 +47,7 @@ export function SubcontractingIssueCreatePage(): ReactElement {
       sourceWarehouse: '',
       targetWarehouse: '',
       notes: '',
+      userIds: [],
     },
   });
 
