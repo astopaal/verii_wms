@@ -48,6 +48,7 @@ export function WarehouseOutboundCreatePage(): ReactElement {
       sourceWarehouse: '',
       targetWarehouse: '',
       notes: '',
+      userIds: [],
     },
   });
 

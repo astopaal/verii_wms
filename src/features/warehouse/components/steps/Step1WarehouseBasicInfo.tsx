@@ -8,8 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useCustomers } from '@/features/goods-receipt/hooks/useCustomers';
 import { useProjects } from '@/features/goods-receipt/hooks/useProjects';
 import { useWarehouses } from '@/features/goods-receipt/hooks/useWarehouses';
+import { useActiveUsers } from '@/features/auth/hooks/useActiveUsers';
 import { SearchableSelect } from '@/features/goods-receipt/components/steps/components/SearchableSelect';
+import { SearchableMultiSelect } from '@/features/transfer/components/steps/components/SearchableMultiSelect';
 import type { Customer, Project, Warehouse } from '@/features/goods-receipt/types/goods-receipt';
+import type { UserDto } from '@/features/auth/types/auth';
 import type { WarehouseFormData } from '../../types/warehouse';
 import { warehouseInboundTypeOptions, warehouseOutboundTypeOptions } from '../../types/warehouse';
 
@@ -26,6 +29,7 @@ export function Step1WarehouseBasicInfo({ type }: Step1WarehouseBasicInfoProps):
   const { data: customers, isLoading: isLoadingCustomers } = useCustomers();
   const { data: projects, isLoading: isLoadingProjects } = useProjects();
   const { data: warehouses, isLoading: isLoadingWarehouses } = useWarehouses();
+  const { data: activeUsers, isLoading: isLoadingUsers } = useActiveUsers();
 
   const typeOptions = type === 'inbound' ? warehouseInboundTypeOptions : warehouseOutboundTypeOptions;
 
@@ -196,6 +200,31 @@ export function Step1WarehouseBasicInfo({ type }: Step1WarehouseBasicInfoProps):
           )}
         />
       </div>
+
+      <FormField
+        control={form.control}
+        name="userIds"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t('warehouse.step1.operationUsers', 'İşlem Yapacak Kullanıcılar')}</FormLabel>
+            <FormControl>
+              <SearchableMultiSelect<UserDto>
+                value={field.value || []}
+                onValueChange={(values) => field.onChange(values)}
+                options={activeUsers || []}
+                getOptionValue={(opt) => String(opt.id)}
+                getOptionLabel={(opt) => opt.fullName || `${opt.firstName || ''} ${opt.lastName || ''}`.trim() || opt.username}
+                placeholder={t('warehouse.step1.selectOperationUsers', 'İşlem yapacak kullanıcıları seçiniz')}
+                searchPlaceholder={t('common.search')}
+                emptyText={t('common.notFound')}
+                isLoading={isLoadingUsers}
+                itemLimit={100}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
       <FormField
         control={form.control}

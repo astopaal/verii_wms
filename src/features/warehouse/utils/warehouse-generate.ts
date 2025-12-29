@@ -71,11 +71,10 @@ export function buildWarehouseInboundRequest(
     },
     lines,
     lineSerials,
-    terminalLines: [
-      {
-        terminalUserId: 2,
-      },
-    ],
+    terminalLines: formData.userIds && formData.userIds.length > 0
+      ? formData.userIds.map((id) => ({ terminalUserId: Number(id) }))
+      : [],
+    userIds: formData.userIds ? formData.userIds.map((id) => Number(id)) : undefined,
   };
 
   return request;
@@ -147,11 +146,10 @@ export function buildWarehouseOutboundRequest(
     },
     lines,
     lineSerials,
-    terminalLines: [
-      {
-        terminalUserId: 2,
-      },
-    ],
+    terminalLines: formData.userIds && formData.userIds.length > 0
+      ? formData.userIds.map((id) => ({ terminalUserId: Number(id) }))
+      : [],
+    userIds: formData.userIds ? formData.userIds.map((id) => Number(id)) : undefined,
   };
 
   return request;

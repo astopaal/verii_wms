@@ -46,6 +46,7 @@ export const createWarehouseFormSchema = (t: TFunction, type: 'inbound' | 'outbo
     ? z.string().min(1, t('warehouse.validation.targetWarehouseRequired', 'Giriş deposu zorunludur'))
     : z.string().optional(),
   notes: z.string().optional(),
+  userIds: z.array(z.string()).optional(),
 });
 
 export type WarehouseFormData = z.infer<ReturnType<typeof createWarehouseFormSchema>>;
@@ -155,6 +156,7 @@ export interface WarehouseGenerateRequest {
   terminalLines: {
     terminalUserId: number;
   }[];
+  userIds?: number[];
 }
 
 export type WarehouseOrdersResponse = ApiResponse<WarehouseOrder[]>;
