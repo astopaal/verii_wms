@@ -75,14 +75,22 @@ export function ParameterFormPage(): ReactElement {
           ? t('parameters.update.success', 'Parametre başarıyla güncellendi')
           : t('parameters.create.success', 'Parametre başarıyla oluşturuldu')
       );
-    } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : parameter
-            ? t('parameters.update.error', 'Parametre güncellenirken bir hata oluştu')
-            : t('parameters.create.error', 'Parametre oluşturulurken bir hata oluştu')
-      );
+    } catch (error: any) {
+      console.error('Parameter update/create error:', error);
+      let errorMessage = parameter
+        ? t('parameters.update.error', 'Parametre güncellenirken bir hata oluştu')
+        : t('parameters.create.error', 'Parametre oluşturulurken bir hata oluştu');
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (error?.response?.data) {
+        const apiError = error.response.data;
+        errorMessage = apiError.exceptionMessage || apiError.message || errorMessage;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      
+      toast.error(errorMessage);
     }
   };
 

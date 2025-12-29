@@ -56,18 +56,38 @@ export const parameterApi = {
 
   create: async (type: ParameterType, data: CreateParameterRequest): Promise<number> => {
     const endpoint = getEndpoint(type);
-    const response = await api.post<ApiResponse<number>>(`/api/${endpoint}`, data);
-    if (response.success) {
-      return response.data || 0;
+    try {
+      const response = await api.post<ApiResponse<number>>(`/api/${endpoint}`, data);
+      if (response.success) {
+        return response.data || 0;
+      }
+      const errorMessage = response.exceptionMessage || response.message || 'Parametre oluşturulamadı';
+      throw new Error(errorMessage);
+    } catch (error: any) {
+      if (error?.response?.data) {
+        const apiError = error.response.data;
+        const errorMessage = apiError.exceptionMessage || apiError.message || 'Parametre oluşturulamadı';
+        throw new Error(errorMessage);
+      }
+      throw error;
     }
-    throw new Error(response.message || 'Parametre oluşturulamadı');
   },
 
   update: async (type: ParameterType, id: number, data: UpdateParameterRequest): Promise<void> => {
     const endpoint = getEndpoint(type);
-    const response = await api.put<ApiResponse<unknown>>(`/api/${endpoint}/${id}`, data);
-    if (!response.success) {
-      throw new Error(response.message || 'Parametre güncellenemedi');
+    try {
+      const response = await api.put<ApiResponse<unknown>>(`/api/${endpoint}/${id}`, data);
+      if (!response.success) {
+        const errorMessage = response.exceptionMessage || response.message || 'Parametre güncellenemedi';
+        throw new Error(errorMessage);
+      }
+    } catch (error: any) {
+      if (error?.response?.data) {
+        const apiError = error.response.data;
+        const errorMessage = apiError.exceptionMessage || apiError.message || 'Parametre güncellenemedi';
+        throw new Error(errorMessage);
+      }
+      throw error;
     }
   },
 
