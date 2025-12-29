@@ -43,13 +43,48 @@ function NavItemComponent({
 
   onToggleRef.current = onToggle;
 
+  const normalizeText = (text: string): string => {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ı/g, 'i')
+      .replace(/ş/g, 's')
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/İ/g, 'i')
+      .replace(/Ş/g, 's')
+      .replace(/Ğ/g, 'g')
+      .replace(/Ü/g, 'u')
+      .replace(/Ö/g, 'o')
+      .replace(/Ç/g, 'c');
+  };
+
   const matchesSearch = useMemo(() => {
     if (!searchQuery.trim()) return true;
-    const query = searchQuery.toLowerCase();
-    const titleMatch = item.title.toLowerCase().includes(query);
-    const childrenMatch = item.children?.some((child) =>
-      child.title.toLowerCase().includes(query)
+    
+    const normalizedQuery = normalizeText(searchQuery);
+    const queryWords = normalizedQuery.split(/\s+/).filter((word) => word.length > 0);
+    
+    if (queryWords.length === 0) return true;
+    
+    const normalizedTitle = normalizeText(item.title);
+    const titleWords = normalizedTitle.split(/\s+/).filter((word) => word.length > 0);
+    
+    const titleMatch = queryWords.every((queryWord) =>
+      titleWords.some((titleWord) => titleWord.includes(queryWord))
     );
+    
+    const childrenMatch = item.children?.some((child) => {
+      const normalizedChildTitle = normalizeText(child.title);
+      const childWords = normalizedChildTitle.split(/\s+/).filter((word) => word.length > 0);
+      return queryWords.every((queryWord) =>
+        childWords.some((childWord) => childWord.includes(queryWord))
+      );
+    });
+    
     return titleMatch || childrenMatch || false;
   }, [item, searchQuery]);
 
