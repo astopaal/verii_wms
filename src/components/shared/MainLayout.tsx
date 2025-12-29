@@ -1,4 +1,4 @@
-import { type ReactElement } from 'react';
+import { type ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
@@ -18,10 +18,29 @@ interface MainLayoutProps {
   navItems?: NavItem[];
 }
 
+const normalizeForSort = (text: string): string => {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ı/g, 'i')
+    .replace(/ş/g, 's')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/İ/g, 'i')
+    .replace(/Ş/g, 's')
+    .replace(/Ğ/g, 'g')
+    .replace(/Ü/g, 'u')
+    .replace(/Ö/g, 'o')
+    .replace(/Ç/g, 'c');
+};
+
 export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
   const { t } = useTranslation();
 
-  const defaultNavItems: NavItem[] = [
+  const defaultNavItems: NavItem[] = useMemo(() => [
     {
       title: t('sidebar.dashboard'),
       href: '/',
@@ -66,6 +85,10 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
+          title: t('sidebar.goodsReceiptAssigned', 'Atanmış Mal Kabul Emirleri'),
+          href: '/goods-receipt/assigned',
+        },
+        {
           title: t('sidebar.goodsReceiptCreate'),
           href: '/goods-receipt/create',
         },
@@ -73,11 +96,7 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.goodsReceiptList'),
           href: '/goods-receipt/list',
         },
-        {
-          title: t('sidebar.goodsReceiptAssigned', 'Atanmış Mal Kabul Emirleri'),
-          href: '/goods-receipt/assigned',
-        },
-      ],
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.inventory'),
@@ -149,14 +168,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
-          title: t('sidebar.packageList', 'Paketleme Listesi'),
-          href: '/package/list',
-        },
-        {
           title: t('sidebar.packageCreate', 'Yeni Paketleme'),
           href: '/package/create',
         },
-      ],
+        {
+          title: t('sidebar.packageList', 'Paketleme Listesi'),
+          href: '/package/list',
+        },
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.transfer'),
@@ -177,14 +196,6 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
-          title: t('sidebar.transferCreate'),
-          href: '/transfer/create',
-        },
-        {
-          title: t('sidebar.transferList'),
-          href: '/transfer/list',
-        },
-        {
           title: t('sidebar.transferAssigned', 'Atanmış Transfer Emirleri'),
           href: '/transfer/assigned',
         },
@@ -192,7 +203,15 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.transferApproval', 'Onay Bekleyen Emirler'),
           href: '/transfer/approval',
         },
-      ],
+        {
+          title: t('sidebar.transferCreate'),
+          href: '/transfer/create',
+        },
+        {
+          title: t('sidebar.transferList'),
+          href: '/transfer/list',
+        },
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.subcontracting', 'Fason İşlemleri'),
@@ -213,6 +232,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
+          title: t('sidebar.subcontractingIssueAssigned', 'Atanmış Fason Çıkış Emirleri'),
+          href: '/subcontracting/issue/assigned',
+        },
+        {
+          title: t('sidebar.subcontractingIssueApproval', 'Onay Bekleyen Fason Çıkış Emirleri'),
+          href: '/subcontracting/issue/approval',
+        },
+        {
           title: t('sidebar.subcontractingIssueCreate', 'Fason Çıkış Emri'),
           href: '/subcontracting/issue/create',
         },
@@ -221,8 +248,12 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           href: '/subcontracting/issue/list',
         },
         {
-          title: t('sidebar.subcontractingIssueAssigned', 'Atanmış Fason Çıkış Emirleri'),
-          href: '/subcontracting/issue/assigned',
+          title: t('sidebar.subcontractingReceiptAssigned', 'Atanmış Fason Giriş Emirleri'),
+          href: '/subcontracting/receipt/assigned',
+        },
+        {
+          title: t('sidebar.subcontractingReceiptApproval', 'Onay Bekleyen Fason Giriş Emirleri'),
+          href: '/subcontracting/receipt/approval',
         },
         {
           title: t('sidebar.subcontractingReceiptCreate', 'Fason Giriş Emri'),
@@ -232,19 +263,7 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.subcontractingReceiptList', 'Fason Giriş Listesi'),
           href: '/subcontracting/receipt/list',
         },
-        {
-          title: t('sidebar.subcontractingReceiptAssigned', 'Atanmış Fason Giriş Emirleri'),
-          href: '/subcontracting/receipt/assigned',
-        },
-        {
-          title: t('sidebar.subcontractingIssueApproval', 'Onay Bekleyen Fason Çıkış Emirleri'),
-          href: '/subcontracting/issue/approval',
-        },
-        {
-          title: t('sidebar.subcontractingReceiptApproval', 'Onay Bekleyen Fason Giriş Emirleri'),
-          href: '/subcontracting/receipt/approval',
-        },
-      ],
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.warehouse', 'Ambar İşlemleri'),
@@ -268,12 +287,28 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
+          title: t('sidebar.warehouseInboundAssigned', 'Atanmış Ambar Giriş Emirleri'),
+          href: '/warehouse/inbound/assigned',
+        },
+        {
+          title: t('sidebar.warehouseInboundApproval', 'Onay Bekleyen Ambar Giriş Emirleri'),
+          href: '/warehouse/inbound/approval',
+        },
+        {
           title: t('sidebar.warehouseInboundCreate', 'Ambar Giriş Emri'),
           href: '/warehouse/inbound/create',
         },
         {
           title: t('sidebar.warehouseInboundList', 'Ambar Giriş Listesi'),
           href: '/warehouse/inbound/list',
+        },
+        {
+          title: t('sidebar.warehouseOutboundAssigned', 'Atanmış Ambar Çıkış Emirleri'),
+          href: '/warehouse/outbound/assigned',
+        },
+        {
+          title: t('sidebar.warehouseOutboundApproval', 'Onay Bekleyen Ambar Çıkış Emirleri'),
+          href: '/warehouse/outbound/approval',
         },
         {
           title: t('sidebar.warehouseOutboundCreate', 'Ambar Çıkış Emri'),
@@ -283,23 +318,7 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.warehouseOutboundList', 'Ambar Çıkış Listesi'),
           href: '/warehouse/outbound/list',
         },
-        {
-          title: t('sidebar.warehouseInboundAssigned', 'Atanmış Ambar Giriş Emirleri'),
-          href: '/warehouse/inbound/assigned',
-        },
-        {
-          title: t('sidebar.warehouseOutboundAssigned', 'Atanmış Ambar Çıkış Emirleri'),
-          href: '/warehouse/outbound/assigned',
-        },
-        {
-          title: t('sidebar.warehouseInboundApproval', 'Onay Bekleyen Ambar Giriş Emirleri'),
-          href: '/warehouse/inbound/approval',
-        },
-        {
-          title: t('sidebar.warehouseOutboundApproval', 'Onay Bekleyen Ambar Çıkış Emirleri'),
-          href: '/warehouse/outbound/approval',
-        },
-      ],
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.shipment', 'Sevkiyat'),
@@ -322,14 +341,6 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ),
       children: [
         {
-          title: t('sidebar.shipmentCreate', 'Sevkiyat Emri'),
-          href: '/shipment/create',
-        },
-        {
-          title: t('sidebar.shipmentList', 'Sevkiyat Emri Listesi'),
-          href: '/shipment/list',
-        },
-        {
           title: t('sidebar.shipmentAssigned', 'Atanmış Sevkiyat Emirleri'),
           href: '/shipment/assigned',
         },
@@ -337,7 +348,15 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.shipmentApproval', 'Onay Bekleyen Sevkiyat Emirleri'),
           href: '/shipment/approval',
         },
-      ],
+        {
+          title: t('sidebar.shipmentCreate', 'Sevkiyat Emri'),
+          href: '/shipment/create',
+        },
+        {
+          title: t('sidebar.shipmentList', 'Sevkiyat Emri Listesi'),
+          href: '/shipment/list',
+        },
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
       title: t('sidebar.parameters', 'Parametre'),
@@ -401,11 +420,22 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           title: t('sidebar.parametersP', 'Paket Parametreleri'),
           href: '/parameters/p',
         },
-      ],
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
-  ];
+  ], [t]);
 
-  const items = navItems || defaultNavItems;
+  const sortedNavItems = useMemo(() => {
+    const dashboard = defaultNavItems.find((item) => item.href === '/');
+    const others = defaultNavItems.filter((item) => item.href !== '/');
+    
+    const sortedOthers = [...others].sort((a, b) => 
+      normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')
+    );
+    
+    return dashboard ? [dashboard, ...sortedOthers] : sortedOthers;
+  }, [defaultNavItems]);
+
+  const items = navItems || sortedNavItems;
   const { isSidebarOpen } = useUIStore();
 
   return (
