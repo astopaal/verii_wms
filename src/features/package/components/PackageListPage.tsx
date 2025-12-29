@@ -221,7 +221,7 @@ export function PackageListPage(): ReactElement {
               <TableBody>
                 {data?.data && data.data.length > 0 ? (
                   data.data.map((item: PHeaderDto) => (
-                    <TableRow key={item.id} className="cursor-pointer" onClick={() => navigate(`/package/detail/${item.id}`)}>
+                    <TableRow key={item.id}>
                       <TableCell className="font-medium">#{item.id}</TableCell>
                       <TableCell className="font-medium">{item.packingNo || '-'}</TableCell>
                       <TableCell>{formatDate(item.packingDate)}</TableCell>
