@@ -612,7 +612,7 @@
   "subcontracting": {
     "sit": {
       "assignedList": {
-        "title": "Zugewiesene SIT-Aufträge",
+        "title": "Zugewiesene Subunternehmer-Ausgangsaufträge",
         "searchPlaceholder": "Belegnummer, Kundencode, Lager...",
         "id": "ID",
         "documentNo": "Belegnummer",
@@ -625,7 +625,7 @@
         "createdDate": "Erstellungsdatum",
         "actions": "Aktionen",
         "viewDetails": "Details",
-        "noData": "Keine zugewiesenen SIT-Aufträge gefunden",
+        "noData": "Keine zugewiesenen Subunternehmer-Ausgangsaufträge gefunden",
         "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
       },
       "collection": {
@@ -657,7 +657,7 @@
     },
     "srt": {
       "assignedList": {
-        "title": "Zugewiesene SRT-Aufträge",
+        "title": "Zugewiesene Subunternehmer-Eingangsaufträge",
         "searchPlaceholder": "Belegnummer, Kundencode, Lager...",
         "id": "ID",
         "documentNo": "Belegnummer",
@@ -670,7 +670,7 @@
         "createdDate": "Erstellungsdatum",
         "actions": "Aktionen",
         "viewDetails": "Details",
-        "noData": "Keine zugewiesenen SRT-Aufträge gefunden",
+        "noData": "Keine zugewiesenen Subunternehmer-Eingangsaufträge gefunden",
         "error": "Beim Laden der Daten ist ein Fehler aufgetreten"
       },
       "collection": {

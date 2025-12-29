@@ -612,7 +612,7 @@
   "subcontracting": {
     "sit": {
       "assignedList": {
-        "title": "Atanmış SIT Emirleri",
+        "title": "Atanmış Fason Çıkış Emirleri",
         "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
         "id": "ID",
         "documentNo": "Belge No",
@@ -625,7 +625,7 @@
         "createdDate": "Oluşturulma Tarihi",
         "actions": "İşlemler",
         "viewDetails": "Detay",
-        "noData": "Atanmış SIT emri bulunamadı",
+        "noData": "Atanmış Fason Çıkış emri bulunamadı",
         "error": "Veri yüklenirken bir hata oluştu"
       },
       "collection": {
@@ -657,7 +657,7 @@
     },
     "srt": {
       "assignedList": {
-        "title": "Atanmış SRT Emirleri",
+        "title": "Atanmış Fason Giriş Emirleri",
         "searchPlaceholder": "Belge No, Cari Kodu, Depo...",
         "id": "ID",
         "documentNo": "Belge No",
@@ -670,7 +670,7 @@
         "createdDate": "Oluşturulma Tarihi",
         "actions": "İşlemler",
         "viewDetails": "Detay",
-        "noData": "Atanmış SRT emri bulunamadı",
+        "noData": "Atanmış Fason Giriş emri bulunamadı",
         "error": "Veri yüklenirken bir hata oluştu"
       },
       "collection": {

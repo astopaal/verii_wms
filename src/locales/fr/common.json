@@ -612,7 +612,7 @@
   "subcontracting": {
     "sit": {
       "assignedList": {
-        "title": "Ordres SIT assignés",
+        "title": "Ordres de sous-traitance sortants assignés",
         "searchPlaceholder": "N° de document, Code client, Entrepôt...",
         "id": "ID",
         "documentNo": "N° de document",
@@ -625,7 +625,7 @@
         "createdDate": "Date de création",
         "actions": "Actions",
         "viewDetails": "Détails",
-        "noData": "Aucun ordre SIT assigné trouvé",
+        "noData": "Aucun ordre de sous-traitance sortant assigné trouvé",
         "error": "Une erreur s'est produite lors du chargement des données"
       },
       "collection": {
@@ -657,7 +657,7 @@
     },
     "srt": {
       "assignedList": {
-        "title": "Ordres SRT assignés",
+        "title": "Ordres de sous-traitance entrants assignés",
         "searchPlaceholder": "N° de document, Code client, Entrepôt...",
         "id": "ID",
         "documentNo": "N° de document",
@@ -670,7 +670,7 @@
         "createdDate": "Date de création",
         "actions": "Actions",
         "viewDetails": "Détails",
-        "noData": "Aucun ordre SRT assigné trouvé",
+        "noData": "Aucun ordre de sous-traitance entrant assigné trouvé",
         "error": "Une erreur s'est produite lors du chargement des données"
       },
       "collection": {

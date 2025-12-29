@@ -612,7 +612,7 @@
   "subcontracting": {
     "sit": {
       "assignedList": {
-        "title": "Assigned SIT Orders",
+        "title": "Assigned Subcontracting Outbound Orders",
         "searchPlaceholder": "Document No, Customer Code, Warehouse...",
         "id": "ID",
         "documentNo": "Document No",
@@ -625,7 +625,7 @@
         "createdDate": "Created Date",
         "actions": "Actions",
         "viewDetails": "Details",
-        "noData": "No assigned SIT orders found",
+        "noData": "No assigned subcontracting outbound orders found",
         "error": "An error occurred while loading data"
       },
       "collection": {
@@ -657,7 +657,7 @@
     },
     "srt": {
       "assignedList": {
-        "title": "Assigned SRT Orders",
+        "title": "Assigned Subcontracting Inbound Orders",
         "searchPlaceholder": "Document No, Customer Code, Warehouse...",
         "id": "ID",
         "documentNo": "Document No",
@@ -670,7 +670,7 @@
         "createdDate": "Created Date",
         "actions": "Actions",
         "viewDetails": "Details",
-        "noData": "No assigned SRT orders found",
+        "noData": "No assigned subcontracting inbound orders found",
         "error": "An error occurred while loading data"
       },
       "collection": {
