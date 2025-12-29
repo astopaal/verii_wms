@@ -13,6 +13,13 @@ interface NavItem {
   children?: NavItem[];
 }
 
+interface NavItem {
+  title: string;
+  href?: string;
+  icon?: ReactElement;
+  children?: NavItem[];
+}
+
 interface SidebarProps {
   items: NavItem[];
 }
@@ -22,11 +29,13 @@ function NavItemComponent({
   searchQuery,
   expandedItemKey,
   onToggle,
+  isManualClick,
 }: {
   item: NavItem;
   searchQuery: string;
   expandedItemKey: string | null;
-  onToggle: (key: string) => void;
+  onToggle: (key: string | null) => void;
+  isManualClick: boolean;
 }): ReactElement {
   const location = useLocation();
   const { isSidebarOpen, setSidebarOpen } = useUIStore();
@@ -40,6 +49,7 @@ function NavItemComponent({
   const onToggleRef = useRef(onToggle);
   const lastActiveRef = useRef(false);
   const lastSearchRef = useRef('');
+  const lastPathnameRef = useRef(location.pathname);
 
   onToggleRef.current = onToggle;
 
@@ -101,13 +111,20 @@ function NavItemComponent({
   }, [item, searchQuery, childMatchesSearch]);
 
   useEffect(() => {
-    if (isChildActive && hasChildren && !isExpanded && !lastActiveRef.current) {
+    const pathnameChanged = lastPathnameRef.current !== location.pathname;
+    lastPathnameRef.current = location.pathname;
+    
+    if (pathnameChanged) {
+      lastActiveRef.current = false;
+    }
+    
+    if (isChildActive && hasChildren && !isExpanded && !lastActiveRef.current && !isManualClick) {
       lastActiveRef.current = true;
       onToggleRef.current(itemKey);
     } else if (!isChildActive) {
       lastActiveRef.current = false;
     }
-  }, [isChildActive, hasChildren, itemKey, isExpanded]);
+  }, [isChildActive, hasChildren, itemKey, isExpanded, location.pathname, isManualClick]);
 
   useEffect(() => {
     const searchChanged = lastSearchRef.current !== searchQuery;
@@ -141,13 +158,11 @@ function NavItemComponent({
           onClick={() => {
             if (!isSidebarOpen) {
               setSidebarOpen(true);
-              onToggleRef.current(itemKey);
+              setTimeout(() => {
+                onToggleRef.current(itemKey);
+              }, 100);
             } else {
-              if (isExpanded) {
-                onToggle('');
-              } else {
-                onToggle(itemKey);
-              }
+              onToggle(itemKey);
             }
           }}
           className={cn(
@@ -280,15 +295,27 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
   const { isSidebarOpen } = useUIStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedItemKey, setExpandedItemKey] = useState<string | null>(null);
+  const [isManualClick, setIsManualClick] = useState(false);
 
-  const handleToggle = useCallback((key: string): void => {
+  useEffect(() => {
+    if (!isSidebarOpen) {
+      setExpandedItemKey(null);
+    }
+  }, [isSidebarOpen]);
+
+  const handleToggle = useCallback((key: string | null): void => {
+    setIsManualClick(true);
     setExpandedItemKey((prev) => {
+      if (key === null) {
+        return null;
+      }
       if (prev === key) {
         return null;
       }
       return key;
     });
   }, []);
+
 
   return (
     <>
@@ -338,6 +365,7 @@ export function Sidebar({ items }: SidebarProps): ReactElement {
               searchQuery={searchQuery}
               expandedItemKey={expandedItemKey}
               onToggle={handleToggle}
+              isManualClick={isManualClick}
             />
           ))}
         </nav>

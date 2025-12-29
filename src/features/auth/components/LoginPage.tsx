@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -38,6 +38,8 @@ export function LoginPage(): React.JSX.Element {
   const { mutate: login, isPending } = useLogin(branches);
   const { token, isAuthenticated, logout } = useAuthStore();
   const [isPasswordButtonPressed, setIsPasswordButtonPressed] = useState(false);
+  const passwordButtonRef = useRef<HTMLButtonElement>(null);
+  const touchStartTimeRef = useRef<number | null>(null);
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
     defaultValues: {
@@ -59,6 +61,62 @@ export function LoginPage(): React.JSX.Element {
       navigate('/', { replace: true });
     }
   }, [searchParams, setSearchParams, t, token, isAuthenticated, navigate, logout]);
+
+  useEffect(() => {
+    const handleTouchEnd = (e: TouchEvent): void => {
+      if (isPasswordButtonPressed) {
+        const touch = e.changedTouches[0];
+        if (touch && passwordButtonRef.current) {
+          const rect = passwordButtonRef.current.getBoundingClientRect();
+          const isInsideButton =
+            touch.clientX >= rect.left &&
+            touch.clientX <= rect.right &&
+            touch.clientY >= rect.top &&
+            touch.clientY <= rect.bottom;
+          
+          if (!isInsideButton) {
+            setIsPasswordButtonPressed(false);
+          }
+        } else {
+          setIsPasswordButtonPressed(false);
+        }
+      }
+    };
+
+    const handleTouchCancel = (): void => {
+      setIsPasswordButtonPressed(false);
+    };
+
+    const handleTouchMove = (e: TouchEvent): void => {
+      if (isPasswordButtonPressed && passwordButtonRef.current) {
+        const touch = e.touches[0] || e.changedTouches[0];
+        if (touch) {
+          const rect = passwordButtonRef.current.getBoundingClientRect();
+          const isInsideButton =
+            touch.clientX >= rect.left &&
+            touch.clientX <= rect.right &&
+            touch.clientY >= rect.top &&
+            touch.clientY <= rect.bottom;
+          
+          if (!isInsideButton) {
+            setIsPasswordButtonPressed(false);
+          }
+        }
+      }
+    };
+
+    if (isPasswordButtonPressed) {
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
+      document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
+      document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    }
+
+    return () => {
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchcancel', handleTouchCancel);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [isPasswordButtonPressed]);
 
   const onSubmit = (data: LoginRequest): void => {
     login(data);
@@ -188,40 +246,70 @@ export function LoginPage(): React.JSX.Element {
                           <Input
                             type={isPasswordButtonPressed ? 'text' : 'password'}
                             placeholder={t('auth.login.passwordPlaceholder')}
-                            className="h-11 pr-10"
+                            className={field.value && field.value.length > 0 ? 'h-11 pr-10' : 'h-11'}
                             {...field}
                           />
-                          <button
-                            type="button"
-                            onMouseDown={(e) => {
-                              e.preventDefault();
-                              setIsPasswordButtonPressed(true);
-                            }}
-                            onMouseUp={(e) => {
-                              e.preventDefault();
-                              setIsPasswordButtonPressed(false);
-                            }}
-                            onMouseLeave={(e) => {
-                              e.preventDefault();
-                              setIsPasswordButtonPressed(false);
-                            }}
-                            onTouchStart={(e) => {
-                              e.preventDefault();
-                              setIsPasswordButtonPressed(true);
-                            }}
-                            onTouchEnd={(e) => {
-                              e.preventDefault();
-                              setIsPasswordButtonPressed(false);
-                            }}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors select-none"
-                            aria-label="Şifreyi göster"
-                          >
-                            {isPasswordButtonPressed ? (
-                              <EyeOff className="size-4" />
-                            ) : (
-                              <Eye className="size-4" />
-                            )}
-                          </button>
+                          {field.value && field.value.length > 0 && (
+                            <button
+                              ref={passwordButtonRef}
+                              type="button"
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+                                setIsPasswordButtonPressed(true);
+                              }}
+                              onMouseUp={(e) => {
+                                e.preventDefault();
+                                setIsPasswordButtonPressed(false);
+                              }}
+                              onMouseLeave={(e) => {
+                                e.preventDefault();
+                                setIsPasswordButtonPressed(false);
+                              }}
+                              onTouchStart={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                touchStartTimeRef.current = Date.now();
+                                setIsPasswordButtonPressed(true);
+                              }}
+                              onTouchEnd={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsPasswordButtonPressed(false);
+                                touchStartTimeRef.current = null;
+                              }}
+                              onTouchCancel={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsPasswordButtonPressed(false);
+                                touchStartTimeRef.current = null;
+                              }}
+                              onTouchMove={(e) => {
+                                if (passwordButtonRef.current) {
+                                  const touch = e.touches[0];
+                                  if (touch) {
+                                    const rect = passwordButtonRef.current.getBoundingClientRect();
+                                    const isInsideButton =
+                                      touch.clientX >= rect.left &&
+                                      touch.clientX <= rect.right &&
+                                      touch.clientY >= rect.top &&
+                                      touch.clientY <= rect.bottom;
+                                    
+                                    if (!isInsideButton) {
+                                      setIsPasswordButtonPressed(false);
+                                    }
+                                  }
+                                }
+                              }}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors select-none"
+                              aria-label="Şifreyi göster"
+                            >
+                              {isPasswordButtonPressed ? (
+                                <EyeOff className="size-4" />
+                              ) : (
+                                <Eye className="size-4" />
+                              )}
+                            </button>
+                          )}
                         </div>
                       </FormControl>
                       <FormMessage />
