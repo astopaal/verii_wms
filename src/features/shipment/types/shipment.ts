@@ -9,6 +9,7 @@ export const createShipmentFormSchema = (t: TFunction) => z.object({
   customerId: z.string().min(1, t('shipment.validation.customerRequired', 'Cari seçimi zorunludur')),
   sourceWarehouse: z.string().min(1, t('shipment.validation.sourceWarehouseRequired', 'Çıkış deposu zorunludur')),
   notes: z.string().optional(),
+  userIds: z.array(z.string()).optional(),
 });
 
 export type ShipmentFormData = z.infer<ReturnType<typeof createShipmentFormSchema>>;
@@ -116,6 +117,7 @@ export interface ShipmentGenerateRequest {
   terminalLines: {
     terminalUserId: number;
   }[];
+  userIds?: number[];
 }
 
 export interface ShipmentHeader {

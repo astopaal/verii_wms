@@ -46,6 +46,7 @@ export function ShipmentCreatePage(): ReactElement {
       customerId: '',
       sourceWarehouse: '',
       notes: '',
+      userIds: [],
     },
   });
 
