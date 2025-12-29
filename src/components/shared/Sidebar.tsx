@@ -62,6 +62,22 @@ function NavItemComponent({
       .replace(/Ç/g, 'c');
   };
 
+  const childMatchesSearch = useCallback((childTitle: string): boolean => {
+    if (!searchQuery.trim()) return true;
+    
+    const normalizedQuery = normalizeText(searchQuery);
+    const queryWords = normalizedQuery.split(/\s+/).filter((word) => word.length > 0);
+    
+    if (queryWords.length === 0) return true;
+    
+    const normalizedChildTitle = normalizeText(childTitle);
+    const childWords = normalizedChildTitle.split(/\s+/).filter((word) => word.length > 0);
+    
+    return queryWords.every((queryWord) =>
+      childWords.some((childWord) => childWord.includes(queryWord))
+    );
+  }, [searchQuery]);
+
   const matchesSearch = useMemo(() => {
     if (!searchQuery.trim()) return true;
     
@@ -77,16 +93,12 @@ function NavItemComponent({
       titleWords.some((titleWord) => titleWord.includes(queryWord))
     );
     
-    const childrenMatch = item.children?.some((child) => {
-      const normalizedChildTitle = normalizeText(child.title);
-      const childWords = normalizedChildTitle.split(/\s+/).filter((word) => word.length > 0);
-      return queryWords.every((queryWord) =>
-        childWords.some((childWord) => childWord.includes(queryWord))
-      );
-    });
+    if (titleMatch) return true;
     
-    return titleMatch || childrenMatch || false;
-  }, [item, searchQuery]);
+    const childrenMatch = item.children?.some((child) => childMatchesSearch(child.title));
+    
+    return childrenMatch || false;
+  }, [item, searchQuery, childMatchesSearch]);
 
   useEffect(() => {
     if (isChildActive && hasChildren && !isExpanded && !lastActiveRef.current) {
@@ -187,6 +199,9 @@ function NavItemComponent({
           <div className="ml-4 space-y-1 border-l pl-4">
             {item.children?.map((child) => {
               const isChildActive = location.pathname === child.href;
+              
+              if (!childMatchesSearch(child.title)) return null;
+              
               return (
                 <Link
                   key={child.href}
