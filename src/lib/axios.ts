@@ -46,9 +46,17 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response.data,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token');
+      
+      try {
+        const { useAuthStore } = await import('@/stores/auth-store');
+        useAuthStore.getState().logout();
+      } catch (err) {
+        console.warn('Failed to clear auth store:', err);
+      }
+      
       if (window.location.pathname !== '/auth/login') {
         window.location.href = '/auth/login?sessionExpired=true';
       }

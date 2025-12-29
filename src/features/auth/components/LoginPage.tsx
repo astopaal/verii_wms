@@ -36,7 +36,7 @@ export function LoginPage(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: branches, isLoading: branchesLoading } = useBranches();
   const { mutate: login, isPending } = useLogin(branches);
-  const { token, isAuthenticated } = useAuthStore();
+  const { token, isAuthenticated, logout } = useAuthStore();
   const [isPasswordButtonPressed, setIsPasswordButtonPressed] = useState(false);
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
@@ -49,6 +49,7 @@ export function LoginPage(): React.JSX.Element {
 
   useEffect(() => {
     if (searchParams.get('sessionExpired') === 'true') {
+      logout();
       toast.warning(t('auth.login.sessionExpired'));
       setSearchParams({}, { replace: true });
       return;
@@ -57,7 +58,7 @@ export function LoginPage(): React.JSX.Element {
     if (token && isTokenValid(token) && isAuthenticated()) {
       navigate('/', { replace: true });
     }
-  }, [searchParams, setSearchParams, t, token, isAuthenticated, navigate]);
+  }, [searchParams, setSearchParams, t, token, isAuthenticated, navigate, logout]);
 
   const onSubmit = (data: LoginRequest): void => {
     login(data);
