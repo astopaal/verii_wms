@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 export function Navbar(): ReactElement {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user, logout, branch } = useAuthStore();
   const { isSidebarOpen, toggleSidebar, pageTitle } = useUIStore();
 
   const handleLogout = (): void => {
@@ -89,9 +89,20 @@ export function Navbar(): ReactElement {
         </div>
         <div className="ml-auto flex items-center gap-4">
           {user && (
-            <span className="hidden text-sm text-muted-foreground sm:inline-block">
-              {user.name || user.email}
-            </span>
+            <div className="hidden sm:flex items-center gap-3 text-sm">
+              {branch && (
+                <span className="text-muted-foreground">
+                  {branch.code && <span className="font-medium">{branch.code}</span>}
+                  {branch.name && (
+                    <span className={branch.code ? ' ml-1' : ''}>{branch.name}</span>
+                  )}
+                </span>
+              )}
+              {branch && <span className="text-muted-foreground">•</span>}
+              <span className="text-muted-foreground">
+                {user.name || user.email}
+              </span>
+            </div>
           )}
           <ThemeToggle />
           <Button variant="ghost" size="sm" onClick={handleLogout}>
