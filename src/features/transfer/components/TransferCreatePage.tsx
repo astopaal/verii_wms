@@ -56,6 +56,7 @@ export function TransferCreatePage(): ReactElement {
       sourceWarehouse: '',
       targetWarehouse: '',
       notes: '',
+      userIds: [],
     },
   });
 

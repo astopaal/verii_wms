@@ -50,6 +50,14 @@ export function buildTransferGenerateRequest(
     ? selectedItems[0].sourceWarehouse
     : undefined;
 
+  const userIdsAsNumbers = formData.userIds ? formData.userIds.map((id) => Number(id)) : [];
+
+  const terminalLines = userIdsAsNumbers.length > 0
+    ? userIdsAsNumbers.map((userId) => ({
+        terminalUserId: userId,
+      }))
+    : [];
+
   const request: TransferGenerateRequest = {
     header: {
       branchCode: '0',
@@ -75,11 +83,8 @@ export function buildTransferGenerateRequest(
     },
     lines,
     lineSerials,
-    terminalLines: [
-      {
-        terminalUserId: 2,
-      },
-    ],
+    terminalLines,
+    userIds: userIdsAsNumbers.length > 0 ? userIdsAsNumbers : undefined,
   };
 
   return request;

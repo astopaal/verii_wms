@@ -12,6 +12,7 @@ export const createTransferFormSchema = (t: TFunction, isFreeTransfer: boolean =
     : z.string().optional(),
   targetWarehouse: z.string().min(1, t('transfer.validation.targetWarehouseRequired', 'Varış deposu zorunludur')),
   notes: z.string().optional(),
+  userIds: z.array(z.string()).optional(),
 });
 
 export type TransferFormData = z.infer<ReturnType<typeof createTransferFormSchema>>;
@@ -134,6 +135,7 @@ export interface TransferGenerateRequest {
   terminalLines: {
     terminalUserId: number;
   }[];
+  userIds?: number[];
 }
 
 export type TransferOrdersResponse = ApiResponse<TransferOrder[]>;
