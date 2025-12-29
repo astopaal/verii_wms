@@ -39,7 +39,7 @@ export function LoginPage(): React.JSX.Element {
   const { token, isAuthenticated, logout } = useAuthStore();
   const [isPasswordButtonPressed, setIsPasswordButtonPressed] = useState(false);
   const passwordButtonRef = useRef<HTMLButtonElement>(null);
-  const touchStartTimeRef = useRef<number | null>(null);
+  const touchIdRef = useRef<number | null>(null);
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
     defaultValues: {
@@ -61,62 +61,6 @@ export function LoginPage(): React.JSX.Element {
       navigate('/', { replace: true });
     }
   }, [searchParams, setSearchParams, t, token, isAuthenticated, navigate, logout]);
-
-  useEffect(() => {
-    const handleTouchEnd = (e: TouchEvent): void => {
-      if (isPasswordButtonPressed) {
-        const touch = e.changedTouches[0];
-        if (touch && passwordButtonRef.current) {
-          const rect = passwordButtonRef.current.getBoundingClientRect();
-          const isInsideButton =
-            touch.clientX >= rect.left &&
-            touch.clientX <= rect.right &&
-            touch.clientY >= rect.top &&
-            touch.clientY <= rect.bottom;
-          
-          if (!isInsideButton) {
-            setIsPasswordButtonPressed(false);
-          }
-        } else {
-          setIsPasswordButtonPressed(false);
-        }
-      }
-    };
-
-    const handleTouchCancel = (): void => {
-      setIsPasswordButtonPressed(false);
-    };
-
-    const handleTouchMove = (e: TouchEvent): void => {
-      if (isPasswordButtonPressed && passwordButtonRef.current) {
-        const touch = e.touches[0] || e.changedTouches[0];
-        if (touch) {
-          const rect = passwordButtonRef.current.getBoundingClientRect();
-          const isInsideButton =
-            touch.clientX >= rect.left &&
-            touch.clientX <= rect.right &&
-            touch.clientY >= rect.top &&
-            touch.clientY <= rect.bottom;
-          
-          if (!isInsideButton) {
-            setIsPasswordButtonPressed(false);
-          }
-        }
-      }
-    };
-
-    if (isPasswordButtonPressed) {
-      document.addEventListener('touchend', handleTouchEnd, { passive: true });
-      document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
-      document.addEventListener('touchmove', handleTouchMove, { passive: true });
-    }
-
-    return () => {
-      document.removeEventListener('touchend', handleTouchEnd);
-      document.removeEventListener('touchcancel', handleTouchCancel);
-      document.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [isPasswordButtonPressed]);
 
   const onSubmit = (data: LoginRequest): void => {
     login(data);
@@ -266,26 +210,31 @@ export function LoginPage(): React.JSX.Element {
                                 setIsPasswordButtonPressed(false);
                               }}
                               onTouchStart={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                touchStartTimeRef.current = Date.now();
-                                setIsPasswordButtonPressed(true);
+                                const touch = e.changedTouches[0] || e.touches[0];
+                                if (touch) {
+                                  touchIdRef.current = touch.identifier;
+                                  setIsPasswordButtonPressed(true);
+                                }
                               }}
                               onTouchEnd={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setIsPasswordButtonPressed(false);
-                                touchStartTimeRef.current = null;
+                                const touch = e.changedTouches[0];
+                                if (touch && touchIdRef.current === touch.identifier) {
+                                  setIsPasswordButtonPressed(false);
+                                  touchIdRef.current = null;
+                                }
                               }}
                               onTouchCancel={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setIsPasswordButtonPressed(false);
-                                touchStartTimeRef.current = null;
+                                const touch = e.changedTouches[0];
+                                if (touch && touchIdRef.current === touch.identifier) {
+                                  setIsPasswordButtonPressed(false);
+                                  touchIdRef.current = null;
+                                }
                               }}
                               onTouchMove={(e) => {
-                                if (passwordButtonRef.current) {
-                                  const touch = e.touches[0];
+                                if (passwordButtonRef.current && touchIdRef.current !== null) {
+                                  const touch = Array.from(e.touches).find(
+                                    (t) => t.identifier === touchIdRef.current
+                                  );
                                   if (touch) {
                                     const rect = passwordButtonRef.current.getBoundingClientRect();
                                     const isInsideButton =
@@ -296,6 +245,7 @@ export function LoginPage(): React.JSX.Element {
                                     
                                     if (!isInsideButton) {
                                       setIsPasswordButtonPressed(false);
+                                      touchIdRef.current = null;
                                     }
                                   }
                                 }
