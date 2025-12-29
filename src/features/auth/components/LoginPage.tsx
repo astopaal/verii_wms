@@ -102,7 +102,20 @@ export function LoginPage(): React.JSX.Element {
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t('auth.login.selectBranch')} />
+                            {field.value && branches?.find((b) => b.id === field.value) ? (
+                              <>
+                                <span>
+                                  {branches.find((b) => b.id === field.value)?.name}
+                                  {branches.find((b) => b.id === field.value)?.code && (
+                                    <span className="text-muted-foreground ml-2">
+                                      ({branches.find((b) => b.id === field.value)?.code})
+                                    </span>
+                                  )}
+                                </span>
+                              </>
+                            ) : (
+                              <SelectValue placeholder={t('auth.login.selectBranch')} />
+                            )}
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
