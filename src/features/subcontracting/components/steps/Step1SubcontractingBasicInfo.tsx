@@ -173,7 +173,10 @@ export function Step1SubcontractingBasicInfo(): ReactElement {
                 onValueChange={(values) => field.onChange(values)}
                 options={activeUsers || []}
                 getOptionValue={(opt) => String(opt.id)}
-                getOptionLabel={(opt) => opt.fullName || `${opt.firstName || ''} ${opt.lastName || ''}`.trim() || opt.username}
+                getOptionLabel={(opt) => {
+                  const name = opt.fullName || `${opt.firstName || ''} ${opt.lastName || ''}`.trim() || opt.username;
+                  return opt.email ? `${name} (${opt.email})` : name;
+                }}
                 placeholder={t('subcontracting.step1.selectOperationUsers', 'İşlem yapacak kullanıcıları seçiniz')}
                 searchPlaceholder={t('common.search')}
                 emptyText={t('common.notFound')}
