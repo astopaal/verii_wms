@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { loginRequestSchema, type LoginRequest } from '../types/auth';
 import { useLogin } from '../hooks/useLogin';
 import { useBranches } from '../hooks/useBranches';
+import { useAuthStore } from '@/stores/auth-store';
+import { isTokenValid } from '@/utils/jwt';
 import type React from 'react';
 import {
   Form,
@@ -30,10 +32,12 @@ import { Building2, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 
 export function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { mutate: login, isPending } = useLogin();
   const { data: branches, isLoading: branchesLoading } = useBranches();
-  const [showPassword, setShowPassword] = useState(false);
+  const { mutate: login, isPending } = useLogin(branches);
+  const { token, isAuthenticated } = useAuthStore();
+  const [isPasswordButtonPressed, setIsPasswordButtonPressed] = useState(false);
   const form = useForm<LoginRequest>({
     resolver: zodResolver(loginRequestSchema),
     defaultValues: {
@@ -47,8 +51,13 @@ export function LoginPage(): React.JSX.Element {
     if (searchParams.get('sessionExpired') === 'true') {
       toast.warning(t('auth.login.sessionExpired'));
       setSearchParams({}, { replace: true });
+      return;
     }
-  }, [searchParams, setSearchParams, t]);
+
+    if (token && isTokenValid(token) && isAuthenticated()) {
+      navigate('/', { replace: true });
+    }
+  }, [searchParams, setSearchParams, t, token, isAuthenticated, navigate]);
 
   const onSubmit = (data: LoginRequest): void => {
     login(data);
@@ -176,18 +185,37 @@ export function LoginPage(): React.JSX.Element {
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showPassword ? 'text' : 'password'}
+                            type={isPasswordButtonPressed ? 'text' : 'password'}
                             placeholder={t('auth.login.passwordPlaceholder')}
                             className="h-11 pr-10"
                             {...field}
                           />
                           <button
                             type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                            aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              setIsPasswordButtonPressed(true);
+                            }}
+                            onMouseUp={(e) => {
+                              e.preventDefault();
+                              setIsPasswordButtonPressed(false);
+                            }}
+                            onMouseLeave={(e) => {
+                              e.preventDefault();
+                              setIsPasswordButtonPressed(false);
+                            }}
+                            onTouchStart={(e) => {
+                              e.preventDefault();
+                              setIsPasswordButtonPressed(true);
+                            }}
+                            onTouchEnd={(e) => {
+                              e.preventDefault();
+                              setIsPasswordButtonPressed(false);
+                            }}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors select-none"
+                            aria-label="Şifreyi göster"
                           >
-                            {showPassword ? (
+                            {isPasswordButtonPressed ? (
                               <EyeOff className="size-4" />
                             ) : (
                               <Eye className="size-4" />

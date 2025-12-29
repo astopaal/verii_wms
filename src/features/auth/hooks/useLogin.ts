@@ -5,20 +5,21 @@ import { toast } from 'sonner';
 import { authApi } from '../api/auth-api';
 import { useAuthStore } from '@/stores/auth-store';
 import { getUserFromToken } from '@/utils/jwt';
-import type { LoginRequest } from '../types/auth';
+import type { LoginRequest, Branch } from '../types/auth';
 
-export const useLogin = () => {
+export const useLogin = (branches?: Branch[]) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
     mutationFn: (data: LoginRequest) => authApi.login(data),
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
       if (response.success && response.data) {
         const user = getUserFromToken(response.data);
         if (user) {
-          setAuth(user, response.data);
+          const selectedBranch = branches?.find((b) => b.id === variables.branchId) || null;
+          setAuth(user, response.data, selectedBranch);
           navigate('/');
         }
       }
