@@ -24,7 +24,7 @@ export function AssignedSrtListPage(): ReactElement {
   const { data, isLoading, error } = useAssignedSrtHeaders();
 
   useEffect(() => {
-    setPageTitle(t('subcontracting.srt.assignedList.title', 'Atanmış SRT Emirleri'));
+    setPageTitle(t('subcontracting.srt.assignedList.title', 'Atanmış Fason Giriş Emirleri'));
     return () => {
       setPageTitle(null);
     };

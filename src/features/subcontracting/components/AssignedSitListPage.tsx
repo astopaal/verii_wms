@@ -24,7 +24,7 @@ export function AssignedSitListPage(): ReactElement {
   const { data, isLoading, error } = useAssignedSitHeaders();
 
   useEffect(() => {
-    setPageTitle(t('subcontracting.sit.assignedList.title', 'Atanmış SIT Emirleri'));
+    setPageTitle(t('subcontracting.sit.assignedList.title', 'Atanmış Fason Çıkış Emirleri'));
     return () => {
       setPageTitle(null);
     };
