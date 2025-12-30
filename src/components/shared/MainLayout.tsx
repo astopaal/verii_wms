@@ -5,6 +5,7 @@ import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { useUIStore } from '@/stores/ui-store';
+import { useNotificationConnection } from '@/features/notification/hooks/useNotificationConnection';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -437,6 +438,8 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
 
   const items = navItems || sortedNavItems;
   const { isSidebarOpen } = useUIStore();
+  
+  useNotificationConnection();
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">

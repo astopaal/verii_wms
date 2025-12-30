@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth-store';
 import { useUIStore } from '@/stores/ui-store';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { NotificationIcon } from '@/features/notification/components/NotificationIcon';
 import { cn } from '@/lib/utils';
 
 export function Navbar(): ReactElement {
@@ -104,6 +105,7 @@ export function Navbar(): ReactElement {
               </span>
             </div>
           )}
+          <NotificationIcon />
           <ThemeToggle />
           <Button variant="ghost" size="sm" onClick={handleLogout}>
             {t('auth.logout')}
