@@ -1116,6 +1116,19 @@
       "selectCustomer": "Select Customer",
       "selectCarrier": "Select Carrier"
     }
+  },
+  "notification": {
+    "title": "Notifications",
+    "new": "new",
+    "unreadCount": "unread",
+    "noNotifications": "No notifications",
+    "noMoreNotifications": "All notifications loaded",
+    "markAllAsRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "viewAll": "View all notifications",
+    "loading": "Loading...",
+    "disconnected": "Connection disconnected",
+    "notifications": "Notifications"
   }
 }
 

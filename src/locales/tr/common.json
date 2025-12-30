@@ -1118,6 +1118,19 @@
       "selectCustomer": "Cari seçiniz",
       "selectCarrier": "Kargo Firması Seçin"
     }
+  },
+  "notification": {
+    "title": "Bildirimler",
+    "new": "yeni",
+    "unreadCount": "okunmamış",
+    "noNotifications": "Bildirim bulunmuyor",
+    "noMoreNotifications": "Tüm bildirimler yüklendi",
+    "markAllAsRead": "Tümünü okundu işaretle",
+    "markAsRead": "Okundu işaretle",
+    "viewAll": "Tüm bildirimleri görüntüle",
+    "loading": "Yükleniyor...",
+    "disconnected": "Bağlantı kesildi",
+    "notifications": "Bildirimler"
   }
 }
 

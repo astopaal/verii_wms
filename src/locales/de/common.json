@@ -1091,6 +1091,19 @@
       "selectCustomer": "Kunde auswählen",
       "selectCarrier": "Spediteur auswählen"
     }
+  },
+  "notification": {
+    "title": "Benachrichtigungen",
+    "new": "neu",
+    "unreadCount": "ungelesen",
+    "noNotifications": "Keine Benachrichtigungen",
+    "noMoreNotifications": "Alle Benachrichtigungen geladen",
+    "markAllAsRead": "Alle als gelesen markieren",
+    "markAsRead": "Als gelesen markieren",
+    "viewAll": "Alle Benachrichtigungen anzeigen",
+    "loading": "Wird geladen...",
+    "disconnected": "Verbindung getrennt",
+    "notifications": "Benachrichtigungen"
   }
 }
 
