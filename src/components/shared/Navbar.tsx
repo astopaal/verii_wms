@@ -1,4 +1,4 @@
-import { type ReactElement } from 'react';
+import { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/auth-store';
@@ -6,6 +6,7 @@ import { useUIStore } from '@/stores/ui-store';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { NotificationIcon } from '@/features/notification/components/NotificationIcon';
+import { UserDetailModal } from '@/features/user-detail';
 import { cn } from '@/lib/utils';
 
 export function Navbar(): ReactElement {
@@ -13,10 +14,15 @@ export function Navbar(): ReactElement {
   const navigate = useNavigate();
   const { user, logout, branch } = useAuthStore();
   const { isSidebarOpen, toggleSidebar, pageTitle } = useUIStore();
+  const [isUserDetailModalOpen, setIsUserDetailModalOpen] = useState(false);
 
   const handleLogout = (): void => {
     logout();
     navigate('/auth/login');
+  };
+
+  const handleUserClick = (): void => {
+    setIsUserDetailModalOpen(true);
   };
 
   return (
@@ -100,9 +106,13 @@ export function Navbar(): ReactElement {
                 </span>
               )}
               {branch && <span className="text-muted-foreground">•</span>}
-              <span className="text-muted-foreground">
+              <button
+                type="button"
+                onClick={handleUserClick}
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
                 {user.name || user.email}
-              </span>
+              </button>
             </div>
           )}
           <NotificationIcon />
@@ -112,6 +122,10 @@ export function Navbar(): ReactElement {
           </Button>
         </div>
       </div>
+      <UserDetailModal
+        isOpen={isUserDetailModalOpen}
+        onClose={() => setIsUserDetailModalOpen(false)}
+      />
     </header>
   );
 }
