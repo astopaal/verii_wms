@@ -1,4 +1,5 @@
 import * as signalR from '@microsoft/signalr';
+import { ensureApiReady, getApiBaseUrl } from '@/lib/axios';
 import { notificationApi } from '../api/notification-api';
 import type { NotificationDto, SignalRNotificationPayload } from '../types/notification';
 import { useNotificationStore } from '../stores/notification-store';
@@ -9,29 +10,8 @@ class NotificationService {
   private isPolling = false;
 
   private async getApiUrl(): Promise<string> {
-    try {
-      const response = await fetch('/config.json');
-      if (response.ok) {
-        const config = await response.json();
-        if (config.apiUrl) {
-          return config.apiUrl.replace(/\/$/, '');
-        }
-      }
-    } catch (error) {
-      console.warn('[NotificationService] Failed to load config.json:', error);
-    }
-    
-    try {
-      const { api } = await import('@/lib/axios');
-      const baseURL = api.defaults.baseURL;
-      if (baseURL) {
-        return baseURL.toString().replace(/\/$/, '');
-      }
-    } catch (error) {
-      console.warn('[NotificationService] Failed to get API URL from axios:', error);
-    }
-    
-    return 'http://localhost:5000';
+    await ensureApiReady();
+    return getApiBaseUrl().replace(/\/$/, '') || 'http://localhost:5000';
   }
 
   private getToken(): string | null {
@@ -242,4 +222,3 @@ class NotificationService {
 }
 
 export const notificationService = new NotificationService();
-

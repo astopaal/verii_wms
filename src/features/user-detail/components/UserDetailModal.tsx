@@ -2,6 +2,7 @@ import { type ReactElement, useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { toast } from 'sonner';
 import { useAuthStore } from '@/stores/auth-store';
 import { api } from '@/lib/axios';
@@ -17,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useUserDetail } from '../hooks/useUserDetail';
 import { useCreateUserDetail } from '../hooks/useCreateUserDetail';
@@ -24,7 +26,9 @@ import { useUpdateUserDetail } from '../hooks/useUpdateUserDetail';
 import { useUploadProfilePicture } from '../hooks/useUploadProfilePicture';
 import { useDeleteProfilePicture } from '../hooks/useDeleteProfilePicture';
 import { createUserDetailFormSchema, type UserDetailFormData, Gender } from '../types/user-detail';
-import { Loader2, Upload, Trash2 } from 'lucide-react';
+import { useChangePassword } from '@/features/auth/hooks/useChangePassword';
+import type { ChangePasswordRequest } from '@/features/auth/types/auth';
+import { Loader2, Upload, Trash2, Shield, Lock, Eye, EyeOff } from 'lucide-react';
 
 interface UserDetailModalProps {
   isOpen: boolean;
@@ -43,12 +47,15 @@ export function UserDetailModal({ isOpen, onClose }: UserDetailModalProps): Reac
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState(false);
+  const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] = useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
 
   const { data: userDetail, isLoading: isLoadingUserDetail, refetch } = useUserDetail();
   const createMutation = useCreateUserDetail();
   const updateMutation = useUpdateUserDetail();
   const uploadMutation = useUploadProfilePicture();
   const deleteMutation = useDeleteProfilePicture();
+  const changePasswordMutation = useChangePassword();
 
   const schema = useMemo(() => createUserDetailFormSchema(t), [t]);
 
@@ -60,6 +67,25 @@ export function UserDetailModal({ isOpen, onClose }: UserDetailModalProps): Reac
       weight: null,
       description: '',
       gender: null,
+    },
+  });
+
+  const changePasswordSchema = useMemo(() => z.object({
+    currentPassword: z.string().min(1, t('userDetail.currentPasswordRequired', 'Mevcut şifre zorunludur')),
+    newPassword: z
+      .string()
+      .min(6, t('userDetail.newPasswordMinLength', 'Yeni şifre en az 6 karakter olmalıdır'))
+      .max(100, t('userDetail.newPasswordMaxLength', 'Yeni şifre en fazla 100 karakter olabilir')),
+  }).refine((data) => data.currentPassword !== data.newPassword, {
+    message: t('userDetail.newPasswordSameAsCurrent', 'Yeni şifre mevcut şifre ile aynı olamaz'),
+    path: ['newPassword'],
+  }), [t]);
+
+  const changePasswordForm = useForm<ChangePasswordRequest>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      currentPassword: '',
+      newPassword: '',
     },
   });
 
@@ -234,10 +260,16 @@ export function UserDetailModal({ isOpen, onClose }: UserDetailModalProps): Reac
     }
   };
 
+  const handleChangePasswordSubmit = async (data: ChangePasswordRequest): Promise<void> => {
+    await changePasswordMutation.mutateAsync(data);
+    changePasswordForm.reset();
+  };
+
   const descriptionLength = form.watch('description')?.length || 0;
   const isLoading = isLoadingUserDetail || createMutation.isPending || updateMutation.isPending;
   const isUploading = uploadMutation.isPending;
   const isDeleting = deleteMutation.isPending;
+  const isChangingPassword = changePasswordMutation.isPending;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -254,9 +286,10 @@ export function UserDetailModal({ isOpen, onClose }: UserDetailModalProps): Reac
             <Loader2 className="size-6 animate-spin text-muted-foreground" />
           </div>
         ) : (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-              <div className="space-y-4">
+          <>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+                <div className="space-y-4">
                 <div className="flex flex-col items-center gap-4">
                   <div className="relative">
                     {previewImage ? (
@@ -462,25 +495,113 @@ export function UserDetailModal({ isOpen, onClose }: UserDetailModalProps): Reac
                 />
               </div>
 
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
-                  {t('common.cancel', 'İptal')}
-                </Button>
-                <Button type="submit" disabled={isLoading || isUploading}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="size-4 mr-2 animate-spin" />
-                      {t('common.saving', 'Kaydediliyor...')}
-                    </>
-                  ) : isEditMode ? (
-                    t('common.update', 'Güncelle')
-                  ) : (
-                    t('common.save', 'Kaydet')
-                  )}
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+                <DialogFooter>
+                  <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
+                    {t('common.cancel', 'İptal')}
+                  </Button>
+                  <Button type="submit" disabled={isLoading || isUploading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="size-4 mr-2 animate-spin" />
+                        {t('common.saving', 'Kaydediliyor...')}
+                      </>
+                    ) : isEditMode ? (
+                      t('common.update', 'Güncelle')
+                    ) : (
+                      t('common.save', 'Kaydet')
+                    )}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+
+            <div className="mt-4">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="change-password">
+                  <AccordionTrigger>{t('userDetail.changePassword', 'Şifre Değiştir')}</AccordionTrigger>
+                  <AccordionContent>
+                    <Form {...changePasswordForm}>
+                      <form onSubmit={changePasswordForm.handleSubmit(handleChangePasswordSubmit)} className="space-y-4 pt-2">
+                      <FormField
+                        control={changePasswordForm.control}
+                        name="currentPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{t('userDetail.currentPassword', 'Mevcut Şifre')}</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                                <Input
+                                  {...field}
+                                  type={isCurrentPasswordVisible ? 'text' : 'password'}
+                                  placeholder="••••••••"
+                                  className="pl-10 pr-10"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setIsCurrentPasswordVisible((v) => !v)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                >
+                                  {isCurrentPasswordVisible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={changePasswordForm.control}
+                        name="newPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{t('userDetail.newPassword', 'Yeni Şifre')}</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                                <Input
+                                  {...field}
+                                  type={isNewPasswordVisible ? 'text' : 'password'}
+                                  placeholder={t('userDetail.newPasswordPlaceholder', 'Yeni şifreniz')}
+                                  className="pl-10 pr-10"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setIsNewPasswordVisible((v) => !v)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                >
+                                  {isNewPasswordVisible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                        <div className="flex justify-end">
+                          <Button type="submit" variant="outline" disabled={isChangingPassword}>
+                            {isChangingPassword ? (
+                              <>
+                                <Loader2 className="size-4 mr-2 animate-spin" />
+                                {t('userDetail.changingPassword', 'Şifre değiştiriliyor...')}
+                              </>
+                            ) : (
+                              <>
+                                <Shield className="size-4 mr-2" />
+                                {t('userDetail.changePasswordButton', 'Şifreyi Güncelle')}
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </form>
+                    </Form>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </>
         )}
       </DialogContent>
 

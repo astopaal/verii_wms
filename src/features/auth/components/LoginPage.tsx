@@ -212,6 +212,16 @@ export function LoginPage(): React.JSX.Element {
                   )}
                 />
 
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className="text-sm text-primary hover:underline"
+                    onClick={() => navigate('/auth/forgot-password')}
+                  >
+                    {t('auth.login.forgotPassword')}
+                  </button>
+                </div>
+
                 <Button
                   type="submit"
                   className="w-full h-11 text-base font-medium"

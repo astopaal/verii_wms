@@ -41,3 +41,25 @@ export interface UserDto {
 }
 
 export type ActiveUsersResponse = ApiResponse<UserDto[]>;
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email('auth.validation.emailInvalid'),
+});
+
+export type ForgotPasswordRequest = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, 'auth.validation.tokenRequired'),
+  newPassword: z.string().min(6, 'auth.validation.newPasswordMinLength'),
+  confirmPassword: z.string().min(6, 'auth.validation.confirmPasswordRequired'),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: 'auth.validation.passwordsMismatch',
+  path: ['confirmPassword'],
+});
+
+export type ResetPasswordRequest = z.infer<typeof resetPasswordSchema>;

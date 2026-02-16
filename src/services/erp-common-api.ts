@@ -39,7 +39,7 @@ export const erpCommonApi = {
   },
 
   getBranches: async (): Promise<BranchErp[]> => {
-    const response = await api.get('/api/Erp/getBranches') as ApiResponse<BranchErp[]>;
+    const response = await api.get('/api/Erp/getBranches', { skipAuth: true }) as ApiResponse<BranchErp[]>;
     if (response.success && response.data) {
       return response.data;
     }
