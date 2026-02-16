@@ -41,12 +41,48 @@
       "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
       "password": "Passwort",
       "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Passwort vergessen?",
       "loginButton": "Anmelden",
       "loggingIn": "Wird angemeldet...",
       "wrongPassword": "E-Mail oder Passwort ist falsch",
       "loginError": "Beim Anmelden ist ein Fehler aufgetreten",
       "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
       "copyright": "© 2025 VERII. Alle Rechte vorbehalten."
+    },
+    "forgotPassword": {
+      "title": "Passwort vergessen",
+      "description": "Geben Sie Ihre E-Mail-Adresse ein, um einen Reset-Link zu erhalten.",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+      "submitButton": "Reset-Link senden",
+      "processing": "Wird gesendet...",
+      "backToLogin": "Zur Anmeldung zurück",
+      "successMessage": "Der Link zum Zurücksetzen wurde an Ihre E-Mail gesendet.",
+      "errorMessage": "Beim Anfordern des Passwort-Resets ist ein Fehler aufgetreten."
+    },
+    "resetPassword": {
+      "title": "Passwort zurücksetzen",
+      "description": "Legen Sie Ihr neues Passwort fest.",
+      "newPasswordLabel": "Neues Passwort",
+      "newPasswordPlaceholder": "Neues Passwort eingeben",
+      "confirmPasswordLabel": "Neues Passwort bestätigen",
+      "confirmPasswordPlaceholder": "Neues Passwort erneut eingeben",
+      "submitButton": "Passwort aktualisieren",
+      "processing": "Wird aktualisiert...",
+      "successRedirect": "Ihr Passwort wurde aktualisiert. Weiterleitung zur Anmeldung.",
+      "failed": "Passwort konnte nicht aktualisiert werden.",
+      "error": "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten.",
+      "invalidToken": "Ungültiger oder fehlender Reset-Link.",
+      "tokenNotFound": "Reset-Token nicht gefunden.",
+      "showPassword": "Passwort anzeigen",
+      "hidePassword": "Passwort ausblenden"
+    },
+    "validation": {
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "tokenRequired": "Reset-Token ist erforderlich.",
+      "newPasswordMinLength": "Das neue Passwort muss mindestens 6 Zeichen haben.",
+      "confirmPasswordRequired": "Passwortbestätigung ist erforderlich.",
+      "passwordsMismatch": "Passwörter stimmen nicht überein."
     },
     "logout": "Abmelden"
   },
@@ -95,7 +131,14 @@
     "parametersP": "Paketparameter",
     "package": "Verpackung",
     "packageList": "Verpackungsliste",
-    "packageCreate": "Neue Verpackung"
+    "packageCreate": "Neue Verpackung",
+    "accessControl": "Zugriffskontrolle",
+    "userManagement": "Benutzerverwaltung",
+    "permissionDefinitions": "Berechtigungsdefinitionen",
+    "permissionGroups": "Berechtigungsgruppen",
+    "userGroupAssignments": "Benutzergruppen-Zuweisungen",
+    "mailSettings": "E-Mail-Einstellungen",
+    "hangfireMonitoring": "Hangfire Uberwachung"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -232,7 +275,6 @@
       "isPlanned": "Geplant",
       "priorityLevel": "Prioritätsstufe",
       "statusInfo": "Statusinformationen",
-      "status": "Status",
       "isCompleted": "Abgeschlossen",
       "completionDate": "Abschlussdatum",
       "isPendingApproval": "Genehmigung ausstehend",
@@ -980,7 +1022,6 @@
       "yapKod": "Yap-Kode",
       "quantity": "Menge",
       "serialNo": "Seriennummer",
-      "barcode": "Barcode",
       "actions": "Aktionen",
       "noLines": "Keine Zeilen gefunden",
       "notFound": "Paket nicht gefunden",
@@ -994,47 +1035,9 @@
       "lineAddError": "Fehler beim Hinzufügen der Zeile"
     },
     "form": {
-      "packingNo": "Verpackungsnummer",
-      "packingNoRequired": "Verpackungsnummer ist erforderlich",
-      "packingDate": "Verpackungsdatum",
-      "warehouseCode": "Lagerkode",
-      "sourceType": "Quelltyp",
-      "selectSourceType": "Quelltyp auswählen",
-      "sourceHeaderId": "Quellkopf-ID",
-      "customerCode": "Kundencode",
-      "customerAddress": "Kundenadresse",
-      "status": "Status",
-      "carrierId": "Spediteur-ID",
-      "carrierServiceType": "Spediteurdiensttyp",
-      "trackingNo": "Sendungsnummer",
-      "packageNo": "Paketnummer",
-      "packageNoRequired": "Paketnummer ist erforderlich",
-      "packageType": "Pakettyp",
-      "package": "Paket",
-      "selectPackage": "Paket auswählen",
-      "packingHeaderId": "Verpackungskopf-ID",
-      "packingHeaderIdRequired": "Verpackungskopf-ID ist erforderlich",
-      "packageIdRequired": "Paket-ID ist erforderlich",
-      "barcode": "Barcode",
-      "length": "Länge",
-      "width": "Breite",
-      "height": "Höhe",
-      "volume": "Volumen",
-      "netWeight": "Nettogewicht",
-      "tareWeight": "Taragewicht",
-      "grossWeight": "Bruttogewicht",
-      "isMixed": "Gemischt",
-      "stockCode": "Lagerkode",
-      "stockCodeRequired": "Lagerkode ist erforderlich",
-      "yapKod": "Yap-Kode",
-      "yapKodRequired": "Yap-Kode ist erforderlich",
-      "quantity": "Menge",
-      "quantityRequired": "Menge ist erforderlich",
-      "serialNo": "Seriennummer",
-      "serialNo2": "Seriennummer 2",
-      "serialNo3": "Seriennummer 3",
-      "serialNo4": "Seriennummer 4",
-      "sourceRouteId": "Quellrouten-ID"
+      "selectWarehouse": "Lager auswählen",
+      "selectCustomer": "Kunde auswählen",
+      "selectCarrier": "Spediteur auswählen"
     },
     "status": {
       "draft": "Entwurf",
@@ -1085,11 +1088,6 @@
       "Scotty": "Scotty",
       "KolayGelsin": "Kolay Gelsin",
       "BirGundeKargo": "Bir Günde Kargo"
-    },
-    "form": {
-      "selectWarehouse": "Lager auswählen",
-      "selectCustomer": "Kunde auswählen",
-      "selectCarrier": "Spediteur auswählen"
     }
   },
   "notification": {
@@ -1141,7 +1139,18 @@
     "profilePictureUploadError": "Beim Hochladen des Profilbilds ist ein Fehler aufgetreten",
     "profilePictureDeletedSuccessfully": "Profilbild erfolgreich gelöscht",
     "profilePictureDeleteError": "Beim Löschen des Profilbilds ist ein Fehler aufgetreten",
-    "userNotFound": "Benutzer nicht gefunden"
+    "userNotFound": "Benutzer nicht gefunden",
+    "changePassword": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "newPasswordPlaceholder": "Ihr neues Passwort",
+    "changePasswordButton": "Passwort aktualisieren",
+    "changingPassword": "Passwort wird geändert...",
+    "passwordChangedSuccessfully": "Passwort erfolgreich geändert",
+    "changePasswordError": "Beim Ändern des Passworts ist ein Fehler aufgetreten",
+    "currentPasswordRequired": "Aktuelles Passwort ist erforderlich",
+    "newPasswordMinLength": "Das neue Passwort muss mindestens 6 Zeichen lang sein",
+    "newPasswordMaxLength": "Das neue Passwort darf höchstens 100 Zeichen lang sein",
+    "newPasswordSameAsCurrent": "Das neue Passwort darf nicht mit dem aktuellen übereinstimmen"
   }
 }
-

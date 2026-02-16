@@ -41,12 +41,48 @@
       "emailPlaceholder": "Entrez votre adresse e-mail",
       "password": "Mot de passe",
       "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Mot de passe oublié ?",
       "loginButton": "Se connecter",
       "loggingIn": "Connexion en cours...",
       "wrongPassword": "L'e-mail ou le mot de passe est incorrect",
       "loginError": "Une erreur s'est produite lors de la connexion",
       "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
       "copyright": "© 2025 VERII. Tous droits réservés."
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "description": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Entrez votre adresse e-mail",
+      "submitButton": "Envoyer le lien",
+      "processing": "Envoi en cours...",
+      "backToLogin": "Retour à la connexion",
+      "successMessage": "Le lien de réinitialisation a été envoyé à votre e-mail.",
+      "errorMessage": "Une erreur s'est produite lors de la demande de réinitialisation."
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Définissez votre nouveau mot de passe.",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Entrez un nouveau mot de passe",
+      "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+      "confirmPasswordPlaceholder": "Saisissez à nouveau le mot de passe",
+      "submitButton": "Mettre à jour le mot de passe",
+      "processing": "Mise à jour...",
+      "successRedirect": "Votre mot de passe a été mis à jour. Redirection vers la connexion.",
+      "failed": "Le mot de passe n'a pas pu être mis à jour.",
+      "error": "Une erreur s'est produite lors de la mise à jour du mot de passe.",
+      "invalidToken": "Lien de réinitialisation invalide ou manquant.",
+      "tokenNotFound": "Jeton de réinitialisation introuvable.",
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe"
+    },
+    "validation": {
+      "emailInvalid": "Veuillez saisir une adresse e-mail valide.",
+      "tokenRequired": "Le jeton de réinitialisation est requis.",
+      "newPasswordMinLength": "Le nouveau mot de passe doit contenir au moins 6 caractères.",
+      "confirmPasswordRequired": "La confirmation du mot de passe est requise.",
+      "passwordsMismatch": "Les mots de passe ne correspondent pas."
     },
     "logout": "Déconnexion"
   },
@@ -95,7 +131,14 @@
     "parametersP": "Paramètres d'emballage",
     "package": "Emballage",
     "packageList": "Liste d'emballage",
-    "packageCreate": "Nouvel emballage"
+    "packageCreate": "Nouvel emballage",
+    "accessControl": "Contrôle d'accès",
+    "userManagement": "Gestion des utilisateurs",
+    "permissionDefinitions": "Définitions des permissions",
+    "permissionGroups": "Groupes de permissions",
+    "userGroupAssignments": "Affectations de groupes utilisateurs",
+    "mailSettings": "Paramètres e-mail",
+    "hangfireMonitoring": "Surveillance Hangfire"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -232,7 +275,6 @@
       "isPlanned": "Planifié",
       "priorityLevel": "Niveau de priorité",
       "statusInfo": "Informations sur le statut",
-      "status": "Statut",
       "isCompleted": "Terminé",
       "completionDate": "Date d'achèvement",
       "isPendingApproval": "En attente d'approbation",
@@ -980,7 +1022,6 @@
       "yapKod": "Code Yap",
       "quantity": "Quantité",
       "serialNo": "N° de série",
-      "barcode": "Code-barres",
       "actions": "Actions",
       "noLines": "Aucune ligne trouvée",
       "notFound": "Colis non trouvé",
@@ -994,47 +1035,9 @@
       "lineAddError": "Une erreur s'est produite lors de l'ajout de la ligne"
     },
     "form": {
-      "packingNo": "N° d'emballage",
-      "packingNoRequired": "Le N° d'emballage est requis",
-      "packingDate": "Date d'emballage",
-      "warehouseCode": "Code entrepôt",
-      "sourceType": "Type de source",
-      "selectSourceType": "Sélectionner le type de source",
-      "sourceHeaderId": "ID d'en-tête source",
-      "customerCode": "Code client",
-      "customerAddress": "Adresse client",
-      "status": "Statut",
-      "carrierId": "ID transporteur",
-      "carrierServiceType": "Type de service transporteur",
-      "trackingNo": "N° de suivi",
-      "packageNo": "N° de colis",
-      "packageNoRequired": "Le N° de colis est requis",
-      "packageType": "Type de colis",
-      "package": "Colis",
-      "selectPackage": "Sélectionner le colis",
-      "packingHeaderId": "ID d'en-tête d'emballage",
-      "packingHeaderIdRequired": "L'ID d'en-tête d'emballage est requis",
-      "packageIdRequired": "L'ID du colis est requis",
-      "barcode": "Code-barres",
-      "length": "Longueur",
-      "width": "Largeur",
-      "height": "Hauteur",
-      "volume": "Volume",
-      "netWeight": "Poids net",
-      "tareWeight": "Poids à vide",
-      "grossWeight": "Poids brut",
-      "isMixed": "Mixte",
-      "stockCode": "Code stock",
-      "stockCodeRequired": "Le code stock est requis",
-      "yapKod": "Code Yap",
-      "yapKodRequired": "Le code Yap est requis",
-      "quantity": "Quantité",
-      "quantityRequired": "La quantité est requise",
-      "serialNo": "N° de série",
-      "serialNo2": "N° de série 2",
-      "serialNo3": "N° de série 3",
-      "serialNo4": "N° de série 4",
-      "sourceRouteId": "ID de route source"
+      "selectWarehouse": "Sélectionner l'entrepôt",
+      "selectCustomer": "Sélectionner le client",
+      "selectCarrier": "Sélectionner le transporteur"
     },
     "status": {
       "draft": "Brouillon",
@@ -1085,11 +1088,6 @@
       "Scotty": "Scotty",
       "KolayGelsin": "Kolay Gelsin",
       "BirGundeKargo": "Bir Günde Kargo"
-    },
-    "form": {
-      "selectWarehouse": "Sélectionner l'entrepôt",
-      "selectCustomer": "Sélectionner le client",
-      "selectCarrier": "Sélectionner le transporteur"
     }
   },
   "notification": {
@@ -1141,7 +1139,18 @@
     "profilePictureUploadError": "Une erreur s'est produite lors du téléchargement de la photo de profil",
     "profilePictureDeletedSuccessfully": "Photo de profil supprimée avec succès",
     "profilePictureDeleteError": "Une erreur s'est produite lors de la suppression de la photo de profil",
-    "userNotFound": "Utilisateur non trouvé"
+    "userNotFound": "Utilisateur non trouvé",
+    "changePassword": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Votre nouveau mot de passe",
+    "changePasswordButton": "Mettre à jour le mot de passe",
+    "changingPassword": "Changement du mot de passe...",
+    "passwordChangedSuccessfully": "Mot de passe modifié avec succès",
+    "changePasswordError": "Une erreur est survenue lors du changement du mot de passe",
+    "currentPasswordRequired": "Le mot de passe actuel est requis",
+    "newPasswordMinLength": "Le nouveau mot de passe doit contenir au moins 6 caractères",
+    "newPasswordMaxLength": "Le nouveau mot de passe doit contenir au maximum 100 caractères",
+    "newPasswordSameAsCurrent": "Le nouveau mot de passe ne peut pas être identique à l'actuel"
   }
 }
-

@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/shared/ProtectedRoute';
 import { MainLayout } from '@/components/shared/MainLayout';
 import AuthLayout from '@/layouts/AuthLayout';
-import { LoginPage } from '@/features/auth';
+import { LoginPage, ForgotPasswordPage, ResetPasswordPage } from '@/features/auth';
 import { DashboardPage } from '@/features/dashboard';
 import {
   GoodsReceiptCreatePage,
@@ -50,6 +50,14 @@ import {
   PackageDetailPage,
   PackagePackageDetailPage,
 } from '@/features/package';
+import {
+  PermissionDefinitionsPage,
+  PermissionGroupsPage,
+  UserGroupAssignmentsPage,
+} from '@/features/access-control';
+import { UserManagementPage } from '@/features/user-management';
+import { MailSettingsPage } from '@/features/mail-settings';
+import { HangfireMonitoringPage } from '@/features/hangfire-monitoring';
 
 export const router = createBrowserRouter([
   {
@@ -284,6 +292,40 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'access-control',
+        children: [
+          {
+            path: 'user-management',
+            element: <UserManagementPage />,
+          },
+          {
+            path: 'permission-definitions',
+            element: <PermissionDefinitionsPage />,
+          },
+          {
+            path: 'permission-groups',
+            element: <PermissionGroupsPage />,
+          },
+          {
+            path: 'user-group-assignments',
+            element: <UserGroupAssignmentsPage />,
+          },
+        ],
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: 'mail-settings',
+            element: <MailSettingsPage />,
+          },
+        ],
+      },
+      {
+        path: 'hangfire-monitoring',
+        element: <HangfireMonitoringPage />,
+      },
     ],
   },
   {
@@ -293,6 +335,28 @@ export const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'forgot-password',
+        element: <ForgotPasswordPage />,
+      },
+      {
+        path: 'reset-password',
+        element: <ResetPasswordPage />,
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: 'forgot-password',
+        element: <ForgotPasswordPage />,
+      },
+      {
+        path: 'reset-password',
+        element: <ResetPasswordPage />,
       },
     ],
   },

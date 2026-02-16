@@ -41,12 +41,48 @@
       "emailPlaceholder": "Enter your email address",
       "password": "Password",
       "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Forgot password?",
       "loginButton": "Sign In",
       "loggingIn": "Signing in...",
       "wrongPassword": "Email or password is incorrect",
       "loginError": "An error occurred while signing in",
       "sessionExpired": "Your session has expired. Please sign in again.",
       "copyright": "© 2025 VERII. All rights reserved."
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Enter your email address to receive a reset link.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "submitButton": "Send Reset Link",
+      "processing": "Sending...",
+      "backToLogin": "Back to login",
+      "successMessage": "Password reset link has been sent to your email.",
+      "errorMessage": "An error occurred while requesting password reset."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Set your new password.",
+      "newPasswordLabel": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPasswordLabel": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Re-enter new password",
+      "submitButton": "Update Password",
+      "processing": "Updating...",
+      "successRedirect": "Your password has been updated. Redirecting to login.",
+      "failed": "Password could not be updated.",
+      "error": "An error occurred while updating password.",
+      "invalidToken": "Invalid or missing reset link.",
+      "tokenNotFound": "Reset token not found.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "validation": {
+      "emailInvalid": "Please enter a valid email address.",
+      "tokenRequired": "Reset token is required.",
+      "newPasswordMinLength": "New password must be at least 6 characters.",
+      "confirmPasswordRequired": "Password confirmation is required.",
+      "passwordsMismatch": "Passwords do not match."
     },
     "logout": "Logout"
   },
@@ -95,7 +131,14 @@
     "parametersP": "Package Parameters",
     "package": "Packaging",
     "packageList": "Packaging List",
-    "packageCreate": "New Packaging"
+    "packageCreate": "New Packaging",
+    "accessControl": "Access Control",
+    "userManagement": "User Management",
+    "permissionDefinitions": "Permission Definitions",
+    "permissionGroups": "Permission Groups",
+    "userGroupAssignments": "User Group Assignments",
+    "mailSettings": "Mail Settings",
+    "hangfireMonitoring": "Hangfire Monitoring"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -232,7 +275,6 @@
       "isPlanned": "Planned",
       "priorityLevel": "Priority Level",
       "statusInfo": "Status Information",
-      "status": "Status",
       "isCompleted": "Completed",
       "completionDate": "Completion Date",
       "isPendingApproval": "Pending Approval",
@@ -987,7 +1029,6 @@
       "yapKod": "Yap Code",
       "quantity": "Quantity",
       "serialNo": "Serial No",
-      "barcode": "Barcode",
       "actions": "Actions",
       "noLines": "No lines found",
       "notFound": "Package not found",
@@ -1001,54 +1042,9 @@
       "lineAddError": "An error occurred while adding line"
     },
     "form": {
-      "packingNo": "Packing No",
-      "sourceType": "Source Type",
-      "selectSourceType": "Select Source Type",
-      "noSourceType": "Source type not found",
-      "sourceHeaderId": "Header to Map",
-      "selectSourceHeader": "Select Header to Map",
-      "noAvailableHeaders": "No available headers found",
-      "selectSourceTypeFirst": "Please select source type first",
-      "packingNoRequired": "Packing No is required",
-      "packingDate": "Packing Date",
-      "warehouseCode": "Warehouse Code",
-      "sourceType": "Source Type",
-      "selectSourceType": "Select Source Type",
-      "sourceHeaderId": "Source Header ID",
-      "customerCode": "Customer Code",
-      "customerAddress": "Customer Address",
-      "status": "Status",
-      "carrierId": "Carrier ID",
-      "carrierServiceType": "Carrier Service Type",
-      "trackingNo": "Tracking No",
-      "packageNo": "Package No",
-      "packageNoRequired": "Package No is required",
-      "packageType": "Package Type",
-      "package": "Package",
-      "selectPackage": "Select Package",
-      "packingHeaderId": "Packing Header ID",
-      "packingHeaderIdRequired": "Packing Header ID is required",
-      "packageIdRequired": "Package ID is required",
-      "barcode": "Barcode",
-      "length": "Length",
-      "width": "Width",
-      "height": "Height",
-      "volume": "Volume",
-      "netWeight": "Net Weight",
-      "tareWeight": "Tare Weight",
-      "grossWeight": "Gross Weight",
-      "isMixed": "Mixed",
-      "stockCode": "Stock Code",
-      "stockCodeRequired": "Stock Code is required",
-      "yapKod": "Yap Code",
-      "yapKodRequired": "Yap Code is required",
-      "quantity": "Quantity",
-      "quantityRequired": "Quantity is required",
-      "serialNo": "Serial No",
-      "serialNo2": "Serial No 2",
-      "serialNo3": "Serial No 3",
-      "serialNo4": "Serial No 4",
-      "sourceRouteId": "Source Route ID"
+      "selectWarehouse": "Select Warehouse",
+      "selectCustomer": "Select Customer",
+      "selectCarrier": "Select Carrier"
     },
     "status": {
       "draft": "Draft",
@@ -1056,28 +1052,6 @@
       "packed": "Packed",
       "shipped": "Shipped",
       "cancelled": "Cancelled"
-    },
-    "sourceType": {
-      "GR": "Good Receipt",
-      "WT": "Warehouse Transfer",
-      "SH": "Shipping",
-      "PR": "Production",
-      "PT": "Production Transfer",
-      "SIT": "Subcontracting Issue Transfer",
-      "SRT": "Subcontracting Receipt Transfer",
-      "WI": "Warehouse Inbound",
-      "WO": "Warehouse Outbound"
-    },
-    "packageStatus": {
-      "open": "Open",
-      "closed": "Closed",
-      "loaded": "Loaded"
-    },
-    "packageType": {
-      "box": "Box",
-      "pallet": "Pallet",
-      "bag": "Bag",
-      "custom": "Custom"
     },
     "sourceType": {
       "gr": "Goods Receipt",
@@ -1089,6 +1063,17 @@
       "wi": "Warehouse Inbound",
       "wo": "Warehouse Outbound",
       "sh": "Shipment"
+    },
+    "packageStatus": {
+      "open": "Open",
+      "closed": "Closed",
+      "loaded": "Loaded"
+    },
+    "packageType": {
+      "box": "Box",
+      "pallet": "Pallet",
+      "bag": "Bag",
+      "custom": "Custom"
     },
     "cargoCompany": {
       "None": "None",
@@ -1110,11 +1095,6 @@
       "Scotty": "Scotty",
       "KolayGelsin": "Kolay Gelsin",
       "BirGundeKargo": "Bir Günde Kargo"
-    },
-    "form": {
-      "selectWarehouse": "Select Warehouse",
-      "selectCustomer": "Select Customer",
-      "selectCarrier": "Select Carrier"
     }
   },
   "notification": {
@@ -1166,7 +1146,18 @@
     "profilePictureUploadError": "An error occurred while uploading profile picture",
     "profilePictureDeletedSuccessfully": "Profile picture deleted successfully",
     "profilePictureDeleteError": "An error occurred while deleting profile picture",
-    "userNotFound": "User not found"
+    "userNotFound": "User not found",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Your new password",
+    "changePasswordButton": "Update Password",
+    "changingPassword": "Changing password...",
+    "passwordChangedSuccessfully": "Password changed successfully",
+    "changePasswordError": "An error occurred while changing password",
+    "currentPasswordRequired": "Current password is required",
+    "newPasswordMinLength": "New password must be at least 6 characters",
+    "newPasswordMaxLength": "New password must be at most 100 characters",
+    "newPasswordSameAsCurrent": "New password cannot be the same as current password"
   }
 }
-

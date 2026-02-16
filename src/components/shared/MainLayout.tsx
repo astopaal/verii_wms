@@ -1,12 +1,14 @@
 import { type ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { useUIStore } from '@/stores/ui-store';
 import { useNotificationConnection } from '@/features/notification/hooks/useNotificationConnection';
 import { cn } from '@/lib/utils';
+import { RoutePermissionGuard } from '@/features/access-control/components/RoutePermissionGuard';
+import { useMyPermissionsQuery } from '@/features/access-control/hooks/useMyPermissionsQuery';
+import { filterNavItemsByPermission } from '@/features/access-control/utils/filterNavItems';
 
 interface NavItem {
   title: string;
@@ -40,6 +42,7 @@ const normalizeForSort = (text: string): string => {
 
 export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
   const { t } = useTranslation();
+  const { data: permissions, isLoading, isError } = useMyPermissionsQuery();
 
   const defaultNavItems: NavItem[] = useMemo(() => [
     {
@@ -360,6 +363,52 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
       ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
     },
     {
+      title: t('sidebar.accessControl', 'Erişim Kontrolü'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 3l7 4v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z" />
+          <path d="M9.5 11.5a2.5 2.5 0 1 1 5 0v1" />
+          <rect x="8.5" y="12.5" width="7" height="5" rx="1" />
+        </svg>
+      ),
+      children: [
+        {
+          title: t('sidebar.userManagement', 'Kullanıcı Yönetimi'),
+          href: '/access-control/user-management',
+        },
+        {
+          title: t('sidebar.permissionDefinitions', 'İzin Tanımları'),
+          href: '/access-control/permission-definitions',
+        },
+        {
+          title: t('sidebar.permissionGroups', 'İzin Grupları'),
+          href: '/access-control/permission-groups',
+        },
+        {
+          title: t('sidebar.userGroupAssignments', 'Kullanıcı Grup Atamaları'),
+          href: '/access-control/user-group-assignments',
+        },
+        {
+          title: t('sidebar.mailSettings', 'Mail Ayarları'),
+          href: '/users/mail-settings',
+        },
+        {
+          title: t('sidebar.hangfireMonitoring', 'Hangfire İzleme'),
+          href: '/hangfire-monitoring',
+        },
+      ].sort((a, b) => normalizeForSort(a.title).localeCompare(normalizeForSort(b.title), 'tr')),
+    },
+    {
       title: t('sidebar.parameters', 'Parametre'),
       icon: (
         <svg
@@ -436,7 +485,14 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
     return dashboard ? [dashboard, ...sortedOthers] : sortedOthers;
   }, [defaultNavItems]);
 
-  const items = navItems || sortedNavItems;
+  const items = useMemo(() => {
+    const rawItems = navItems ?? sortedNavItems;
+    if (isLoading) return rawItems;
+    if (permissions) return filterNavItemsByPermission(rawItems, permissions);
+    if (isError) return rawItems;
+    return rawItems;
+  }, [navItems, sortedNavItems, isLoading, permissions, isError]);
+
   const { isSidebarOpen } = useUIStore();
   
   useNotificationConnection();
@@ -453,7 +509,7 @@ export function MainLayout({ navItems }: MainLayoutProps): ReactElement {
           )}
         >
           <div className="container px-4 py-3">
-            <Outlet />
+            <RoutePermissionGuard />
           </div>
         </main>
       </div>
